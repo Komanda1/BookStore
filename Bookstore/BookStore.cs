@@ -73,5 +73,69 @@
             cases.Add(newCase);
             return newCase;
         }
+
+        public void AddBookToStore(Book book, int defaultCapacity = 10)
+        {
+            if (book == null)
+                throw new ArgumentNullException(nameof(book));
+
+            //Пробуем найти шкаф нужного жанра
+            var bookCase = FindCaseByGenre(book.Genre);
+
+            //Если шкафа с таким жанром нет, то создем или пересоздаем
+            if (bookCase == null)
+            {
+                bookCase = CreateOrReuseCase(book.Genre, defaultCapacity);
+            }
+
+            //Проверяем наличие места
+            if (!bookCase.HasSpace)
+                throw new InvalidOperationException("В шкафу для этого жанра нет места.");
+
+            //Добавляем книгу в найденный или созданный шкаф
+            bookCase.AddBook(book);
+        }
+
+        public Book FindBookById(int id)
+        {
+            foreach (var bookCase in cases)
+            {
+                var found = bookCase.FindById(id);
+                if (found != null)
+                    return found;
+            }
+            return null;
+        }
+
+        public Book FindBookByName(string name)
+        {
+            foreach (var bookCase in cases)
+            {
+                var found = bookCase.FindByName(name);
+                if (found != null)
+                    return found;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Метод продажи книги
+        /// </summary>
+        /// <param name="book">Книга</param>
+        /// <exception cref="ArgumentNullException">Книга не может быть null</exception>
+        /// <exception cref="InvalidOperationException">Книга не найдена в магазине</exception>
+        public void SellBook(Book book)
+        {
+            if (book == null)
+                throw new ArgumentNullException(nameof(book));
+
+            var ownerCase = cases.FirstOrDefault(c => c.Books.Contains(book));
+            if (ownerCase == null)
+                throw new InvalidOperationException("Книга не найдена в магазине.");
+
+            decimal income = book.Sell();
+            ownerCase.RemoveBook(book);
+            Balance += income;
+        }
     }
 }
