@@ -137,5 +137,23 @@
             ownerCase.RemoveBook(book);
             Balance += income;
         }
+
+        /// <summary>
+        /// Удалить шкаф из магазина (только если он пустой).
+        /// </summary>
+        /// <param name="bookCase">Шкаф</param>
+        /// <exception cref="ArgumentNullException">Шкаф не может быть null</exception>
+        /// <exception cref="InvalidOperationException">Нельзя удалить непустой шкаф</exception>
+        public void RemoveCase(BookCase bookCase)
+        {
+            if (bookCase == null)
+                throw new ArgumentNullException(nameof(bookCase));
+
+            if (bookCase.Books.Count > 0)
+                throw new InvalidOperationException("Нельзя удалить шкаф, пока в нём есть книги.");
+
+            cases.Remove(bookCase);
+        }
+
     }
 }
