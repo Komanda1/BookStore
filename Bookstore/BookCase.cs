@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bookstore
+﻿namespace Bookstore
 {
+    /// <summary>
+    /// Класс BookCase
+    /// </summary>
     public class BookCase
     {
         public string Genre { get; private set; }
@@ -15,6 +12,12 @@ namespace Bookstore
 
         public IReadOnlyList<Book> Books => books;
 
+        /// <summary>
+        /// Конструктор класса BookCase
+        /// </summary>
+        /// <param name="genre">Жанр</param>
+        /// <param name="capacity">Количество книг</param>
+        /// <exception cref="ArgumentException">Жанр шкафа не может быть пустым, Вместимость должна быть > 0</exception>
         public BookCase(string genre, int capacity)
         {
             if (string.IsNullOrWhiteSpace(genre))
@@ -29,6 +32,12 @@ namespace Bookstore
 
         public bool HasSpace => books.Count < Capacity;
 
+        /// <summary>
+        /// Метод добавления книги
+        /// </summary>
+        /// <param name="book">Книга</param>
+        /// <exception cref="ArgumentNullException">Книга не может быть null</exception>
+        /// <exception cref="InvalidOperationException">В шкафу нет места, Жанр книги не совпадает с жанром шкафа, Нельзя добавить проданную книгу</exception>
         public void AddBook(Book book)
         {
             if (book == null)
@@ -46,24 +55,49 @@ namespace Bookstore
             books.Add(book);
         }
 
+        /// <summary>
+        /// Метод поиска книги по id
+        /// </summary>
+        /// <param name="id">Id книги</param>
+        /// <returns>Найденная книга</returns>
         public Book FindById(int id)
         {
             return books.FirstOrDefault(b => b.Id == id);
         }
 
+        /// <summary>
+        /// Метод поиска книги по названию
+        /// </summary>
+        /// <param name="name">Название книги</param>
+        /// <returns>Найденная книга</returns>
         public Book FindByName(string name)
         {
             return books.FirstOrDefault(b => string.Equals(b.Name, name, StringComparison.OrdinalIgnoreCase));
         }
-
+        
+        /// <summary>
+        /// Метод получения списка книг
+        /// </summary>
+        /// <returns>Список книг</returns>
         public List<Book> GetBooksInOrder()
         {
             return books; 
         }
+        /// <summary>
+        /// Метод удаления книги
+        /// </summary>
+        /// <param name="book">Книга</param>
+        /// <returns>Удалена ли книга</returns>
         public bool RemoveBook(Book book)
         {
             return books.Remove(book);
         }
+        /// <summary>
+        /// Метод смены жанра
+        /// </summary>
+        /// <param name="newGenre">Новый жанр</param>
+        /// <exception cref="InvalidOperationException">Нельзя сменить жанр, пока в шкафу есть книги</exception>
+        /// <exception cref="ArgumentException">Жанр не может быть пустым</exception>
         public void ReassignGenre(string newGenre)
         {
             if (books.Count > 0)

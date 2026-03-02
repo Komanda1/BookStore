@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bookstore
+﻿namespace Bookstore
 {
+    /// <summary>
+    /// Класс BookStore
+    /// </summary>
     public class BookStore
     {
         private readonly List<BookCase> cases = new();
@@ -14,6 +11,11 @@ namespace Bookstore
         public int MaxCases { get; }
         public decimal Balance { get; private set; }
 
+        /// <summary>
+        /// Конструктор класса BookStore
+        /// </summary>
+        /// <param name="maxCases">Максимальное количество шкафов</param>
+        /// <exception cref="ArgumentException">Максимальное количество шкафов должно быть > 0</exception>
         public BookStore(int maxCases)
         {
             if (maxCases <= 0)
@@ -22,6 +24,12 @@ namespace Bookstore
             MaxCases = maxCases;
         }
 
+        /// <summary>
+        /// Метод поиска шкафа по жанру
+        /// </summary>
+        /// <param name="genre">Жанр</param>
+        /// <returns>Найденный шкаф</returns>
+        /// <exception cref="ArgumentException">Жанр не может быть пустым</exception>
         public BookCase? FindCaseByGenre(string genre)
         {
             if (string.IsNullOrWhiteSpace(genre))
@@ -30,6 +38,14 @@ namespace Bookstore
             return cases.FirstOrDefault(c => string.Equals(c.Genre, genre, StringComparison.OrdinalIgnoreCase));
         }
 
+        /// <summary>
+        /// Метод создания или использования шкафа
+        /// </summary>
+        /// <param name="genre">Жанр</param>
+        /// <param name="defaultCapacity">Вместимость</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Жанр не может быть пустым.</exception>
+        /// <exception cref="InvalidOperationException">Достигнуто максимальное количество шкафов</exception>
         public BookCase CreateOrReuseCase(string genre, int defaultCapacity = 10)
         {
             if (string.IsNullOrWhiteSpace(genre))
