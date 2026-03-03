@@ -93,7 +93,7 @@
         /// </summary>
         /// <param name="book">Книга</param>
         /// <returns>Удалена ли книга</returns>
-        public bool RemoveBook(Book book)
+        internal bool RemoveBook(Book book)
         {
             return books.Remove(book);
         }
