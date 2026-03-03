@@ -6,7 +6,7 @@ namespace Lab3
     public partial class Form1 : Form
     {
         private BookStore store;
-        private Book currentBook;
+        private Book? currentBook;
         private Book selectedBook;
         private BookCase currentShelf;
 
@@ -161,33 +161,60 @@ namespace Lab3
         /// </summary>
         private void btnGenerateRandom_Click_1(object sender, EventArgs e)
         {
+            try
             {
-                try
-                {
-                    string genre = string.IsNullOrWhiteSpace(txtGenre.Text) ? null : txtGenre.Text;
+                string? genre = string.IsNullOrWhiteSpace(txtGenre.Text) ? null : txtGenre.Text;
 
-                    currentBook = new Book(
-                        name: null,
-                        author: null,
-                        genre: genre,
-                        pageNumber: null,
-                        price: null
-                    );
-                    txtBookID.Text = currentBook.Id.ToString();
-                    txtBookName.Text = currentBook.Name;
-                    txtAuthor.Text = currentBook.Author;
-                    txtGenre.Text = currentBook.Genre;
-                    txtPrice.Text = currentBook.Price.ToString();
-                    txtPageCount.Text = currentBook.PageNumber.ToString();
+                currentBook = new Book(
+                    name: null,
+                    author: null,
+                    genre: genre,
+                    pageNumber: null,
+                    price: null
+                );
 
-                    UpdateStatus($"Сгенерирована книга: \"{currentBook.Name}\" ({currentBook.Genre})");
-                }
-                catch (Exception)
-                {
+                txtBookID.Text = (store.GetLastBookId()+1).ToString();
+                txtBookName.Text = currentBook.Name;
+                txtAuthor.Text = currentBook.Author;
+                txtGenre.Text = currentBook.Genre;
+                txtPrice.Text = currentBook.Price.ToString();
+                txtPageCount.Text = currentBook.PageNumber.ToString();
 
-                }
+                UpdateStatus($"Сгенерирована книга: \"{currentBook.Name}\" ({currentBook.Genre})");
+            }
+            catch (ArgumentNullException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Неверные данные при создании книги",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                UpdateStatus("Ошибка: одно из значений книги оказалось null.");
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Нельзя создать книгу",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                UpdateStatus("Не удалось создать книгу. Проверьте файлы с данными и жанр.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Необработанная ошибка при генерации книги",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                UpdateStatus("Произошла непредвиденная ошибка при генерации книги.");
             }
         }
+
+
         /// <summary>
         /// Обработчик кнопки "Добавить книгу в магазин"
         /// </summary>
@@ -197,14 +224,24 @@ namespace Lab3
             {
                 if (!decimal.TryParse(txtPrice.Text, out decimal price))
                 {
-                    MessageBox.Show("Введите корректную цену");
+                    MessageBox.Show("Введите корректную цену", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
                 if (!int.TryParse(txtPageCount.Text, out int page))
                 {
-                    MessageBox.Show("Введите корректное количество страниц");
+                    MessageBox.Show("Введите корректное количество страниц", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
+                if (string.IsNullOrWhiteSpace(txtBookName.Text) ||
+                    string.IsNullOrWhiteSpace(txtAuthor.Text) ||
+                    string.IsNullOrWhiteSpace(txtGenre.Text))
+                {
+                    MessageBox.Show("Заполните название, автора и жанр.", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 if (currentBook == null)
                 {
                     currentBook = new Book(
@@ -215,13 +252,42 @@ namespace Lab3
                         price: price
                     );
                 }
+
                 store.AddBookToStore(currentBook);
+
                 UpdateStatus($"Книга \"{currentBook.Name}\" добавлена. Жанр: {currentBook.Genre}");
                 LoadGenres();
                 ClearBookFields();
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
+                MessageBox.Show(
+                    ex.Message,
+                    "Ошибка при добавлении книги",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                UpdateStatus("Не удалось добавить книгу в магазин.");
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Некорректные данные",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                UpdateStatus("Проверьте введённые данные книги.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Необработанная ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                UpdateStatus("Произошла непредвиденная ошибка при добавлении книги.");
             }
         }
         //---------------------------------------------------МАГАЗИН--------------------------------------------------------------------------
@@ -281,40 +347,63 @@ namespace Lab3
         /// </summary>
         private void btnFindBook_Click(object sender, EventArgs e)
         {
-            string searchText = txtSearchBook.Text.Trim();
+            try
+            {
+                string searchText = txtSearchBook.Text.Trim();
 
-            Book foundBook = null;
-            if (int.TryParse(searchText, out int id))
-            {
-                foundBook = store.FindBookById(id);
-            }
-            if (foundBook == null)
-            {
-                foundBook = store.FindBookByName(searchText);
-            }
-
-            if (foundBook != null)
-            {
-                selectedBook = foundBook;
-                DisplayBookInfo(selectedBook);
-                foreach (var shelf in store.Cases)
+                if (string.IsNullOrWhiteSpace(searchText))
                 {
-                    if (shelf.Books.Contains(foundBook))
-                    {
-                        currentShelf = shelf;
-                        lstGenres.SelectedItem = shelf.Genre;
-                        DisplayBooks(shelf);
-                        break;
-                    }
+                    UpdateStatus("Введите ID или название книги для поиска.");
+                    return;
                 }
 
-                UpdateStatus($"Книга найдена: \"{foundBook.Name}\"");
+                Book foundBook = null;
+
+                if (int.TryParse(searchText, out int id))
+                {
+                    foundBook = store.FindBookById(id);
+                }
+
+                if (foundBook == null)
+                {
+                    foundBook = store.FindBookByName(searchText);
+                }
+
+                if (foundBook != null)
+                {
+                    selectedBook = foundBook;
+                    DisplayBookInfo(selectedBook);
+
+                    foreach (var shelf in store.Cases)
+                    {
+                        if (shelf.Books.Contains(foundBook))
+                        {
+                            currentShelf = shelf;
+                            lstGenres.SelectedItem = shelf.Genre;
+                            DisplayBooks(shelf);
+                            break;
+                        }
+                    }
+
+                    UpdateStatus($"Книга найдена: \"{foundBook.Name}\"");
+                }
+                else
+                {
+                    UpdateStatus("Книга не найдена.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                UpdateStatus("Книга не найдена");
+                MessageBox.Show(
+                    ex.Message,
+                    "Ошибка при поиске книги",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                UpdateStatus("Произошла ошибка при поиске книги.");
             }
         }
+
 
         /// <summary>
         /// Обработчик кнопки "Продать книгу"
@@ -324,19 +413,47 @@ namespace Lab3
         {
             try
             {
+                if (selectedBook == null)
+                {
+                    UpdateStatus("Сначала выберите книгу для продажи.");
+                    return;
+                }
+
                 store.SellBook(selectedBook);
                 UpdateBalance();
 
                 if (currentShelf != null)
                 {
                     DisplayBooks(currentShelf);
-                    UpdateStatus($"Шкаф \"{currentShelf.Genre}\": {currentShelf.OccupiedCount}/{currentShelf.Capacity} книг");
+                    UpdateStatus($"Книга продана. Шкаф \"{currentShelf.Genre}\": {currentShelf.Books.Count}/{currentShelf.Capacity} книг");
                 }
-                ClearBookInfo();
-            }
-            catch (Exception)
-            {
+                else
+                {
+                    UpdateStatus("Книга продана.");
+                }
 
+                ClearBookInfo();
+                selectedBook = null;
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Нельзя продать книгу",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                UpdateStatus("Не удалось продать книгу.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Ошибка при продаже книги",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                UpdateStatus("Произошла ошибка при продаже книги.");
             }
         }
 
@@ -348,9 +465,23 @@ namespace Lab3
         {
             try
             {
+                if (currentShelf == null)
+                {
+                    UpdateStatus("Сначала выберите шкаф (жанр) для очистки.");
+                    return;
+                }
+
+                if (!currentShelf.Books.Any())
+                {
+                    UpdateStatus($"Шкаф \"{currentShelf.Genre}\" уже пуст.");
+                    return;
+                }
+
                 decimal totalIncome = 0;
                 int booksSold = 0;
+
                 var booksToSell = currentShelf.Books.ToList();
+
                 foreach (var book in booksToSell)
                 {
                     store.SellBook(book);
@@ -361,14 +492,31 @@ namespace Lab3
                 UpdateBalance();
                 DisplayBooks(currentShelf);
                 ClearBookInfo();
-                UpdateStatus($"Шкаф \"{currentShelf.Genre}\" очищен. Готов к новому жанру.");
                 lstBook.ClearSelected();
-
+                UpdateStatus($"Шкаф \"{currentShelf.Genre}\" очищен. Продано {booksSold} книг на сумму {totalIncome:C}.");
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
+                MessageBox.Show(
+                    ex.Message,
+                    "Ошибка при очистке шкафа",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                UpdateStatus("Не удалось очистить шкаф.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Необработанная ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                UpdateStatus("Произошла ошибка при очистке шкафа.");
             }
         }
+
 
         /// <summary>
         /// Обработчик кнопки "Закрыть"

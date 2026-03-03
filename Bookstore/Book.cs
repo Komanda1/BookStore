@@ -1,4 +1,6 @@
-﻿namespace Bookstore
+﻿using System.Xml.Linq;
+
+namespace Bookstore
 {
     /// <summary>
     /// Статический список всех книг
@@ -19,7 +21,7 @@
         private static int lastId = 0;
         private static readonly Random rnd = new Random();
 
-        public int Id { get;}
+        public int Id { get; internal set; }
         public string Name { get; set; }
         public string Author { get; set; }
         public string Genre { get; set; }
@@ -38,14 +40,14 @@
         /// <param name="price">Цена</param>
         /// <exception cref="InvalidOperationException">Книга не может быть создана с пустыми полями</exception>
         public Book(
-            string name = null,
-            string author = null,
-            string genre = null,
+            string? name = null,
+            string? author = null,
+            string? genre = null,
             int? pageNumber = null,
             decimal? price = null)
         {
-            Id = GetId();
-            Name = MakeUniqueName(name) ?? GenerateUniqueName();
+            //Id = GetId();
+            Name = GenerateUniqueName(name);
             Author = author ?? GetRandomLineFromFile("BooksAuthors.txt");
             Genre = genre ?? GetRandomLineFromFile("BooksGenres.txt");
             PageNumber = pageNumber ?? rnd.Next(50, 1101); // 50 - 1100 cтраниц
@@ -103,8 +105,10 @@
         /// Метод для генерации уникального имени книги
         /// </summary>
         /// <returns></returns>
-        private static string GenerateUniqueName()
+        private static string GenerateUniqueName(string? name)
         {
+            if (name != null)
+                return MakeUniqueName(name);
             var baseName = GetRandomLineFromFile("BooksNames.txt");
             return MakeUniqueName(baseName);
         }

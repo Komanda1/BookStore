@@ -5,6 +5,20 @@
     /// </summary>
     public class BookStore
     {
+
+        private int lastBookId = 0;
+
+        private int GetNextBookId()
+        {
+            lastBookId++;
+            return lastBookId;
+        }
+
+        public int GetLastBookId()
+        {
+            return lastBookId;
+        }
+
         private readonly List<BookCase> cases = new();
         public IReadOnlyList<BookCase> Cases => cases;
 
@@ -90,20 +104,22 @@
             if (book == null)
                 throw new ArgumentNullException(nameof(book));
 
-            //Пробуем найти шкаф нужного жанра
+            // если Id ещё не назначен — назначаем при первом добавлении в магазин
+            if (book.Id == 0)
+            {
+                book.Id = GetNextBookId();
+            }
+
             var bookCase = FindCaseByGenre(book.Genre);
 
-            //Если шкафа с таким жанром нет, то создем или пересоздаем
             if (bookCase == null)
             {
                 bookCase = CreateOrReuseCase(book.Genre, defaultCapacity);
             }
 
-            //Проверяем наличие места
             if (!bookCase.HasSpace)
                 throw new InvalidOperationException("В шкафу для этого жанра нет места.");
 
-            //Добавляем книгу в найденный или созданный шкаф
             bookCase.AddBook(book);
         }
 
