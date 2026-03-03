@@ -37,6 +37,10 @@
 
             return cases.FirstOrDefault(c => string.Equals(c.Genre, genre, StringComparison.OrdinalIgnoreCase));
         }
+        public List<string> GetAvailableGenres()
+        {
+            return cases.Select(c => c.Genre).Distinct().ToList();
+        }
 
         /// <summary>
         /// Метод создания или использования шкафа

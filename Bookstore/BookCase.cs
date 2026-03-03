@@ -113,5 +113,7 @@
 
             Genre = newGenre;
         }
+
+        public int OccupiedCount => books.Count;
     }
 }

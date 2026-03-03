@@ -29,195 +29,181 @@
         private void InitializeComponent()
         {
             tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
-            tabPage2 = new TabPage();
-            groupBox1 = new GroupBox();
+            tabNewBook = new TabPage();
             groupBox2 = new GroupBox();
-            label1 = new Label();
-            textBox2 = new TextBox();
-            label2 = new Label();
-            textBox3 = new TextBox();
-            label3 = new Label();
-            textBox4 = new TextBox();
-            label4 = new Label();
-            textBox5 = new TextBox();
-            label5 = new Label();
-            button1 = new Button();
-            button2 = new Button();
+            txtStatus = new Label();
+            btnAddBook = new Button();
+            btnGenerateRandom = new Button();
+            groupBox1 = new GroupBox();
+            txtBookID = new TextBox();
+            txtGenre = new TextBox();
             label6 = new Label();
-            panel1 = new Panel();
-            label7 = new Label();
-            label8 = new Label();
-            textBox6 = new TextBox();
-            button3 = new Button();
-            panel2 = new Panel();
-            label9 = new Label();
-            listBox1 = new ListBox();
-            button4 = new Button();
+            txtPageCount = new TextBox();
+            label5 = new Label();
+            txtPrice = new TextBox();
+            label4 = new Label();
+            txtAuthor = new TextBox();
+            label3 = new Label();
+            txtBookName = new TextBox();
+            label2 = new Label();
+            label1 = new Label();
+            tabStore = new TabPage();
             panel3 = new Panel();
-            label10 = new Label();
-            listBox2 = new ListBox();
-            label11 = new Label();
-            label12 = new Label();
-            label13 = new Label();
-            label14 = new Label();
-            label15 = new Label();
-            button5 = new Button();
-            button6 = new Button();
-            label16 = new Label();
+            txtStoreCode = new TextBox();
+            txtStorePage = new TextBox();
+            txtStorePrice = new TextBox();
+            txtStoreAuthor = new TextBox();
+            txtStoreName = new TextBox();
+            btnClose = new Button();
+            btnSellBook = new Button();
+            lblStoreCode = new Label();
+            lblStorePage = new Label();
+            lblStorePrice = new Label();
+            lblStoreAuthor = new Label();
+            lblStoreName = new Label();
+            lstBook = new ListBox();
+            txtShelfName = new Label();
+            panel2 = new Panel();
+            btnClearShelf = new Button();
+            lstGenres = new ListBox();
+            label9 = new Label();
+            panel1 = new Panel();
+            btnFindBook = new Button();
+            txtSearchBook = new TextBox();
+            lblBalance = new Label();
+            label7 = new Label();
             tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
-            tabPage2.SuspendLayout();
-            groupBox1.SuspendLayout();
+            tabNewBook.SuspendLayout();
             groupBox2.SuspendLayout();
-            panel1.SuspendLayout();
-            panel2.SuspendLayout();
+            groupBox1.SuspendLayout();
+            tabStore.SuspendLayout();
             panel3.SuspendLayout();
+            panel2.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabNewBook);
+            tabControl1.Controls.Add(tabStore);
             tabControl1.Location = new Point(2, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(670, 694);
             tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // tabNewBook
             // 
-            tabPage1.BackColor = Color.FromArgb(224, 224, 224);
-            tabPage1.Controls.Add(groupBox2);
-            tabPage1.Controls.Add(groupBox1);
-            tabPage1.Location = new Point(4, 29);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(662, 661);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Новая книга";
-            // 
-            // tabPage2
-            // 
-            tabPage2.BackColor = Color.FromArgb(224, 224, 224);
-            tabPage2.Controls.Add(panel3);
-            tabPage2.Controls.Add(panel2);
-            tabPage2.Controls.Add(panel1);
-            tabPage2.Location = new Point(4, 29);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(662, 661);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "Магазин";
-            // 
-            // groupBox1
-            // 
-            groupBox1.BackColor = Color.White;
-            groupBox1.Controls.Add(label16);
-            groupBox1.Controls.Add(textBox5);
-            groupBox1.Controls.Add(label5);
-            groupBox1.Controls.Add(textBox4);
-            groupBox1.Controls.Add(label4);
-            groupBox1.Controls.Add(textBox3);
-            groupBox1.Controls.Add(label3);
-            groupBox1.Controls.Add(textBox2);
-            groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(11, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(638, 361);
-            groupBox1.TabIndex = 0;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Данные книги";
+            tabNewBook.BackColor = Color.FromArgb(224, 224, 224);
+            tabNewBook.Controls.Add(groupBox2);
+            tabNewBook.Controls.Add(groupBox1);
+            tabNewBook.Location = new Point(4, 29);
+            tabNewBook.Name = "tabNewBook";
+            tabNewBook.Padding = new Padding(3);
+            tabNewBook.Size = new Size(662, 661);
+            tabNewBook.TabIndex = 0;
+            tabNewBook.Text = "Новая книга";
             // 
             // groupBox2
             // 
             groupBox2.BackColor = Color.White;
-            groupBox2.Controls.Add(label6);
-            groupBox2.Controls.Add(button2);
-            groupBox2.Controls.Add(button1);
-            groupBox2.Location = new Point(10, 397);
+            groupBox2.Controls.Add(txtStatus);
+            groupBox2.Controls.Add(btnAddBook);
+            groupBox2.Controls.Add(btnGenerateRandom);
+            groupBox2.Location = new Point(10, 441);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(639, 167);
+            groupBox2.Size = new Size(639, 166);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             groupBox2.Text = "Управление";
             // 
-            // label1
+            // txtStatus
             // 
-            label1.BackColor = Color.FromArgb(224, 224, 224);
-            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label1.Location = new Point(11, 38);
-            label1.Name = "label1";
-            label1.Size = new Size(234, 48);
-            label1.TabIndex = 0;
-            label1.Text = "Код Книги";
+            txtStatus.BackColor = Color.FromArgb(224, 224, 224);
+            txtStatus.Location = new Point(12, 108);
+            txtStatus.Name = "txtStatus";
+            txtStatus.Size = new Size(566, 37);
+            txtStatus.TabIndex = 2;
+            txtStatus.Text = "Строка состояния";
             // 
-            // textBox2
+            // btnAddBook
             // 
-            textBox2.BackColor = Color.FromArgb(224, 224, 224);
-            textBox2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            textBox2.Location = new Point(292, 110);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(285, 27);
-            textBox2.TabIndex = 3;
+            btnAddBook.Location = new Point(349, 38);
+            btnAddBook.Name = "btnAddBook";
+            btnAddBook.Size = new Size(229, 37);
+            btnAddBook.TabIndex = 1;
+            btnAddBook.Text = "Добавить книгу";
+            btnAddBook.UseVisualStyleBackColor = true;
+            btnAddBook.Click += btnAddBook_Click_1;
             // 
-            // label2
+            // btnGenerateRandom
             // 
-            label2.BackColor = Color.FromArgb(224, 224, 224);
-            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label2.Location = new Point(11, 98);
-            label2.Name = "label2";
-            label2.Size = new Size(234, 48);
-            label2.TabIndex = 2;
-            label2.Text = "Название";
+            btnGenerateRandom.Location = new Point(12, 38);
+            btnGenerateRandom.Name = "btnGenerateRandom";
+            btnGenerateRandom.Size = new Size(229, 37);
+            btnGenerateRandom.TabIndex = 0;
+            btnGenerateRandom.Text = "Случайная генерация";
+            btnGenerateRandom.UseVisualStyleBackColor = true;
+            btnGenerateRandom.Click += btnGenerateRandom_Click_1;
             // 
-            // textBox3
+            // groupBox1
             // 
-            textBox3.BackColor = Color.FromArgb(224, 224, 224);
-            textBox3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            textBox3.Location = new Point(292, 169);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(285, 27);
-            textBox3.TabIndex = 5;
+            groupBox1.BackColor = Color.White;
+            groupBox1.Controls.Add(txtBookID);
+            groupBox1.Controls.Add(txtGenre);
+            groupBox1.Controls.Add(label6);
+            groupBox1.Controls.Add(txtPageCount);
+            groupBox1.Controls.Add(label5);
+            groupBox1.Controls.Add(txtPrice);
+            groupBox1.Controls.Add(label4);
+            groupBox1.Controls.Add(txtAuthor);
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(txtBookName);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Location = new Point(11, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(638, 409);
+            groupBox1.TabIndex = 0;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Данные книги";
             // 
-            // label3
+            // txtBookID
             // 
-            label3.BackColor = Color.FromArgb(224, 224, 224);
-            label3.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label3.Location = new Point(11, 157);
-            label3.Name = "label3";
-            label3.Size = new Size(234, 48);
-            label3.TabIndex = 4;
-            label3.Text = "Автор";
+            txtBookID.BackColor = Color.FromArgb(224, 224, 224);
+            txtBookID.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            txtBookID.Location = new Point(292, 49);
+            txtBookID.Name = "txtBookID";
+            txtBookID.Size = new Size(285, 27);
+            txtBookID.TabIndex = 13;
             // 
-            // textBox4
+            // txtGenre
             // 
-            textBox4.BackColor = Color.FromArgb(224, 224, 224);
-            textBox4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            textBox4.Location = new Point(292, 231);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(285, 27);
-            textBox4.TabIndex = 7;
+            txtGenre.BackColor = Color.FromArgb(224, 224, 224);
+            txtGenre.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            txtGenre.Location = new Point(292, 354);
+            txtGenre.Name = "txtGenre";
+            txtGenre.Size = new Size(285, 27);
+            txtGenre.TabIndex = 12;
             // 
-            // label4
+            // label6
             // 
-            label4.BackColor = Color.FromArgb(224, 224, 224);
-            label4.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label4.Location = new Point(11, 219);
-            label4.Name = "label4";
-            label4.Size = new Size(234, 48);
-            label4.TabIndex = 6;
-            label4.Text = "Цена";
+            label6.BackColor = Color.FromArgb(224, 224, 224);
+            label6.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label6.Location = new Point(11, 342);
+            label6.Name = "label6";
+            label6.Size = new Size(234, 48);
+            label6.TabIndex = 11;
+            label6.Text = "Жанр";
             // 
-            // textBox5
+            // txtPageCount
             // 
-            textBox5.BackColor = Color.FromArgb(224, 224, 224);
-            textBox5.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            textBox5.Location = new Point(292, 293);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(285, 27);
-            textBox5.TabIndex = 9;
+            txtPageCount.BackColor = Color.FromArgb(224, 224, 224);
+            txtPageCount.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            txtPageCount.Location = new Point(292, 293);
+            txtPageCount.Name = "txtPageCount";
+            txtPageCount.Size = new Size(285, 27);
+            txtPageCount.TabIndex = 9;
             // 
             // label5
             // 
@@ -229,90 +215,259 @@
             label5.TabIndex = 8;
             label5.Text = "Кол-во страниц";
             // 
-            // button1
+            // txtPrice
             // 
-            button1.Location = new Point(12, 38);
-            button1.Name = "button1";
-            button1.Size = new Size(229, 37);
-            button1.TabIndex = 0;
-            button1.Text = "Случайная генерация";
-            button1.UseVisualStyleBackColor = true;
+            txtPrice.BackColor = Color.FromArgb(224, 224, 224);
+            txtPrice.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            txtPrice.Location = new Point(292, 231);
+            txtPrice.Name = "txtPrice";
+            txtPrice.Size = new Size(285, 27);
+            txtPrice.TabIndex = 7;
             // 
-            // button2
+            // label4
             // 
-            button2.Location = new Point(349, 38);
-            button2.Name = "button2";
-            button2.Size = new Size(229, 37);
-            button2.TabIndex = 1;
-            button2.Text = "Добавить книгу";
-            button2.UseVisualStyleBackColor = true;
+            label4.BackColor = Color.FromArgb(224, 224, 224);
+            label4.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label4.Location = new Point(11, 219);
+            label4.Name = "label4";
+            label4.Size = new Size(234, 48);
+            label4.TabIndex = 6;
+            label4.Text = "Цена";
             // 
-            // label6
+            // txtAuthor
             // 
-            label6.BackColor = Color.FromArgb(224, 224, 224);
-            label6.Location = new Point(12, 108);
-            label6.Name = "label6";
-            label6.Size = new Size(566, 37);
-            label6.TabIndex = 2;
-            label6.Text = "Строка состояния";
+            txtAuthor.BackColor = Color.FromArgb(224, 224, 224);
+            txtAuthor.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            txtAuthor.Location = new Point(292, 169);
+            txtAuthor.Name = "txtAuthor";
+            txtAuthor.Size = new Size(285, 27);
+            txtAuthor.TabIndex = 5;
             // 
-            // panel1
+            // label3
             // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(button3);
-            panel1.Controls.Add(textBox6);
-            panel1.Controls.Add(label8);
-            panel1.Controls.Add(label7);
-            panel1.Location = new Point(23, 23);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(619, 137);
-            panel1.TabIndex = 0;
+            label3.BackColor = Color.FromArgb(224, 224, 224);
+            label3.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label3.Location = new Point(11, 157);
+            label3.Name = "label3";
+            label3.Size = new Size(234, 48);
+            label3.TabIndex = 4;
+            label3.Text = "Автор";
             // 
-            // label7
+            // txtBookName
             // 
-            label7.BackColor = Color.FromArgb(224, 224, 224);
-            label7.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label7.Location = new Point(12, 14);
-            label7.Name = "label7";
-            label7.Size = new Size(268, 43);
-            label7.TabIndex = 0;
-            label7.Text = "Баланс магазина";
+            txtBookName.BackColor = Color.FromArgb(224, 224, 224);
+            txtBookName.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            txtBookName.Location = new Point(292, 110);
+            txtBookName.Name = "txtBookName";
+            txtBookName.Size = new Size(285, 27);
+            txtBookName.TabIndex = 3;
             // 
-            // label8
+            // label2
             // 
-            label8.BackColor = Color.FromArgb(224, 224, 224);
-            label8.Location = new Point(478, 15);
-            label8.Name = "label8";
-            label8.Size = new Size(120, 42);
-            label8.TabIndex = 1;
+            label2.BackColor = Color.FromArgb(224, 224, 224);
+            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label2.Location = new Point(11, 98);
+            label2.Name = "label2";
+            label2.Size = new Size(234, 48);
+            label2.TabIndex = 2;
+            label2.Text = "Название";
             // 
-            // textBox6
+            // label1
             // 
-            textBox6.Location = new Point(12, 83);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(268, 27);
-            textBox6.TabIndex = 2;
-            textBox6.Text = "Название или код книги";
+            label1.BackColor = Color.FromArgb(224, 224, 224);
+            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label1.Location = new Point(11, 38);
+            label1.Name = "label1";
+            label1.Size = new Size(234, 48);
+            label1.TabIndex = 0;
+            label1.Text = "Код Книги";
             // 
-            // button3
+            // tabStore
             // 
-            button3.Location = new Point(478, 78);
-            button3.Name = "button3";
-            button3.Size = new Size(118, 37);
-            button3.TabIndex = 3;
-            button3.Text = "Найти";
-            button3.UseVisualStyleBackColor = true;
+            tabStore.BackColor = Color.FromArgb(224, 224, 224);
+            tabStore.Controls.Add(panel3);
+            tabStore.Controls.Add(panel2);
+            tabStore.Controls.Add(panel1);
+            tabStore.Location = new Point(4, 29);
+            tabStore.Name = "tabStore";
+            tabStore.Padding = new Padding(3);
+            tabStore.Size = new Size(662, 661);
+            tabStore.TabIndex = 1;
+            tabStore.Text = "Магазин";
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.White;
+            panel3.Controls.Add(txtStoreCode);
+            panel3.Controls.Add(txtStorePage);
+            panel3.Controls.Add(txtStorePrice);
+            panel3.Controls.Add(txtStoreAuthor);
+            panel3.Controls.Add(txtStoreName);
+            panel3.Controls.Add(btnClose);
+            panel3.Controls.Add(btnSellBook);
+            panel3.Controls.Add(lblStoreCode);
+            panel3.Controls.Add(lblStorePage);
+            panel3.Controls.Add(lblStorePrice);
+            panel3.Controls.Add(lblStoreAuthor);
+            panel3.Controls.Add(lblStoreName);
+            panel3.Controls.Add(lstBook);
+            panel3.Controls.Add(txtShelfName);
+            panel3.Location = new Point(243, 168);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(399, 487);
+            panel3.TabIndex = 2;
+            // 
+            // txtStoreCode
+            // 
+            txtStoreCode.Location = new Point(213, 388);
+            txtStoreCode.Name = "txtStoreCode";
+            txtStoreCode.Size = new Size(172, 27);
+            txtStoreCode.TabIndex = 13;
+            // 
+            // txtStorePage
+            // 
+            txtStorePage.Location = new Point(213, 354);
+            txtStorePage.Name = "txtStorePage";
+            txtStorePage.Size = new Size(172, 27);
+            txtStorePage.TabIndex = 12;
+            // 
+            // txtStorePrice
+            // 
+            txtStorePrice.Location = new Point(213, 320);
+            txtStorePrice.Name = "txtStorePrice";
+            txtStorePrice.Size = new Size(172, 27);
+            txtStorePrice.TabIndex = 11;
+            // 
+            // txtStoreAuthor
+            // 
+            txtStoreAuthor.Location = new Point(213, 287);
+            txtStoreAuthor.Name = "txtStoreAuthor";
+            txtStoreAuthor.Size = new Size(172, 27);
+            txtStoreAuthor.TabIndex = 10;
+            // 
+            // txtStoreName
+            // 
+            txtStoreName.Location = new Point(213, 252);
+            txtStoreName.Name = "txtStoreName";
+            txtStoreName.Size = new Size(172, 27);
+            txtStoreName.TabIndex = 9;
+            // 
+            // btnClose
+            // 
+            btnClose.Location = new Point(230, 435);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(146, 38);
+            btnClose.TabIndex = 8;
+            btnClose.Text = "Закрыть";
+            btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
+            // 
+            // btnSellBook
+            // 
+            btnSellBook.Location = new Point(20, 435);
+            btnSellBook.Name = "btnSellBook";
+            btnSellBook.Size = new Size(146, 38);
+            btnSellBook.TabIndex = 7;
+            btnSellBook.Text = "Продать книгу";
+            btnSellBook.UseVisualStyleBackColor = true;
+            btnSellBook.Click += btnSellBook_Click;
+            // 
+            // lblStoreCode
+            // 
+            lblStoreCode.BackColor = Color.FromArgb(224, 224, 224);
+            lblStoreCode.Location = new Point(20, 388);
+            lblStoreCode.Name = "lblStoreCode";
+            lblStoreCode.Size = new Size(168, 32);
+            lblStoreCode.TabIndex = 6;
+            lblStoreCode.Text = "Код Книги";
+            // 
+            // lblStorePage
+            // 
+            lblStorePage.BackColor = Color.FromArgb(224, 224, 224);
+            lblStorePage.Location = new Point(20, 354);
+            lblStorePage.Name = "lblStorePage";
+            lblStorePage.Size = new Size(168, 32);
+            lblStorePage.TabIndex = 5;
+            lblStorePage.Text = "Кол-во страниц";
+            // 
+            // lblStorePrice
+            // 
+            lblStorePrice.BackColor = Color.FromArgb(224, 224, 224);
+            lblStorePrice.Location = new Point(20, 320);
+            lblStorePrice.Name = "lblStorePrice";
+            lblStorePrice.Size = new Size(168, 32);
+            lblStorePrice.TabIndex = 4;
+            lblStorePrice.Text = "Цена";
+            // 
+            // lblStoreAuthor
+            // 
+            lblStoreAuthor.BackColor = Color.FromArgb(224, 224, 224);
+            lblStoreAuthor.Location = new Point(20, 286);
+            lblStoreAuthor.Name = "lblStoreAuthor";
+            lblStoreAuthor.Size = new Size(168, 32);
+            lblStoreAuthor.TabIndex = 3;
+            lblStoreAuthor.Text = "Автор";
+            // 
+            // lblStoreName
+            // 
+            lblStoreName.BackColor = Color.FromArgb(224, 224, 224);
+            lblStoreName.Location = new Point(20, 252);
+            lblStoreName.Name = "lblStoreName";
+            lblStoreName.Size = new Size(168, 32);
+            lblStoreName.TabIndex = 2;
+            lblStoreName.Text = "Название";
+            // 
+            // lstBook
+            // 
+            lstBook.FormattingEnabled = true;
+            lstBook.Items.AddRange(new object[] { "Список книг текущего жанра:" });
+            lstBook.Location = new Point(20, 59);
+            lstBook.Name = "lstBook";
+            lstBook.Size = new Size(365, 184);
+            lstBook.TabIndex = 1;
+            lstBook.SelectedIndexChanged += lstBook_SelectedIndexChanged;
+            // 
+            // txtShelfName
+            // 
+            txtShelfName.BackColor = Color.FromArgb(224, 224, 224);
+            txtShelfName.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            txtShelfName.Location = new Point(20, 10);
+            txtShelfName.Name = "txtShelfName";
+            txtShelfName.Size = new Size(365, 42);
+            txtShelfName.TabIndex = 0;
+            txtShelfName.Text = "Книги в шкафу";
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.Controls.Add(button4);
-            panel2.Controls.Add(listBox1);
+            panel2.Controls.Add(btnClearShelf);
+            panel2.Controls.Add(lstGenres);
             panel2.Controls.Add(label9);
             panel2.Location = new Point(23, 166);
             panel2.Name = "panel2";
             panel2.Size = new Size(207, 489);
             panel2.TabIndex = 1;
+            // 
+            // btnClearShelf
+            // 
+            btnClearShelf.Location = new Point(10, 417);
+            btnClearShelf.Name = "btnClearShelf";
+            btnClearShelf.Size = new Size(187, 46);
+            btnClearShelf.TabIndex = 2;
+            btnClearShelf.Text = "Очистить шкаф";
+            btnClearShelf.UseVisualStyleBackColor = true;
+            btnClearShelf.Click += btnClearShelf_Click;
+            // 
+            // lstGenres
+            // 
+            lstGenres.BackColor = Color.FromArgb(224, 224, 224);
+            lstGenres.FormattingEnabled = true;
+            lstGenres.Items.AddRange(new object[] { "Список жанров (шкафов)" });
+            lstGenres.Location = new Point(12, 66);
+            lstGenres.Name = "lstGenres";
+            lstGenres.Size = new Size(184, 324);
+            lstGenres.TabIndex = 1;
+            lstGenres.SelectedIndexChanged += lstGenres_SelectedIndexChanged_1;
             // 
             // label9
             // 
@@ -324,131 +479,53 @@
             label9.TabIndex = 0;
             label9.Text = "Список жанров";
             // 
-            // listBox1
+            // panel1
             // 
-            listBox1.BackColor = Color.FromArgb(224, 224, 224);
-            listBox1.FormattingEnabled = true;
-            listBox1.Items.AddRange(new object[] { "Список жанров (шкафов)" });
-            listBox1.Location = new Point(12, 66);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(184, 324);
-            listBox1.TabIndex = 1;
+            panel1.BackColor = Color.White;
+            panel1.Controls.Add(btnFindBook);
+            panel1.Controls.Add(txtSearchBook);
+            panel1.Controls.Add(lblBalance);
+            panel1.Controls.Add(label7);
+            panel1.Location = new Point(23, 23);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(619, 137);
+            panel1.TabIndex = 0;
             // 
-            // button4
+            // btnFindBook
             // 
-            button4.Location = new Point(10, 417);
-            button4.Name = "button4";
-            button4.Size = new Size(187, 46);
-            button4.TabIndex = 2;
-            button4.Text = "Очистить шкаф";
-            button4.UseVisualStyleBackColor = true;
+            btnFindBook.Location = new Point(478, 78);
+            btnFindBook.Name = "btnFindBook";
+            btnFindBook.Size = new Size(118, 37);
+            btnFindBook.TabIndex = 3;
+            btnFindBook.Text = "Найти";
+            btnFindBook.UseVisualStyleBackColor = true;
+            btnFindBook.Click += btnFindBook_Click;
             // 
-            // panel3
+            // txtSearchBook
             // 
-            panel3.BackColor = Color.White;
-            panel3.Controls.Add(button6);
-            panel3.Controls.Add(button5);
-            panel3.Controls.Add(label15);
-            panel3.Controls.Add(label14);
-            panel3.Controls.Add(label13);
-            panel3.Controls.Add(label12);
-            panel3.Controls.Add(label11);
-            panel3.Controls.Add(listBox2);
-            panel3.Controls.Add(label10);
-            panel3.Location = new Point(243, 168);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(399, 487);
-            panel3.TabIndex = 2;
+            txtSearchBook.Location = new Point(12, 83);
+            txtSearchBook.Name = "txtSearchBook";
+            txtSearchBook.Size = new Size(268, 27);
+            txtSearchBook.TabIndex = 2;
+            txtSearchBook.Text = "Название или код книги";
             // 
-            // label10
+            // lblBalance
             // 
-            label10.BackColor = Color.FromArgb(224, 224, 224);
-            label10.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label10.Location = new Point(20, 10);
-            label10.Name = "label10";
-            label10.Size = new Size(365, 42);
-            label10.TabIndex = 0;
-            label10.Text = "Книги в шкафу";
+            lblBalance.BackColor = Color.FromArgb(224, 224, 224);
+            lblBalance.Location = new Point(478, 15);
+            lblBalance.Name = "lblBalance";
+            lblBalance.Size = new Size(120, 42);
+            lblBalance.TabIndex = 1;
             // 
-            // listBox2
+            // label7
             // 
-            listBox2.FormattingEnabled = true;
-            listBox2.Items.AddRange(new object[] { "Список книг текущего жанра:" });
-            listBox2.Location = new Point(20, 59);
-            listBox2.Name = "listBox2";
-            listBox2.Size = new Size(365, 184);
-            listBox2.TabIndex = 1;
-            // 
-            // label11
-            // 
-            label11.BackColor = Color.FromArgb(224, 224, 224);
-            label11.Location = new Point(20, 252);
-            label11.Name = "label11";
-            label11.Size = new Size(365, 32);
-            label11.TabIndex = 2;
-            label11.Text = "Название";
-            // 
-            // label12
-            // 
-            label12.BackColor = Color.FromArgb(224, 224, 224);
-            label12.Location = new Point(20, 286);
-            label12.Name = "label12";
-            label12.Size = new Size(365, 32);
-            label12.TabIndex = 3;
-            label12.Text = "Автор";
-            // 
-            // label13
-            // 
-            label13.BackColor = Color.FromArgb(224, 224, 224);
-            label13.Location = new Point(20, 320);
-            label13.Name = "label13";
-            label13.Size = new Size(365, 32);
-            label13.TabIndex = 4;
-            label13.Text = "Цена";
-            // 
-            // label14
-            // 
-            label14.BackColor = Color.FromArgb(224, 224, 224);
-            label14.Location = new Point(20, 354);
-            label14.Name = "label14";
-            label14.Size = new Size(365, 32);
-            label14.TabIndex = 5;
-            label14.Text = "Кол-во страниц";
-            // 
-            // label15
-            // 
-            label15.BackColor = Color.FromArgb(224, 224, 224);
-            label15.Location = new Point(20, 388);
-            label15.Name = "label15";
-            label15.Size = new Size(365, 32);
-            label15.TabIndex = 6;
-            label15.Text = "Код Книги";
-            // 
-            // button5
-            // 
-            button5.Location = new Point(20, 435);
-            button5.Name = "button5";
-            button5.Size = new Size(146, 38);
-            button5.TabIndex = 7;
-            button5.Text = "Продать книгу";
-            button5.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            button6.Location = new Point(230, 435);
-            button6.Name = "button6";
-            button6.Size = new Size(146, 38);
-            button6.TabIndex = 8;
-            button6.Text = "Закрыть";
-            button6.UseVisualStyleBackColor = true;
-            // 
-            // label16
-            // 
-            label16.BackColor = Color.FromArgb(224, 224, 224);
-            label16.Location = new Point(292, 47);
-            label16.Name = "label16";
-            label16.Size = new Size(281, 29);
-            label16.TabIndex = 10;
+            label7.BackColor = Color.FromArgb(224, 224, 224);
+            label7.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label7.Location = new Point(12, 14);
+            label7.Name = "label7";
+            label7.Size = new Size(268, 43);
+            label7.TabIndex = 0;
+            label7.Text = "Баланс магазина";
             // 
             // Form1
             // 
@@ -459,56 +536,65 @@
             Name = "Form1";
             Text = "Form1";
             tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage2.ResumeLayout(false);
+            tabNewBook.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            groupBox2.ResumeLayout(false);
+            tabStore.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            panel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel3.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private TabControl tabControl1;
-        private TabPage tabPage1;
+        private TabPage tabNewBook;
         private GroupBox groupBox1;
-        private TabPage tabPage2;
+        private TabPage tabStore;
         private GroupBox groupBox2;
-        private TextBox textBox5;
+        private TextBox txtPageCount;
         private Label label5;
-        private TextBox textBox4;
+        private TextBox txtPrice;
         private Label label4;
-        private TextBox textBox3;
+        private TextBox txtAuthor;
         private Label label3;
-        private TextBox textBox2;
+        private TextBox txtBookName;
         private Label label2;
         private Label label1;
-        private Label label6;
-        private Button button2;
-        private Button button1;
+        private Label txtStatus;
+        private Button btnAddBook;
+        private Button btnGenerateRandom;
         private Panel panel1;
-        private Label label8;
+        private Label lblBalance;
         private Label label7;
         private Panel panel3;
-        private Label label10;
+        private Label txtShelfName;
         private Panel panel2;
-        private Button button4;
-        private ListBox listBox1;
+        private Button btnClearShelf;
+        private ListBox lstGenres;
         private Label label9;
-        private Button button3;
-        private TextBox textBox6;
-        private Label label15;
-        private Label label14;
-        private Label label13;
-        private Label label12;
-        private Label label11;
-        private ListBox listBox2;
-        private Button button6;
-        private Button button5;
-        private Label label16;
+        private Button btnFindBook;
+        private TextBox txtSearchBook;
+        private Label lblStoreCode;
+        private Label lblStorePage;
+        private Label lblStorePrice;
+        private Label lblStoreAuthor;
+        private Label lblStoreName;
+        private ListBox lstBook;
+        private Button btnClose;
+        private Button btnSellBook;
+        private TextBox textBox5;
+        private TextBox txtStorePage;
+        private TextBox txtStorePrice;
+        private TextBox txtStoreAuthor;
+        private TextBox txtStoreName;
+        private TextBox txtStoreCode;
+        private TextBox txtGenre;
+        private Label label6;
+        private TextBox txtBookID;
     }
 }
