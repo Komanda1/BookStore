@@ -48,7 +48,7 @@
             Name = MakeUniqueName(name) ?? GenerateUniqueName();
             Author = author ?? GetRandomLineFromFile("BooksAuthors.txt");
             Genre = genre ?? GetRandomLineFromFile("BooksGenres.txt");
-            PageNumber = pageNumber ?? rnd.Next(50, 1001); // 50 - 1000 cтраниц
+            PageNumber = pageNumber ?? rnd.Next(50, 1101); // 50 - 1100 cтраниц
             Price = price ?? (decimal)rnd.Next(100, 1501); // 100 - 1500 руб
 
             if (string.IsNullOrWhiteSpace(Name) ||
