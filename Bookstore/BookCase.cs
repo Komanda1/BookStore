@@ -8,8 +8,12 @@
         public string Genre { get; private set; }
         public int Capacity { get; }
 
+
         private readonly List<Book> books = new();
 
+        /// <summary>
+        /// Список книг
+        /// </summary>
         public IReadOnlyList<Book> Books => books;
 
         /// <summary>
@@ -46,6 +50,7 @@
             if (!HasSpace)
                 throw new InvalidOperationException("В шкафу нет места.");
 
+            //StringComparison.OrdinalIgnoreCase для регистронезависимости
             if (!string.Equals(book.Genre, Genre, StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("Жанр книги не совпадает с жанром шкафа.");
 

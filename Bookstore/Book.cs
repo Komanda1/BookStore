@@ -5,6 +5,9 @@
     /// </summary>
     public static class Library
     {
+        /// <summary>
+        /// Список всех книг
+        /// </summary>
         public static List<Book> Books { get; } = new();
     }
 

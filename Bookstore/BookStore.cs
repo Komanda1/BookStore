@@ -139,7 +139,7 @@
         }
 
         /// <summary>
-        /// Удалить шкаф из магазина (только если он пустой).
+        /// Удалить шкаф из магазина (только если он пустой)
         /// </summary>
         /// <param name="bookCase">Шкаф</param>
         /// <exception cref="ArgumentNullException">Шкаф не может быть null</exception>
