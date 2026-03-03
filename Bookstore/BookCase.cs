@@ -84,7 +84,7 @@
         /// Метод получения списка книг
         /// </summary>
         /// <returns>Список книг</returns>
-        public List<Book> GetBooksInOrder()
+        public IEnumerable<Book> GetBooksInOrder()
         {
             return books; 
         }
