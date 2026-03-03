@@ -78,6 +78,13 @@
             return newCase;
         }
 
+        /// <summary>
+        /// Добавляет книгу в магазин, автоматически находя или создавая шкаф нужного жанра.
+        /// </summary>
+        /// <param name="book">Книга для добавления</param>
+        /// <param name="defaultCapacity">Вместимость шкафа по умолчанию, если создаётся новый</param>
+        /// <exception cref="ArgumentNullException">Книга не может быть null</exception>
+        /// <exception cref="InvalidOperationException">В шкафу для этого жанра нет места</exception>
         public void AddBookToStore(Book book, int defaultCapacity = 10)
         {
             if (book == null)
@@ -100,6 +107,11 @@
             bookCase.AddBook(book);
         }
 
+        /// <summary>
+        /// Ищет книгу по уникальному идентификатору во всех шкафах магазина.
+        /// </summary>
+        /// <param name="id">Идентификатор книги</param>
+        /// <returns>Найденная книга или null, если книга не найдена</returns>
         public Book FindBookById(int id)
         {
             foreach (var bookCase in cases)
@@ -111,6 +123,11 @@
             return null;
         }
 
+        /// <summary>
+        /// Ищет книгу по названию во всех шкафах магазина.
+        /// </summary>
+        /// <param name="name">Название книги</param>
+        /// <returns>Найденная книга или null, если книга не найдена</returns>
         public Book FindBookByName(string name)
         {
             foreach (var bookCase in cases)

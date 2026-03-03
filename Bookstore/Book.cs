@@ -112,7 +112,7 @@
         /// <summary>
         /// Метод для создания уникального имени книги
         /// </summary>
-        /// <param name="baseName">Назва книги</param>
+        /// <param name="baseName">Название книги</param>
         /// <returns></returns>
         private static string MakeUniqueName(string baseName)
         {
