@@ -420,6 +420,7 @@
             // lstBook
             // 
             lstBook.FormattingEnabled = true;
+            lstBook.HorizontalScrollbar = true;
             lstBook.Items.AddRange(new object[] { "Список книг текущего жанра:" });
             lstBook.Location = new Point(20, 59);
             lstBook.Name = "lstBook";
