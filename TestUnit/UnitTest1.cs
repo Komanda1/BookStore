@@ -27,11 +27,9 @@ namespace TestUnit
         {
             string genre = "Фантастика";
             int capacity = 10;
-
-            // Действие - выполняем тестируемый метод
             var bookCase = new BookCase(genre, capacity);
 
-            // Проверка - проверяем, что результат правильный
+            //Проверка - проверяем, что результат правильный
             Assert.That(bookCase.Genre, Is.EqualTo(genre));
             Assert.That(bookCase.Capacity, Is.EqualTo(capacity));
             Assert.That(bookCase.HasSpace, Is.True);
@@ -57,14 +55,14 @@ namespace TestUnit
         [Test]
         public void AddBook()
         {
-            // ARRANGE - используем хелпер
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
 
-            // ACT
+            //ACT
             bookCase.AddBook(book);
 
-            // ASSERT
+            //ASSERT
             Assert.That(bookCase.OccupiedCount, Is.EqualTo(1));
             Assert.That(bookCase.Books, Contains.Item(book));
         }
@@ -72,14 +70,14 @@ namespace TestUnit
         [Test]
         public void AddBook_WhenFull_ThrowsInvalidOperationException()
         {
-            // ARRANGE
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 1);
             var book1 = TestHelpers.CreateTestBook(name: "Книга 1", genre: "Фантастика");
             var book2 = TestHelpers.CreateTestBook(name: "Книга 2", genre: "Фантастика");
 
             bookCase.AddBook(book1);
 
-            // ACT & ASSERT
+            //ACT & ASSERT
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 bookCase.AddBook(book2));
 
@@ -89,11 +87,11 @@ namespace TestUnit
         [Test]
         public void AddBook_WrongGenre_ThrowsInvalidOperationException()
         {
-            // ARRANGE
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(genre: "История");
 
-            // ACT & ASSERT
+            //ACT & ASSERT
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 bookCase.AddBook(book));
 
@@ -103,10 +101,10 @@ namespace TestUnit
         [Test]
         public void AddBook_NullBook_ThrowsArgumentNullException()
         {
-            // ARRANGE
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 10);
 
-            // ACT & ASSERT
+            //ACT & ASSERT
             Assert.Throws<ArgumentNullException>(() =>
                 bookCase.AddBook(null));
         }
@@ -114,13 +112,13 @@ namespace TestUnit
         [Test]
         public void AddBook_SoldBook_ThrowsInvalidOperationException()
         {
-            // ARRANGE
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
 
             book.Sell();
 
-            // ACT & ASSERT
+            //ACT & ASSERT
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 bookCase.AddBook(book));
 
@@ -130,86 +128,86 @@ namespace TestUnit
         [Test]
         public void FindById_ExistingBook_ReturnsBook()
         {
-            // ARRANGE
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
 
-            // Сохраняем ID до добавления (он будет 1)
+            //Сохраняем ID до добавления (он будет 1)
             bookCase.AddBook(book);
             int bookId = book.Id;
 
-            // ACT
+            //ACT
             var found = bookCase.FindById(bookId);
 
-            // ASSERT
+            //ASSERT
             Assert.That(found, Is.EqualTo(book));
         }
 
         [Test]
         public void FindById_NonExistingBook_ReturnsNull()
         {
-            // ARRANGE
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 10);
 
-            // ACT
+            //ACT
             var found = bookCase.FindById(999);
 
-            // ASSERT
+            //ASSERT
             Assert.That(found, Is.Null);
         }
 
         [Test]
         public void FindByName_ExistingBook_ReturnsBook()
         {
-            // ARRANGE
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(name: "Уникальное название", genre: "Фантастика");
 
             bookCase.AddBook(book);
 
-            // ACT
+            //ACT
             var found = bookCase.FindByName("Уникальное название");
 
-            // ASSERT
+            //ASSERT
             Assert.That(found, Is.EqualTo(book));
         }
 
         [Test]
         public void FindByName_NonExistingBook_ReturnsNull()
         {
-            // ARRANGE
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 10);
 
-            // ACT
+            //ACT
             var found = bookCase.FindByName("Несуществующая книга");
 
-            // ASSERT
+            //ASSERT
             Assert.That(found, Is.Null);
         }
 
         [Test]
         public void ReassignGenre_EmptyCase_ChangesGenre()
         {
-            // ARRANGE
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 10);
             string newGenre = "Детектив";
 
-            // ACT
+            //ACT
             bookCase.ReassignGenre(newGenre);
 
-            // ASSERT
+            //ASSERT
             Assert.That(bookCase.Genre, Is.EqualTo(newGenre));
         }
 
         [Test]
         public void ReassignGenre_NonEmptyCase_ThrowsInvalidOperationException()
         {
-            // ARRANGE
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             bookCase.AddBook(book);
 
-            // ACT & ASSERT
+            //ACT & ASSERT
             Assert.Throws<InvalidOperationException>(() =>
                 bookCase.ReassignGenre("Детектив"));
         }
@@ -217,10 +215,10 @@ namespace TestUnit
         [Test]
         public void ReassignGenre_EmptyGenre_ThrowsArgumentException()
         {
-            // ARRANGE
+            //ARRANGE
             var bookCase = new BookCase("Фантастика", 10);
 
-            // ACT & ASSERT
+            //ACT & ASSERT
             Assert.Throws<ArgumentException>(() =>
                 bookCase.ReassignGenre(""));
         }
@@ -235,22 +233,21 @@ namespace TestUnit
         [SetUp]
         public void Setup()
         {
-            // Очищаем статический список книг
             Library.Books.Clear();
-            // Создаем новый магазин для каждого теста
+            //Создаем новый магазин для каждого теста
             _store = new BookStore(DefaultMaxCases);
         }
 
         [Test]
         public void Constructor_ValidMaxCases_CreatesStore()
         {
-            // ARRANGE
+            //ARRANGE
             int maxCases = 10;
 
-            // ACT
+            //ACT
             var store = new BookStore(maxCases);
 
-            // ASSERT
+            //ASSERT
             Assert.That(store.MaxCases, Is.EqualTo(maxCases));
             Assert.That(store.Cases, Is.Empty);
             Assert.That(store.Balance, Is.EqualTo(0));
@@ -260,7 +257,7 @@ namespace TestUnit
         [Test]
         public void Constructor_ZeroMaxCases_ThrowsArgumentException()
         {
-            // ACT & ASSERT
+            //ACT & ASSERT
             var exception = Assert.Throws<ArgumentException>(() =>
                 new BookStore(0));
 
@@ -270,7 +267,7 @@ namespace TestUnit
         [Test]
         public void Constructor_NegativeMaxCases_ThrowsArgumentException()
         {
-            // ACT & ASSERT
+            //ACT & ASSERT
             Assert.Throws<ArgumentException>(() =>
                 new BookStore(-1));
         }
@@ -278,13 +275,13 @@ namespace TestUnit
         [Test]
         public void AddBookToStore_NewBook_CreatesCaseAndAddsBook()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
 
-            // ACT
+            //ACT
             _store.AddBookToStore(book);
 
-            // ASSERT
+            //ASSERT
             Assert.That(_store.Cases.Count, Is.EqualTo(1));
             Assert.That(_store.Cases[0].Genre, Is.EqualTo("Фантастика"));
             Assert.That(_store.Cases[0].OccupiedCount, Is.EqualTo(1));
@@ -295,15 +292,15 @@ namespace TestUnit
         [Test]
         public void AddBookToStore_MultipleBooksSameGenre_UsesSameCase()
         {
-            // ARRANGE
+            //ARRANGE
             var book1 = TestHelpers.CreateTestBook(name: "Книга 1", genre: "Фантастика");
             var book2 = TestHelpers.CreateTestBook(name: "Книга 2", genre: "Фантастика");
 
-            // ACT
+            //ACT
             _store.AddBookToStore(book1);
             _store.AddBookToStore(book2);
 
-            // ASSERT
+            //ASSERT
             Assert.That(_store.Cases.Count, Is.EqualTo(1));
             Assert.That(_store.Cases[0].OccupiedCount, Is.EqualTo(2));
         }
@@ -311,17 +308,17 @@ namespace TestUnit
         [Test]
         public void AddBookToStore_DifferentGenres_CreatesDifferentCases()
         {
-            // ARRANGE
+            //ARRANGE
             var book1 = TestHelpers.CreateTestBook(genre: "Фантастика");
             var book2 = TestHelpers.CreateTestBook(genre: "Детектив");
             var book3 = TestHelpers.CreateTestBook(genre: "Роман");
 
-            // ACT
+            //ACT
             _store.AddBookToStore(book1);
             _store.AddBookToStore(book2);
             _store.AddBookToStore(book3);
 
-            // ASSERT
+            //ASSERT
             Assert.That(_store.Cases.Count, Is.EqualTo(3));
             Assert.That(_store.Cases.Select(c => c.Genre),
                 Is.EquivalentTo(new[] { "Фантастика", "Детектив", "Роман" }));
@@ -330,7 +327,7 @@ namespace TestUnit
         [Test]
         public void AddBookToStore_WhenAllCasesFullAndMaxCasesReached_ThrowsException()
         {
-            // ARRANGE
+            //ARRANGE
             // Заполняем все шкафы до максимума
             for (int i = 0; i < DefaultMaxCases; i++)
             {
@@ -338,10 +335,10 @@ namespace TestUnit
                 _store.AddBookToStore(book, defaultCapacity: 1);
             }
 
-            // Пытаемся добавить книгу нового жанра
+            //Пытаемся добавить книгу нового жанра
             var extraBook = TestHelpers.CreateTestBook(genre: "Новый жанр");
 
-            // ACT & ASSERT
+            //ACT & ASSERT
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 _store.AddBookToStore(extraBook));
 
@@ -351,7 +348,7 @@ namespace TestUnit
         [Test]
         public void AddBookToStore_NullBook_ThrowsArgumentNullException()
         {
-            // ACT & ASSERT
+            //ACT & ASSERT
             Assert.Throws<ArgumentNullException>(() =>
                 _store.AddBookToStore(null));
         }
@@ -359,92 +356,92 @@ namespace TestUnit
         [Test]
         public void FindBookById_ExistingBook_ReturnsBook()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             _store.AddBookToStore(book);
             int bookId = book.Id;
 
-            // ACT
+            //ACT
             var found = _store.FindBookById(bookId);
 
-            // ASSERT
+            //ASSERT
             Assert.That(found, Is.EqualTo(book));
         }
 
         [Test]
         public void FindBookById_NonExistingBook_ReturnsNull()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             _store.AddBookToStore(book);
 
-            // ACT
+            //ACT
             var found = _store.FindBookById(999);
 
-            // ASSERT
+            //ASSERT
             Assert.That(found, Is.Null);
         }
 
         [Test]
         public void FindBookByName_ExistingBook_ReturnsBook()
         {
-            // ARRANGE
+            //ARRANGE
             string uniqueName = "Совершенно уникальное название";
             var book = TestHelpers.CreateTestBook(name: uniqueName, genre: "Фантастика");
             _store.AddBookToStore(book);
 
-            // ACT
+            //ACT
             var found = _store.FindBookByName(uniqueName);
 
-            // ASSERT
+            //ASSERT
             Assert.That(found, Is.EqualTo(book));
         }
 
         [Test]
         public void FindBookByName_NonExistingBook_ReturnsNull()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             _store.AddBookToStore(book);
 
-            // ACT
+            //ACT
             var found = _store.FindBookByName("Несуществующая книга");
 
-            // ASSERT
+            //ASSERT
             Assert.That(found, Is.Null);
         }
 
         [Test]
         public void FindBookByName_CaseInsensitive_ReturnsBook()
         {
-            // ARRANGE
+            //ARRANGE
             string uniqueName = "Уникальное Название";
             var book = TestHelpers.CreateTestBook(name: uniqueName, genre: "Фантастика");
             _store.AddBookToStore(book);
 
-            // ACT - ищем с другим регистром
+            //ACT
             var found = _store.FindBookByName("уникальное название");
 
-            // ASSERT
+            //ASSERT
             Assert.That(found, Is.EqualTo(book));
         }
 
         [Test]
         public void SellBook_ExistingBook_RemovesBookAndAddsToBalance()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика", price: 500m);
             _store.AddBookToStore(book);
             decimal initialBalance = _store.Balance;
 
-            // ACT
+            //ACT
             _store.SellBook(book);
 
-            // ASSERT
+            //ASSERT
             Assert.That(_store.Balance, Is.EqualTo(initialBalance + 500m));
             Assert.That(book.IsSold, Is.True);
 
-            // Книга должна быть удалена из шкафа
+            //Книга должна быть удалена из шкафа
             var found = _store.FindBookById(book.Id);
             Assert.That(found, Is.Null);
         }
@@ -452,11 +449,10 @@ namespace TestUnit
         [Test]
         public void SellBook_BookNotInStore_ThrowsInvalidOperationException()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
-            // НЕ добавляем книгу в магазин
 
-            // ACT & ASSERT
+            //ACT & ASSERT
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 _store.SellBook(book));
 
@@ -466,7 +462,7 @@ namespace TestUnit
         [Test]
         public void SellBook_NullBook_ThrowsArgumentNullException()
         {
-            // ACT & ASSERT
+            //ACT & ASSERT
             Assert.Throws<ArgumentNullException>(() =>
                 _store.SellBook(null));
         }
@@ -474,14 +470,14 @@ namespace TestUnit
         [Test]
         public void SellBook_AlreadySoldBook_ThrowsInvalidOperationException()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             _store.AddBookToStore(book);
 
-            // Продаем первый раз
+            //Продаем первый раз
             _store.SellBook(book);
 
-            // ACT & ASSERT - пытаемся продать снова
+            //ACT & ASSERT - пытаемся продать снова
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 _store.SellBook(book));
 
@@ -491,14 +487,14 @@ namespace TestUnit
         [Test]
         public void FindCaseByGenre_ExistingGenre_ReturnsCase()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             _store.AddBookToStore(book);
 
-            // ACT
+            //ACT
             var found = _store.FindCaseByGenre("Фантастика");
 
-            // ASSERT
+            //ASSERT
             Assert.That(found, Is.Not.Null);
             Assert.That(found.Genre, Is.EqualTo("Фантастика"));
         }
@@ -506,21 +502,21 @@ namespace TestUnit
         [Test]
         public void FindCaseByGenre_NonExistingGenre_ReturnsNull()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             _store.AddBookToStore(book);
 
-            // ACT
+            //ACT
             var found = _store.FindCaseByGenre("Несуществующий жанр");
 
-            // ASSERT
+            //ASSERT
             Assert.That(found, Is.Null);
         }
 
         [Test]
         public void FindCaseByGenre_EmptyGenre_ThrowsArgumentException()
         {
-            // ACT & ASSERT
+            //ACT & ASSERT
             Assert.Throws<ArgumentException>(() =>
                 _store.FindCaseByGenre(""));
         }
@@ -528,17 +524,17 @@ namespace TestUnit
         [Test]
         public void GetAvailableGenres_ReturnsDistinctGenres()
         {
-            // ARRANGE
+            //ARRANGE
             _store.AddBookToStore(TestHelpers.CreateTestBook(genre: "Фантастика"));
             _store.AddBookToStore(TestHelpers.CreateTestBook(genre: "Фантастика"));
             _store.AddBookToStore(TestHelpers.CreateTestBook(genre: "Детектив"));
             _store.AddBookToStore(TestHelpers.CreateTestBook(genre: "Роман"));
             _store.AddBookToStore(TestHelpers.CreateTestBook(genre: "Роман"));
 
-            // ACT
+            //ACT
             var genres = _store.GetAvailableGenres();
 
-            // ASSERT
+            //ASSERT
             Assert.That(genres.Count, Is.EqualTo(3));
             Assert.That(genres, Is.EquivalentTo(new[] { "Фантастика", "Детектив", "Роман" }));
         }
@@ -546,18 +542,18 @@ namespace TestUnit
         [Test]
         public void RemoveCase_EmptyCase_RemovesSuccessfully()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             _store.AddBookToStore(book);
             var fantasyCase = _store.FindCaseByGenre("Фантастика");
 
-            // Продаем книгу - шкаф становится пустым
+            //Продаем книгу - шкаф становится пустым
             _store.SellBook(book);
 
-            // ACT
+            //ACT
             _store.RemoveCase(fantasyCase);
 
-            // ASSERT
+            //ASSERT
             Assert.That(_store.Cases, Does.Not.Contain(fantasyCase));
             Assert.That(_store.Cases.Count, Is.EqualTo(0));
         }
@@ -565,12 +561,12 @@ namespace TestUnit
         [Test]
         public void RemoveCase_NonEmptyCase_ThrowsInvalidOperationException()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             _store.AddBookToStore(book);
             var fantasyCase = _store.FindCaseByGenre("Фантастика");
 
-            // ACT & ASSERT
+            //ACT & ASSERT
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 _store.RemoveCase(fantasyCase));
 
@@ -580,7 +576,7 @@ namespace TestUnit
         [Test]
         public void RemoveCase_NullCase_ThrowsArgumentNullException()
         {
-            // ACT & ASSERT
+            //ACT & ASSERT
             Assert.Throws<ArgumentNullException>(() =>
                 _store.RemoveCase(null));
         }
@@ -588,33 +584,33 @@ namespace TestUnit
         [Test]
         public void CreateOrReuseCase_ExistingGenre_ReturnsExistingCase()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             _store.AddBookToStore(book);
             var originalCase = _store.FindCaseByGenre("Фантастика");
 
-            // ACT
+            //ACT
             var result = _store.CreateOrReuseCase("Фантастика");
 
-            // ASSERT
+            //ASSERT
             Assert.That(result, Is.EqualTo(originalCase));
         }
 
         [Test]
         public void CreateOrReuseCase_EmptyCaseAvailable_ReusesAndChangesGenre()
         {
-            // ARRANGE
+            //ARRANGE
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             _store.AddBookToStore(book);
             var fantasyCase = _store.FindCaseByGenre("Фантастика");
 
-            // Продаем книгу - шкаф пустой
+            //Продаем книгу - шкаф пустой
             _store.SellBook(book);
 
-            // ACT - запрашиваем шкаф для другого жанра
+            //ACT
             var result = _store.CreateOrReuseCase("Детектив");
 
-            // ASSERT
+            //ASSERT
             Assert.That(result, Is.EqualTo(fantasyCase));
             Assert.That(result.Genre, Is.EqualTo("Детектив"));
             Assert.That(_store.Cases.Count, Is.EqualTo(1));
@@ -623,13 +619,13 @@ namespace TestUnit
         [Test]
         public void CreateOrReuseCase_NewGenre_CreatesNewCase()
         {
-            // ARRANGE
+            //ARRANGE
             _store.AddBookToStore(TestHelpers.CreateTestBook(genre: "Фантастика"));
 
-            // ACT
+            //ACT
             var result = _store.CreateOrReuseCase("Детектив", defaultCapacity: 15);
 
-            // ASSERT
+            //ASSERT
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Genre, Is.EqualTo("Детектив"));
             Assert.That(result.Capacity, Is.EqualTo(15));
@@ -639,19 +635,19 @@ namespace TestUnit
         [Test]
         public void GetLastBookId_AfterAddingBooks_ReturnsCorrectId()
         {
-            // ARRANGE
+            //ARRANGE
             Assert.That(_store.GetLastBookId(), Is.EqualTo(0));
 
             var book1 = TestHelpers.CreateTestBook(genre: "Фантастика");
             _store.AddBookToStore(book1);
 
-            // ACT
+            //ACT
             int lastId = _store.GetLastBookId();
 
-            // ASSERT
+            //ASSERT
             Assert.That(lastId, Is.EqualTo(book1.Id));
 
-            // Добавляем еще книгу
+            //Добавляем еще книгу
             var book2 = TestHelpers.CreateTestBook(genre: "Детектив");
             _store.AddBookToStore(book2);
 
