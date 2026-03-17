@@ -321,7 +321,7 @@ namespace Bookstore
         /// </summary>
         /// <returns> название книги и автор</returns>
         /// <exception cref="InvalidOperationException"></exception>
-        private static (string Name, string Author) GetRandomNameAuthorPair()
+        public static (string Name, string Author) GetRandomNameAuthorPair()
         {
             var lines = File.ReadLines("NameAuthor.txt").Where(l => !string.IsNullOrWhiteSpace(l) && l.Contains(' ')).ToList();
 
@@ -355,7 +355,7 @@ namespace Bookstore
         /// <param name="path"> файл </param>
         /// <returns> строка </returns>
         /// <exception cref="Exception"></exception>
-        private static string GetRandomLineFromFile(string path)
+        public static string GetRandomLineFromFile(string path)
         {
             int count = 0;
             // Первый проход для получения количества строк в файле
