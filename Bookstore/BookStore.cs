@@ -195,3 +195,371 @@
     }
 }
 */
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace Bookstore
+{
+    /// <summary>
+    /// Класс книжного магазина
+    /// </summary>
+    public class BookStore
+    {
+        private List<BookShelf> shelves = new List<BookShelf>();
+        private List<Book> deliveryQueue = new List<Book>();
+        private List<Customer> customerQueue = new List<Customer>();
+        private List<(string Name, string Author)> database = new List<(string, string)>();
+        public int MaxShelves { get; }
+        public decimal Balance { get; set; }
+        public int UnsatisfiedCustomers { get; set; }
+        public int SatisfiedCustomers { get; set; }
+        public List<Book> DeliveryQueue => deliveryQueue;
+        public List<Customer> CustomerQueue => customerQueue;
+        public List<BookShelf> Shelves => shelves;
+        /// <summary>
+        /// Конструктор магазина
+        /// </summary>
+        /// <param name="maxShelves"> максимальное кол-во шкафов </param>
+        /// <param name="startBalance"> начальный баланс </param>
+        /// <exception cref="ArgumentException"></exception>
+        public BookStore(int maxShelves, decimal startBalance = 1000)
+        {
+            if (maxShelves <= 0)
+                throw new ArgumentException("Максимальное количество шкафов должно быть больше 0");
+
+            if (startBalance < 0)
+                throw new ArgumentException("Баланс не может быть отрицательным");
+
+            MaxShelves = maxShelves;
+            Balance = startBalance;
+            UnsatisfiedCustomers = 0;
+            SatisfiedCustomers = 0;
+            LoadDatabase();
+        }
+
+        /// <summary>
+        /// Загрузка данных из файла
+        /// </summary>
+        private void LoadDatabase()
+        {
+            foreach (var line in File.ReadLines("NameAuthor.txt"))
+            {
+                if (line.Contains(' '))
+                {
+                    var parts = line.Split(' ');
+                    database.Add((parts[0].Trim(), parts[1].Trim()));
+                }
+            }
+            
+        }
+
+        /// <summary>
+        /// Заказ конкретной книги
+        /// </summary>
+        /// <param name="name"> название книги </param>
+        /// <param name="author"> автор </param>
+        /// <param name="genre"> жанр</param>
+        /// <param name="pages"> кол-во страниц </param>
+        /// <param name="price"> цена </param>
+        /// <param name="message"> сообщение о результате </param>
+        /// <returns></returns>
+        public bool OrderBook(string name, string author, string genre, int pages, decimal price, out string message)
+        {
+            message = "";
+            if (Balance < price)
+                message="У вас недостаточно средств на балансе";
+                return false;
+
+            Balance -= price;
+
+            var book = new Book(name, author, genre, pages, price);
+            deliveryQueue.Add(book);
+
+            database.Add((name, author));
+            SaveNewBookToDatabase(name, author);
+            return true;
+        }
+
+        /// <summary>
+        /// Добавление случайной книги в очередь поставок
+        /// </summary>
+        public void AddRandomDelivery()
+        {
+            var book = Book.CreateWithPossibleError();
+            deliveryQueue.Add(book);
+        }
+
+        /// <summary>
+        /// Добавление покупателя в очередь
+        /// </summary>
+        public void AddCustomer()
+        {
+            var customer = Customer.GenerateRandom();
+            customerQueue.Add(customer);
+        }
+
+        /// <summary>
+        /// Принятие книги из поставки
+        /// </summary>
+        /// <param name="book"> книга </param>
+        /// <param name="message"> сообщение о результате</param>
+        /// <returns></returns>
+        public bool AcceptDelivery(Book book, out string message)
+        {
+            message = "";
+
+            if (!deliveryQueue.Contains(book))
+            {
+                message = "Книга не найдена в очереди поставок.";
+                return false;
+            }
+
+            // Проверка на плагиат/опечатку
+            if (book.IsPlagiat || book.IsError)
+            {
+                message = "ВНИМАНИЕ: Книга содержит ошибки!";
+                // Принимаем, но с пометкой
+            }
+
+            // Поиск или создание шкафа
+            var shelf = FindOrCreateShelf(book.Genre);
+
+            if (shelf == null)
+            {
+                message = "Нет места для нового жанра. Распродайте шкаф!";
+                return false;
+            }
+
+            if (!shelf.HasSpace)
+            {
+                message = "В шкафу нет места. Книга останется в очереди";
+                return false;
+            }
+
+            // Списание денег
+            if (Balance < book.BasePrice)
+            {
+                message = "Недостаточно средств!";
+                return false;
+            }
+
+            Balance -= book.BasePrice;
+            shelf.AddBook(book);
+            deliveryQueue.Remove(book);
+
+            message = "Книга успешно принята!";
+            return true;
+        }
+
+        /// <summary>
+        /// Отклонение книги из поставки
+        /// </summary>
+        /// <param name="book"> книга </param>
+        /// <param name="isPlagiat"> флаг плагиата </param>
+        /// <param name="isError"> флаг ошибки </param>
+        /// <param name="reward"> премия </param>
+        /// <param name="message"> сообщение о результате </param>
+        /// <returns></returns>
+        public bool RejectDelivery(Book book, bool isPlagiat, bool isError, out decimal reward, out string message)
+        {
+            reward = 0;
+            message = "";
+
+            if (!deliveryQueue.Contains(book))
+            {
+                message = "Книга не найдена в очереди";
+                return false;
+            }
+
+            deliveryQueue.Remove(book);
+
+            // Премия за нахождение ошибки
+            if (isPlagiat || isError)
+            {
+                reward = 100;
+                Balance += reward;
+                message = $"Ошибка найдена! Премия: {reward}₽";
+            }
+            else
+            {
+                message = "Книга отклонена";
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        ///  Продажа книги покупателю
+        /// </summary>
+        /// <param name="customer"> покупатель </param>
+        /// <param name="book"> книга </param>
+        /// <param name="sellPrice"> цена с наценкой </param>
+        /// <param name="message"> сообщение о результате </param>
+        /// <returns></returns>
+        public bool SellToCustomer(Customer customer, Book book, decimal sellPrice, out string message)
+        {
+            message = "";
+
+            // Проверка цены (не более 15% наценки)
+            if (sellPrice > book.BasePrice * 1.15m)
+            {
+                message = "Цена превышает допустимую наценку 15%!";
+                UnsatisfiedCustomers++;
+                customerQueue.Remove(customer);
+                return false;
+            }
+
+            // Проверка соответствия запросу
+            bool matchesRequest = customer.RequestType == CustomerRequestType.SpecificBook
+                ? (string.Equals(book.Name, customer.DesiredName, StringComparison.OrdinalIgnoreCase) &&
+                   string.Equals(book.Author, customer.DesiredAuthor, StringComparison.OrdinalIgnoreCase))
+                : string.Equals(book.Genre, customer.DesiredGenre, StringComparison.OrdinalIgnoreCase);
+
+            if (!matchesRequest)
+            {
+                message = "Книга не соответствует запросу покупателя!";
+                UnsatisfiedCustomers++;
+                customerQueue.Remove(customer);
+                return false;
+            }
+
+            // Продажа
+            var shelf = shelves.FirstOrDefault(s => s.Books.Contains(book));
+            if (shelf == null)
+            {
+                message = "Книга не найдена в магазине!";
+                return false;
+            }
+
+            Balance += sellPrice;
+            shelf.RemoveBook(book);
+            customerQueue.Remove(customer);
+            SatisfiedCustomers++;
+
+            message = $"Книга продана за {sellPrice}₽!";
+            return true;
+        }
+
+        /// <summary>
+        /// Продажа книги без покупателя (по базовой цене)
+        /// </summary>
+        /// <param name="book"> книга </param>
+        /// <param name="message"> сообщение о результате </param>
+        /// <returns></returns>
+        public bool SellBook(Book book, out string message)
+        {
+            message = "";
+
+            var shelf = shelves.FirstOrDefault(s => s.Books.Contains(book));
+            if (shelf == null)
+            {
+                message = "Книга не найдена!";
+                return false;
+            }
+
+            Balance += book.BasePrice;
+            shelf.RemoveBook(book);
+            message = $"Книга продана за {book.BasePrice}₽!";
+            return true;
+        }
+
+        /// <summary>
+        ///  Поиск или создание шкафа для жанра
+        /// </summary>
+        /// <param name="genre"> жанр </param>
+        /// <returns></returns>
+        private BookShelf FindOrCreateShelf(string genre)
+        {
+            var Shelf = shelves.FirstOrDefault(s => string.Equals(s.Genre, genre, StringComparison.OrdinalIgnoreCase));
+
+            if (Shelf != null && Shelf.HasSpace)
+                return Shelf;
+
+            var emptyShelf = shelves.FirstOrDefault(s => s.Count == 0);
+            if (emptyShelf != null)
+            {
+                emptyShelf.ChangeGenre(genre);
+                return emptyShelf;
+            }
+
+            if (shelves.Count < MaxShelves)
+            {
+                var newShelf = new BookShelf(genre);
+                shelves.Add(newShelf);
+                return newShelf;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Получение книг по жанру
+        /// </summary>
+        /// <param name="genre"> жанр </param>
+        /// <returns></returns>
+        public List<Book> GetBooksByGenre(string genre)
+        {
+            var result = new List<Book>();
+            foreach (var shelf in shelves)
+            {
+                if (string.Equals(shelf.Genre, genre, StringComparison.OrdinalIgnoreCase))
+                {
+                    result.AddRange(shelf.Books);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Получение всех жанров
+        /// </summary>
+        public List<string> GetAllGenres()
+        {
+            return shelves.Select(s => s.Genre).ToList();
+        }
+
+        /// <summary>
+        /// Сохранение новой книги в файл
+        /// </summary>
+        /// <param name="name"> название книги </param>
+        /// <param name="author"> автор </param>
+        private void SaveNewBookToDatabase(string name, string author)
+        {
+            File.AppendAllText("NameAuthor.txt", $"{Environment.NewLine}{name} | {author}");
+        }
+
+        /// <summary>
+        /// Проверка условия поражения
+        /// </summary>
+        /// <param name="maxQueueSize"> максимальная очередь </param>
+        /// <param name="maxUnsatisfied"> максимальное кол-во разочарованных клиентов </param>
+        /// <returns></returns>
+        public (bool IsGameOver, string Reason) CheckGameOver(int maxQueueSize, int maxUnsatisfied)
+        {
+            if (customerQueue.Count > maxQueueSize)
+                return (true, $"Очередь покупателей превышена: {customerQueue.Count} > {maxQueueSize}");
+
+            if (UnsatisfiedCustomers >= maxUnsatisfied)
+                return (true, $"Слишком много недовольных клиентов: {UnsatisfiedCustomers}");
+
+            if (Balance <= 0)
+                return (true, "Баланс магазина исчерпан!");
+
+            return (false, "");
+        }
+
+        /// <summary>
+        /// Статистика игры
+        /// </summary>
+        public string GetStatistics()
+        {
+            return $"Баланс: {Balance}₽\n" +
+                   $"Довольных клиентов: {SatisfiedCustomers}\n" +
+                   $"Недовольных клиентов: {UnsatisfiedCustomers}\n" +
+                   $"Шкафов: {shelves.Count}/{MaxShelves}\n" +
+                   $"Книг в магазине: {shelves.Sum(s => s.Count)}";
+        }
+    }
+}

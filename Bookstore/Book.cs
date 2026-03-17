@@ -274,7 +274,7 @@ namespace Bookstore
         /// Создание опечатки в названии
         /// </summary>
         /// <param name="name"> название книги </param>
-        /// <returns></returns>
+        /// <returns> измененное название </returns>
         private static string CreateErrorInName(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -323,13 +323,13 @@ namespace Bookstore
         /// <exception cref="InvalidOperationException"></exception>
         public static (string Name, string Author) GetRandomNameAuthorPair()
         {
-            var lines = File.ReadLines("NameAuthor.txt").Where(l => !string.IsNullOrWhiteSpace(l) && l.Contains(' ')).ToList();
+            var lines = File.ReadLines("NameAuthor.txt").Where(l => !string.IsNullOrWhiteSpace(l) && l.Contains('|')).ToList();
 
             if (lines.Count == 0)
                 throw new InvalidOperationException("Файл NameAuthor.txt пуст или некорректен");
 
             var line = lines[rnd.Next(lines.Count)];
-            var parts = line.Split(' ');
+            var parts = line.Split('|');
             return (parts[0].Trim(), parts[1].Trim());
         }
 
@@ -340,8 +340,8 @@ namespace Bookstore
         /// <returns></returns>
         private static string GetRandomAuthorDifferent(string Author)
         {
-            var authors = File.ReadLines("NameAuthor.txt").Where(l => !string.IsNullOrWhiteSpace(l) && l.Contains(' '))
-                             .Select(l => l.Split(' ')[1].Trim()).Where(a => !string.Equals(a, Author, StringComparison.OrdinalIgnoreCase)).ToList();
+            var authors = File.ReadLines("NameAuthor.txt").Where(l => !string.IsNullOrWhiteSpace(l) && l.Contains('|'))
+                             .Select(l => l.Split('|')[1].Trim()).Where(a => !string.Equals(a, Author, StringComparison.OrdinalIgnoreCase)).ToList();
 
             if (authors.Count == 0)
                 return "Не найден автор, отличный от указанного";

@@ -236,11 +236,12 @@ namespace Bookstore
         }
 
         /// <summary>
-        /// Переопределение ToString
+        /// Вывод
         /// </summary>
         public override string ToString()
         {
             return $"{Genre} ({books.Count}/{Capacity})";
         }
+
     }
 }
