@@ -168,216 +168,216 @@ namespace Book
      }
     */
 using System;
-using System.Text.RegularExpressions;
 
-    namespace Bookstore
+namespace Bookstore
+{
+    /// <summary>
+    /// Класс, представляющий книгу в магазине
+    /// </summary>
+    public class Book
     {
+        private static int lastId = 0;
+        private static Random rnd = new Random();
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Author { get; set; }
+        public string Genre { get; set; }
+        public int PageNumber { get; set; }
+        public decimal BasePrice { get; set; }
+        public decimal SellPrice => BasePrice;
+        public bool IsSold { get; set; }
+        public bool IsPlagiat { get; set; }
+        public bool IsError { get; set; }
+
         /// <summary>
-        /// Класс, представляющий книгу в магазине
+        /// Конструктор книги
         /// </summary>
-        public class Book
+        /// <param name="Name"> название книги </param>
+        /// <param name="Author"> автор </param>
+        /// <param name="Genre"> жанр </param>
+        /// <param name="PageNumber">кол-во страниц </param>
+        /// <param name="BasePrice"> цена книги </param>
+        /// <exception cref="ArgumentException"></exception>
+        public Book(string Name, string Author, string Genre, int PageNumber, decimal BasePrice)
         {
-            private static int lastId = 0;
-            private static Random rnd = new Random();
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public string Author { get; set; }
-            public string Genre { get; set; }
-            public int PageNumber { get; set; }
-            public decimal BasePrice { get; set; }
-            public decimal SellPrice => BasePrice;
-            public bool IsSold { get; set; }
-            public bool IsPlagiat { get; set; }
-            public bool IsError { get; set; }
+            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Author) || string.IsNullOrWhiteSpace(Genre))
+                throw new ArgumentException("Название, автор и жанр не могут быть пустыми");
 
-            /// <summary>
-            /// Конструктор книги
-            /// </summary>
-            public Book(string name, string author, string genre, int pageNumber, decimal basePrice)
+            if (PageNumber <= 0)
+                throw new ArgumentException("Количество страниц должно быть больше 0");
+
+            if (BasePrice <= 0)
+                throw new ArgumentException("Цена должна быть больше 0");
+
+            Id = lastId + 1;
+            Name = Name;
+            Author = Author;
+            Genre = Genre;
+            PageNumber = PageNumber;
+            BasePrice = BasePrice;
+            IsSold = false;
+            IsPlagiat = false;
+            IsError = false;
+        }
+
+        /// <summary>
+        /// Конструктор для случайной генерации
+        /// </summary>
+        public Book()
+        {
+            Id = lastId + 1;
+            GenerateRandom();
+        }
+
+        /// <summary>
+        /// Случайная генерация книги из файлов
+        /// </summary>
+        public void GenerateRandom()
+        {
+            var nameAuthor = GetRandomNameAuthorPair();
+            Name = nameAuthor.Name;
+            Author = nameAuthor.Author;
+            Genre = GetRandomLineFromFile("Genres.txt");
+            PageNumber = rnd.Next(50, 1001);
+            BasePrice = rnd.Next(100, 1501);
+            IsSold = false;
+            IsPlagiat = false;
+            IsError = false;
+        }
+
+        /// <summary>
+        /// Создание книги с возможными ошибками
+        /// </summary>
+        public static Book CreateWithPossibleError()
+        {
+            var book = new Book();
+            // 30% шанс ошибки
+            if (rnd.Next(100) < 30)
             {
-                if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(author) || string.IsNullOrWhiteSpace(genre))
-                    throw new ArgumentException("Название, автор и жанр не могут быть пустыми");
-
-                if (pageNumber <= 0)
-                    throw new ArgumentException("Количество страниц должно быть больше 0");
-
-                if (basePrice <= 0)
-                    throw new ArgumentException("Цена должна быть больше 0");
-
-                Id = ++lastId;
-                Name = name.Trim();
-                Author = author.Trim();
-                Genre = genre.Trim();
-                PageNumber = pageNumber;
-                BasePrice = basePrice;
-                IsSold = false;
-                IsPlagiat = false;
-                IsError = false;
-            }
-
-            /// <summary>
-            /// Конструктор для случайной генерации
-            /// </summary>
-            public Book()
-            {
-                Id = ++lastId;
-                GenerateRandom();
-            }
-
-            /// <summary>
-            /// Случайная генерация книги из файлов
-            /// </summary>
-            public void GenerateRandom()
-            {
-                var nameAuthor = GetRandomNameAuthorPair();
-                Name = nameAuthor.Name;
-                Author = nameAuthor.Author;
-                Genre = GetRandomLineFromFile("Genres.txt");
-                PageNumber = rnd.Next(50, 1001);
-                BasePrice = rnd.Next(100, 1501);
-                IsSold = false;
-                IsPlagiarism = false;
-                HasTypo = false;
-            }
-
-            /// <summary>
-            /// Создание книги с возможными ошибками (плагиат/опечатка)
-            /// </summary>
-            public static Book CreateWithPossibleError()
-            {
-                var book = new Book();
-
-                // 30% шанс ошибки
-                if (rnd.Next(100) < 30)
+                if (rnd.Next(2) == 0)
                 {
-                    if (rnd.Next(2) == 0)
-                    {
-                        // Плагиат - меняем автора
-                        book.Author = GetRandomAuthorDifferentFrom(book.Author);
-                        book.IsPlagiarism = true;
-                    }
-                    else
-                    {
-                        // Опечатка - меняем символ в названии
-                        book.Name = CreateTypoInName(book.Name);
-                        book.HasTypo = true;
-                    }
+                    // Плагиат: меняем автора
+                    book.Author = GetRandomAuthorDifferent(book.Author);
+                    book.IsPlagiat = true;
                 }
-
-                return book;
-            }
-
-            /// <summary>
-            /// Создание опечатки в названии
-            /// </summary>
-            private static string CreateTypoInName(string name)
-            {
-                if (string.IsNullOrEmpty(name) || name.Length < 2)
-                    return name;
-
-                var chars = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                int index = rnd.Next(name.Length);
-                char newChar;
-
-                do
+                else
                 {
-                    newChar = chars[rnd.Next(chars.Length)];
-                } while (newChar == name[index]); // Гарантируем, что символ изменится
+                    // Опечатка: меняем символ в названии
+                    book.Name = CreateErrorInName(book.Name);
+                    book.IsError = true;
+                }
+            }
+            return book;
+        }
 
-                return name.Substring(0, index) + newChar + name.Substring(index + 1);
+        /// <summary>
+        /// Создание опечатки в названии
+        /// </summary>
+        /// <param name="name"> название книги </param>
+        /// <returns></returns>
+        private static string CreateErrorInName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return name;
+
+            var chars = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            int index = rnd.Next(name.Length);
+            char newChar;
+
+            do
+            {
+                newChar = chars[rnd.Next(chars.Length)];
+            }
+            while (newChar == name[index]);
+
+            return name.Substring(0, index) + newChar + name.Substring(index + 1);
+        }
+
+        /// <summary>
+        /// Продажа книги
+        /// </summary>
+        /// <returns> цена книги (базовая)  </returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public decimal Sell()
+        {
+            if (IsSold)
+                throw new InvalidOperationException("Книга уже продана");
+            IsSold = true;
+            return BasePrice;
+        }
+
+        /// <summary>
+        /// Проверка на плагиат
+        /// </summary>
+        /// <param name="book"> название проверяемой книги </param>
+        /// <returns></returns>
+        public bool CheckPlagiat(Book book)
+        {
+            return string.Equals(Name, book.Name, StringComparison.OrdinalIgnoreCase) && !string.Equals(Author, book.Author, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Получение пары название-автор из файла
+        /// </summary>
+        /// <returns> название книги и автор</returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        private static (string Name, string Author) GetRandomNameAuthorPair()
+        {
+            var lines = File.ReadLines("NameAuthor.txt").Where(l => !string.IsNullOrWhiteSpace(l) && l.Contains(' ')).ToList();
+
+            if (lines.Count == 0)
+                throw new InvalidOperationException("Файл NameAuthor.txt пуст или некорректен");
+
+            var line = lines[rnd.Next(lines.Count)];
+            var parts = line.Split(' ');
+            return (parts[0].Trim(), parts[1].Trim());
+        }
+
+        /// <summary>
+        /// Получение случайного автора, отличного от указанного
+        /// </summary>
+        /// <param name="Author"> текущий автор </param>
+        /// <returns></returns>
+        private static string GetRandomAuthorDifferent(string Author)
+        {
+            var authors = File.ReadLines("NameAuthor.txt").Where(l => !string.IsNullOrWhiteSpace(l) && l.Contains(' '))
+                             .Select(l => l.Split(' ')[1].Trim()).Where(a => !string.Equals(a, Author, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            if (authors.Count == 0)
+                return "Не найден автор, отличный от указанного";
+
+            return authors[rnd.Next(authors.Count)];
+        }
+
+        /// <summary>
+        /// Чтение случайной строки из файла
+        /// </summary>
+        /// <param name="path"> файл </param>
+        /// <returns> строка </returns>
+        /// <exception cref="Exception"></exception>
+        private static string GetRandomLineFromFile(string path)
+        {
+            int count = 0;
+            // Первый проход для получения количества строк в файле
+            using (var reader = new StreamReader(path))
+            {
+                while (reader.ReadLine() != null)
+                    count++;
             }
 
-            /// <summary>
-            /// Продажа книги
-            /// </summary>
-            /// <returns>Цена продажи</returns>
-            public decimal Sell()
+            if (count == 0)
+                throw new Exception("Пустой файл");
+
+            int targetIndex = rnd.Next(count); // 0 - count-1
+
+            // Второй проход для чтения самой строки
+            using (var reader = new StreamReader(path))
             {
-                if (IsSold)
-                    throw new InvalidOperationException("Книга уже продана.");
+                for (int i = 0; i < targetIndex; i++)
+                    reader.ReadLine();
 
-                IsSold = true;
-                return BasePrice;
-            }
-
-            /// <summary>
-            /// Проверка на плагиат
-            /// </summary>
-            public bool CheckPlagiarism(Book existingBook)
-            {
-                return string.Equals(Name, existingBook.Name, StringComparison.OrdinalIgnoreCase) &&
-                       !string.Equals(Author, existingBook.Author, StringComparison.OrdinalIgnoreCase);
-            }
-
-            /// <summary>
-            /// Получение пары название-автор из файла
-            /// </summary>
-            private static (string Name, string Author) GetRandomNameAuthorPair()
-            {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NameAuthor.txt");
-
-                if (!File.Exists(path))
-                    throw new FileNotFoundException("Файл NameAuthor.txt не найден.");
-
-                var lines = File.ReadLines(path)
-                               .Where(l => !string.IsNullOrWhiteSpace(l) && l.Contains('|'))
-                               .ToList();
-
-                if (lines.Count == 0)
-                    throw new InvalidOperationException("Файл NameAuthor.txt пуст или некорректен.");
-
-                var line = lines[rnd.Next(lines.Count)];
-                var parts = line.Split('|');
-
-                return (parts[0].Trim(), parts[1].Trim());
-            }
-
-            /// <summary>
-            /// Получение случайного автора, отличного от указанного
-            /// </summary>
-            private static string GetRandomAuthorDifferentFrom(string excludeAuthor)
-            {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NameAuthor.txt");
-                var authors = File.ReadLines(path)
-                                 .Where(l => !string.IsNullOrWhiteSpace(l) && l.Contains('|'))
-                                 .Select(l => l.Split('|')[1].Trim())
-                                 .Distinct()
-                                 .Where(a => !string.Equals(a, excludeAuthor, StringComparison.OrdinalIgnoreCase))
-                                 .ToList();
-
-                if (authors.Count == 0)
-                    return "Неизвестный Автор";
-
-                return authors[rnd.Next(authors.Count)];
-            }
-
-            /// <summary>
-            /// Чтение случайной строки из файла
-            /// </summary>
-            private static string GetRandomLineFromFile(string fileName)
-            {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-
-                if (!File.Exists(path))
-                    return "Фантастика";
-
-                var lines = File.ReadLines(path)
-                               .Where(l => !string.IsNullOrWhiteSpace(l))
-                               .ToList();
-
-                return lines.Count > 0 ? lines[rnd.Next(lines.Count)] : "Фантастика";
-            }
-
-            /// <summary>
-            /// Переопределение ToString для отображения
-            /// </summary>
-            public override string ToString()
-            {
-                string errors = "";
-                if (IsPlagiarism) errors += " [ПЛАГИАТ]";
-                if (HasTypo) errors += " [ОПЕЧАТКА]";
-
-                return $"[{Id}] {Name} - {Author} ({Genre}){errors}";
+                return reader.ReadLine() ?? string.Empty; // В случае null, вернем пустую строку
             }
         }
     }
+}
