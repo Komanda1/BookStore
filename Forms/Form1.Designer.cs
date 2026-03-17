@@ -536,6 +536,7 @@
             Controls.Add(tabControl1);
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             tabControl1.ResumeLayout(false);
             tabNewBook.ResumeLayout(false);
             groupBox2.ResumeLayout(false);

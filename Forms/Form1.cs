@@ -1,10 +1,12 @@
 ﻿using Bookstore;
+using System.Reflection.Emit;
 using System.Xml.Linq;
 
 namespace Lab3
 {
     public partial class Form1 : Form
     {
+        private string gameDifficulty;
         private BookStore store;
         private Book? currentBook;
         private Book selectedBook;
@@ -28,6 +30,7 @@ namespace Lab3
             lblBalance.Text = $"{store.Balance:C}";
 
         }
+        
 
         /// <summary>
         /// Комплексная настройка формы перед началом работы
@@ -173,7 +176,7 @@ namespace Lab3
                     price: null
                 );
 
-                txtBookID.Text = (store.GetLastBookId()+1).ToString();
+                txtBookID.Text = (store.GetLastBookId() + 1).ToString();
                 txtBookName.Text = currentBook.Name;
                 txtAuthor.Text = currentBook.Author;
                 txtGenre.Text = currentBook.Genre;
@@ -516,6 +519,24 @@ namespace Lab3
                 UpdateStatus("Произошла ошибка при очистке шкафа.");
             }
         }
+        public Form1(string difficulty) : this() // Вызываем старый конструктор через : this()
+        {
+            this.gameDifficulty = difficulty;
+
+            // Здесь можно сразу настроить игру под сложность
+            StartGameWithDifficulty(difficulty);
+        }
+
+        private void StartGameWithDifficulty(string difficulty)
+        {
+            //label8.Text = ($"Игра началась в режиме: {difficulty}");
+
+            // Вызовите вашу функцию настройки таймеров и лимитов здесь
+            // Например: SetDifficultyParameters(difficulty);
+            // И запустите таймеры: timerBooks.Start(); timerCustomers.Start();
+
+            UpdateStatus($"Режим игры: {difficulty}. Удачи!");
+        }
 
 
         /// <summary>
@@ -525,6 +546,11 @@ namespace Lab3
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
