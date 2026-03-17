@@ -10,7 +10,7 @@ namespace Lab3
         private BookStore store;
         private Book? currentBook;
         private Book selectedBook;
-        private BookCase currentShelf;
+        private GameController currentShelf;
 
         /// <summary>
         /// Конструктор формы
@@ -71,7 +71,7 @@ namespace Lab3
         /// Заполняет booksMap для быстрого доступа к объектам Book
         /// </summary>
         /// <param name="shelf">Шкаф с книгами для отображения</param>
-        private void DisplayBooks(BookCase shelf)
+        private void DisplayBooks(GameController shelf)
         {
             lstBook.Items.Clear();
             booksMap.Clear();

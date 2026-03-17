@@ -27,7 +27,7 @@ namespace TestUnit
         {
             string genre = "Фантастика";
             int capacity = 10;
-            var bookCase = new BookCase(genre, capacity);
+            var bookCase = new GameController(genre, capacity);
 
             //Проверка - проверяем, что результат правильный
             Assert.That(bookCase.Genre, Is.EqualTo(genre));
@@ -40,7 +40,7 @@ namespace TestUnit
         public void EmptyGenre_ThrowsArgumentException()
         {
             var exception = Assert.Throws<ArgumentException>(() =>
-                new BookCase("", 10));
+                new GameController("", 10));
 
             Assert.That(exception.Message, Does.Contain("не может быть пустым"));
         }
@@ -49,14 +49,14 @@ namespace TestUnit
         public void ZeroCapacity_ThrowsArgumentException()
         {
             Assert.Throws<ArgumentException>(() =>
-                new BookCase("Фантастика", 0));
+                new GameController("Фантастика", 0));
         }
 
         [Test]
         public void AddBook()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 10);
+            var bookCase = new GameController("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
 
             //ACT
@@ -71,7 +71,7 @@ namespace TestUnit
         public void AddBook_WhenFull_ThrowsInvalidOperationException()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 1);
+            var bookCase = new GameController("Фантастика", 1);
             var book1 = TestHelpers.CreateTestBook(name: "Книга 1", genre: "Фантастика");
             var book2 = TestHelpers.CreateTestBook(name: "Книга 2", genre: "Фантастика");
 
@@ -88,7 +88,7 @@ namespace TestUnit
         public void AddBook_WrongGenre_ThrowsInvalidOperationException()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 10);
+            var bookCase = new GameController("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(genre: "История");
 
             //ACT & ASSERT
@@ -102,7 +102,7 @@ namespace TestUnit
         public void AddBook_NullBook_ThrowsArgumentNullException()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 10);
+            var bookCase = new GameController("Фантастика", 10);
 
             //ACT & ASSERT
             Assert.Throws<ArgumentNullException>(() =>
@@ -113,7 +113,7 @@ namespace TestUnit
         public void AddBook_SoldBook_ThrowsInvalidOperationException()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 10);
+            var bookCase = new GameController("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
 
             book.Sell();
@@ -129,7 +129,7 @@ namespace TestUnit
         public void FindById_ExistingBook_ReturnsBook()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 10);
+            var bookCase = new GameController("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
 
             //Сохраняем ID до добавления (он будет 1)
@@ -147,7 +147,7 @@ namespace TestUnit
         public void FindById_NonExistingBook_ReturnsNull()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 10);
+            var bookCase = new GameController("Фантастика", 10);
 
             //ACT
             var found = bookCase.FindById(999);
@@ -160,7 +160,7 @@ namespace TestUnit
         public void FindByName_ExistingBook_ReturnsBook()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 10);
+            var bookCase = new GameController("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(name: "Уникальное название", genre: "Фантастика");
 
             bookCase.AddBook(book);
@@ -176,7 +176,7 @@ namespace TestUnit
         public void FindByName_NonExistingBook_ReturnsNull()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 10);
+            var bookCase = new GameController("Фантастика", 10);
 
             //ACT
             var found = bookCase.FindByName("Несуществующая книга");
@@ -189,7 +189,7 @@ namespace TestUnit
         public void ReassignGenre_EmptyCase_ChangesGenre()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 10);
+            var bookCase = new GameController("Фантастика", 10);
             string newGenre = "Детектив";
 
             //ACT
@@ -203,7 +203,7 @@ namespace TestUnit
         public void ReassignGenre_NonEmptyCase_ThrowsInvalidOperationException()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 10);
+            var bookCase = new GameController("Фантастика", 10);
             var book = TestHelpers.CreateTestBook(genre: "Фантастика");
             bookCase.AddBook(book);
 
@@ -216,7 +216,7 @@ namespace TestUnit
         public void ReassignGenre_EmptyGenre_ThrowsArgumentException()
         {
             //ARRANGE
-            var bookCase = new BookCase("Фантастика", 10);
+            var bookCase = new GameController("Фантастика", 10);
 
             //ACT & ASSERT
             Assert.Throws<ArgumentException>(() =>

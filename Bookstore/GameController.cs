@@ -3,7 +3,7 @@
     /// <summary>
     /// Класс BookCase
     /// </summary>
-    public class BookCase
+    public class GameController
     {
         public string Genre { get; private set; }
         public int Capacity { get; }
@@ -22,7 +22,7 @@
         /// <param name="genre">Жанр</param>
         /// <param name="capacity">Количество книг</param>
         /// <exception cref="ArgumentException">Жанр шкафа не может быть пустым, Вместимость должна быть > 0</exception>
-        public BookCase(string genre, int capacity)
+        public GameController(string genre, int capacity)
         {
             if (string.IsNullOrWhiteSpace(genre))
                 throw new ArgumentException("Жанр шкафа не может быть пустым.");

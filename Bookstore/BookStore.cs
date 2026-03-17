@@ -19,8 +19,8 @@
             return lastBookId;
         }
 
-        private readonly List<BookCase> cases = new();
-        public IReadOnlyList<BookCase> Cases => cases;
+        private readonly List<GameController> cases = new();
+        public IReadOnlyList<GameController> Cases => cases;
 
         public int MaxCases { get; }
         public decimal Balance { get; private set; }
@@ -44,7 +44,7 @@
         /// <param name="genre">Жанр</param>
         /// <returns>Найденный шкаф</returns>
         /// <exception cref="ArgumentException">Жанр не может быть пустым</exception>
-        public BookCase? FindCaseByGenre(string genre)
+        public GameController? FindCaseByGenre(string genre)
         {
             if (string.IsNullOrWhiteSpace(genre))
                 throw new ArgumentException("Жанр не может быть пустым.");
@@ -64,7 +64,7 @@
         /// <returns></returns>
         /// <exception cref="ArgumentException">Жанр не может быть пустым.</exception>
         /// <exception cref="InvalidOperationException">Достигнуто максимальное количество шкафов</exception>
-        public BookCase CreateOrReuseCase(string genre, int defaultCapacity = 10)
+        public GameController CreateOrReuseCase(string genre, int defaultCapacity = 10)
         {
             if (string.IsNullOrWhiteSpace(genre))
                 throw new ArgumentException("Жанр не может быть пустым.");
@@ -87,7 +87,7 @@
                 throw new InvalidOperationException("Достигнуто максимальное количество шкафов.");
 
             //Создаем новый шкаф
-            var newCase = new BookCase(genre, capacity: defaultCapacity);
+            var newCase = new GameController(genre, capacity: defaultCapacity);
             cases.Add(newCase);
             return newCase;
         }
@@ -181,7 +181,7 @@
         /// <param name="bookCase">Шкаф</param>
         /// <exception cref="ArgumentNullException">Шкаф не может быть null</exception>
         /// <exception cref="InvalidOperationException">Нельзя удалить непустой шкаф</exception>
-        public void RemoveCase(BookCase bookCase)
+        public void RemoveCase(GameController bookCase)
         {
             if (bookCase == null)
                 throw new ArgumentNullException(nameof(bookCase));
