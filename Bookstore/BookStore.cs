@@ -1,4 +1,4 @@
-﻿namespace Bookstore
+﻿/*namespace Bookstore
 {
     /// <summary>
     /// Класс BookStore
@@ -194,3 +194,4 @@
 
     }
 }
+*/
