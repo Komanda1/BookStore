@@ -529,7 +529,7 @@ namespace Lab3
 
         private void StartGameWithDifficulty(string difficulty)
         {
-            //label8.Text = ($"Игра началась в режиме: {difficulty}");
+            label8.Text = ($"Игра началась в режиме: {difficulty}");
 
             // Вызовите вашу функцию настройки таймеров и лимитов здесь
             // Например: SetDifficultyParameters(difficulty);
