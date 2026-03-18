@@ -121,6 +121,8 @@
             textBox13 = new TextBox();
             textBox14 = new TextBox();
             label25 = new Label();
+            label26 = new Label();
+            label27 = new Label();
             tabControl1.SuspendLayout();
             tabNewBook.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -144,7 +146,7 @@
             tabControl1.Controls.Add(tabStore);
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Location = new Point(51, 124);
+            tabControl1.Location = new Point(51, 174);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(732, 776);
@@ -970,7 +972,7 @@
             label7.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
             label7.Location = new Point(370, 64);
             label7.Name = "label7";
-            label7.Size = new Size(268, 43);
+            label7.Size = new Size(277, 43);
             label7.TabIndex = 0;
             label7.Text = "Баланс магазина";
             // 
@@ -986,7 +988,7 @@
             // lblday
             // 
             lblday.BackColor = Color.Silver;
-            lblday.Location = new Point(59, 58);
+            lblday.Location = new Point(58, 64);
             lblday.Name = "lblday";
             lblday.Size = new Size(52, 22);
             lblday.TabIndex = 3;
@@ -995,7 +997,7 @@
             // lbltime
             // 
             lbltime.BackColor = Color.Silver;
-            lbltime.Location = new Point(192, 58);
+            lbltime.Location = new Point(137, 64);
             lbltime.Name = "lbltime";
             lbltime.Size = new Size(63, 22);
             lbltime.TabIndex = 4;
@@ -1003,14 +1005,14 @@
             // 
             // txtday
             // 
-            txtday.Location = new Point(59, 85);
+            txtday.Location = new Point(58, 91);
             txtday.Name = "txtday";
             txtday.Size = new Size(53, 27);
             txtday.TabIndex = 5;
             // 
             // txttime
             // 
-            txttime.Location = new Point(192, 85);
+            txttime.Location = new Point(137, 91);
             txttime.Name = "txttime";
             txttime.Size = new Size(63, 27);
             txttime.TabIndex = 6;
@@ -1053,12 +1055,32 @@
             label25.Text = "В очереди:";
             label25.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // label26
+            // 
+            label26.BackColor = Color.FromArgb(224, 224, 224);
+            label26.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label26.Location = new Point(370, 121);
+            label26.Name = "label26";
+            label26.Size = new Size(277, 43);
+            label26.TabIndex = 7;
+            label26.Text = "Кол-во недовольных клиентов";
+            // 
+            // label27
+            // 
+            label27.BackColor = Color.FromArgb(224, 224, 224);
+            label27.Location = new Point(659, 121);
+            label27.Name = "label27";
+            label27.Size = new Size(120, 42);
+            label27.TabIndex = 8;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(845, 902);
+            ClientSize = new Size(845, 960);
+            Controls.Add(label27);
+            Controls.Add(label26);
             Controls.Add(txttime);
             Controls.Add(txtday);
             Controls.Add(lbltime);
@@ -1194,5 +1216,7 @@
         private Label label18;
         private TextBox textBox14;
         private Label label25;
+        private Label label26;
+        private Label label27;
     }
 }
