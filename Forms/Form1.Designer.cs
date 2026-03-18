@@ -799,7 +799,7 @@
             label24.Name = "label24";
             label24.Size = new Size(230, 26);
             label24.TabIndex = 1;
-            label24.Text = "Довольнвх клиентов:";
+            label24.Text = "Довольных клиентов:";
             // 
             // label23
             // 
@@ -808,7 +808,7 @@
             label23.Name = "label23";
             label23.Size = new Size(230, 28);
             label23.TabIndex = 0;
-            label23.Text = "Недовольнвх клиентов:";
+            label23.Text = "Недовольных клиентов:";
             // 
             // groupBox6
             // 
