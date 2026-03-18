@@ -70,11 +70,7 @@
             panel1 = new Panel();
             btnFindBook = new Button();
             txtSearchBook = new TextBox();
-            lblBalance = new Label();
-            label7 = new Label();
-            label8 = new Label();
             tabPage1 = new TabPage();
-            tabPage2 = new TabPage();
             groupBox4 = new GroupBox();
             button1 = new Button();
             radioButton3 = new RadioButton();
@@ -92,6 +88,7 @@
             textBox1 = new TextBox();
             label11 = new Label();
             label10 = new Label();
+            tabPage2 = new TabPage();
             groupBox7 = new GroupBox();
             textBox8 = new TextBox();
             textBox7 = new TextBox();
@@ -113,6 +110,17 @@
             label17 = new Label();
             listBox1 = new ListBox();
             label16 = new Label();
+            lblBalance = new Label();
+            label7 = new Label();
+            label8 = new Label();
+            lblday = new Label();
+            lbltime = new Label();
+            txtday = new TextBox();
+            txttime = new TextBox();
+            label18 = new Label();
+            textBox13 = new TextBox();
+            textBox14 = new TextBox();
+            label25 = new Label();
             tabControl1.SuspendLayout();
             tabNewBook.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -122,9 +130,9 @@
             panel2.SuspendLayout();
             panel1.SuspendLayout();
             tabPage1.SuspendLayout();
-            tabPage2.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBox3.SuspendLayout();
+            tabPage2.SuspendLayout();
             groupBox7.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
@@ -136,10 +144,10 @@
             tabControl1.Controls.Add(tabStore);
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Location = new Point(2, 124);
+            tabControl1.Location = new Point(51, 124);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(670, 776);
+            tabControl1.Size = new Size(732, 776);
             tabControl1.TabIndex = 0;
             // 
             // tabNewBook
@@ -150,7 +158,7 @@
             tabNewBook.Location = new Point(4, 29);
             tabNewBook.Name = "tabNewBook";
             tabNewBook.Padding = new Padding(3);
-            tabNewBook.Size = new Size(662, 598);
+            tabNewBook.Size = new Size(724, 743);
             tabNewBook.TabIndex = 0;
             tabNewBook.Text = "Заказать книгу";
             // 
@@ -160,7 +168,7 @@
             groupBox2.Controls.Add(txtStatus);
             groupBox2.Controls.Add(btnAddBook);
             groupBox2.Controls.Add(btnGenerateRandom);
-            groupBox2.Location = new Point(10, 441);
+            groupBox2.Location = new Point(38, 441);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(639, 166);
             groupBox2.TabIndex = 1;
@@ -211,7 +219,7 @@
             groupBox1.Controls.Add(txtBookName);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(11, 12);
+            groupBox1.Location = new Point(39, 12);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(638, 409);
             groupBox1.TabIndex = 0;
@@ -341,7 +349,7 @@
             tabStore.Location = new Point(4, 29);
             tabStore.Name = "tabStore";
             tabStore.Padding = new Padding(3);
-            tabStore.Size = new Size(662, 598);
+            tabStore.Size = new Size(724, 743);
             tabStore.TabIndex = 1;
             tabStore.Text = "Магазин";
             // 
@@ -362,7 +370,7 @@
             panel3.Controls.Add(lblStoreName);
             panel3.Controls.Add(lstBook);
             panel3.Controls.Add(txtShelfName);
-            panel3.Location = new Point(239, 80);
+            panel3.Location = new Point(273, 80);
             panel3.Name = "panel3";
             panel3.Size = new Size(399, 487);
             panel3.TabIndex = 2;
@@ -494,7 +502,7 @@
             panel2.Controls.Add(btnClearShelf);
             panel2.Controls.Add(lstGenres);
             panel2.Controls.Add(label9);
-            panel2.Location = new Point(19, 78);
+            panel2.Location = new Point(53, 78);
             panel2.Name = "panel2";
             panel2.Size = new Size(207, 489);
             panel2.TabIndex = 1;
@@ -535,7 +543,7 @@
             panel1.BackColor = Color.White;
             panel1.Controls.Add(btnFindBook);
             panel1.Controls.Add(txtSearchBook);
-            panel1.Location = new Point(19, 9);
+            panel1.Location = new Point(53, 9);
             panel1.Name = "panel1";
             panel1.Size = new Size(619, 63);
             panel1.TabIndex = 0;
@@ -558,58 +566,19 @@
             txtSearchBook.TabIndex = 2;
             txtSearchBook.Text = "Название или код книги";
             // 
-            // lblBalance
-            // 
-            lblBalance.BackColor = Color.FromArgb(224, 224, 224);
-            lblBalance.Location = new Point(524, 63);
-            lblBalance.Name = "lblBalance";
-            lblBalance.Size = new Size(120, 42);
-            lblBalance.TabIndex = 1;
-            // 
-            // label7
-            // 
-            label7.BackColor = Color.FromArgb(224, 224, 224);
-            label7.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label7.Location = new Point(2, 63);
-            label7.Name = "label7";
-            label7.Size = new Size(268, 43);
-            label7.TabIndex = 0;
-            label7.Text = "Баланс магазина";
-            // 
-            // label8
-            // 
-            label8.BackColor = Color.FromArgb(224, 224, 224);
-            label8.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label8.Location = new Point(6, 9);
-            label8.Name = "label8";
-            label8.Size = new Size(638, 43);
-            label8.TabIndex = 2;
-            // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(textBox13);
+            tabPage1.Controls.Add(label18);
             tabPage1.Controls.Add(groupBox4);
             tabPage1.Controls.Add(groupBox3);
             tabPage1.Controls.Add(label10);
             tabPage1.Location = new Point(4, 29);
             tabPage1.Name = "tabPage1";
-            tabPage1.Size = new Size(662, 598);
+            tabPage1.Size = new Size(724, 743);
             tabPage1.TabIndex = 2;
             tabPage1.Text = "Поставки";
             tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            tabPage2.Controls.Add(groupBox7);
-            tabPage2.Controls.Add(groupBox6);
-            tabPage2.Controls.Add(groupBox5);
-            tabPage2.Controls.Add(listBox1);
-            tabPage2.Controls.Add(label16);
-            tabPage2.Location = new Point(4, 29);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Size = new Size(662, 743);
-            tabPage2.TabIndex = 3;
-            tabPage2.Text = "Покупатели";
-            tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
@@ -617,7 +586,7 @@
             groupBox4.Controls.Add(radioButton3);
             groupBox4.Controls.Add(radioButton2);
             groupBox4.Controls.Add(radioButton1);
-            groupBox4.Location = new Point(23, 358);
+            groupBox4.Location = new Point(46, 420);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(613, 151);
             groupBox4.TabIndex = 5;
@@ -681,7 +650,7 @@
             groupBox3.Controls.Add(label12);
             groupBox3.Controls.Add(textBox1);
             groupBox3.Controls.Add(label11);
-            groupBox3.Location = new Point(23, 77);
+            groupBox3.Location = new Point(46, 139);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(617, 262);
             groupBox3.TabIndex = 4;
@@ -772,11 +741,27 @@
             // 
             label10.BackColor = Color.Silver;
             label10.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label10.Location = new Point(24, 18);
+            label10.Location = new Point(47, 18);
             label10.Name = "label10";
             label10.Size = new Size(615, 48);
             label10.TabIndex = 3;
             label10.Text = "Поступила книга";
+            // 
+            // tabPage2
+            // 
+            tabPage2.Controls.Add(textBox14);
+            tabPage2.Controls.Add(label25);
+            tabPage2.Controls.Add(groupBox7);
+            tabPage2.Controls.Add(groupBox6);
+            tabPage2.Controls.Add(groupBox5);
+            tabPage2.Controls.Add(listBox1);
+            tabPage2.Controls.Add(label16);
+            tabPage2.Location = new Point(4, 29);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Size = new Size(724, 743);
+            tabPage2.TabIndex = 3;
+            tabPage2.Text = "Покупатели";
+            tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox7
             // 
@@ -784,7 +769,7 @@
             groupBox7.Controls.Add(textBox7);
             groupBox7.Controls.Add(label24);
             groupBox7.Controls.Add(label23);
-            groupBox7.Location = new Point(23, 646);
+            groupBox7.Location = new Point(56, 646);
             groupBox7.Name = "groupBox7";
             groupBox7.Size = new Size(618, 99);
             groupBox7.TabIndex = 11;
@@ -827,7 +812,7 @@
             // 
             groupBox6.Controls.Add(button3);
             groupBox6.Controls.Add(button2);
-            groupBox6.Location = new Point(22, 565);
+            groupBox6.Location = new Point(55, 569);
             groupBox6.Name = "groupBox6";
             groupBox6.Size = new Size(617, 71);
             groupBox6.TabIndex = 10;
@@ -865,7 +850,7 @@
             groupBox5.Controls.Add(label20);
             groupBox5.Controls.Add(comboBox1);
             groupBox5.Controls.Add(label17);
-            groupBox5.Location = new Point(21, 275);
+            groupBox5.Location = new Point(54, 295);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new Size(612, 263);
             groupBox5.TabIndex = 9;
@@ -956,7 +941,7 @@
             // listBox1
             // 
             listBox1.FormattingEnabled = true;
-            listBox1.Location = new Point(22, 89);
+            listBox1.Location = new Point(55, 115);
             listBox1.Name = "listBox1";
             listBox1.Size = new Size(606, 164);
             listBox1.TabIndex = 8;
@@ -964,18 +949,120 @@
             // label16
             // 
             label16.BackColor = Color.Silver;
-            label16.Location = new Point(22, 13);
+            label16.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label16.Location = new Point(55, 65);
             label16.Name = "label16";
-            label16.Size = new Size(607, 53);
+            label16.Size = new Size(607, 36);
             label16.TabIndex = 7;
             label16.Text = "Очередь";
+            // 
+            // lblBalance
+            // 
+            lblBalance.BackColor = Color.FromArgb(224, 224, 224);
+            lblBalance.Location = new Point(659, 64);
+            lblBalance.Name = "lblBalance";
+            lblBalance.Size = new Size(120, 42);
+            lblBalance.TabIndex = 1;
+            // 
+            // label7
+            // 
+            label7.BackColor = Color.FromArgb(224, 224, 224);
+            label7.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label7.Location = new Point(370, 64);
+            label7.Name = "label7";
+            label7.Size = new Size(268, 43);
+            label7.TabIndex = 0;
+            label7.Text = "Баланс магазина";
+            // 
+            // label8
+            // 
+            label8.BackColor = Color.FromArgb(224, 224, 224);
+            label8.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label8.Location = new Point(58, 5);
+            label8.Name = "label8";
+            label8.Size = new Size(721, 43);
+            label8.TabIndex = 2;
+            // 
+            // lblday
+            // 
+            lblday.BackColor = Color.Silver;
+            lblday.Location = new Point(59, 58);
+            lblday.Name = "lblday";
+            lblday.Size = new Size(52, 22);
+            lblday.TabIndex = 3;
+            lblday.Text = "День:";
+            // 
+            // lbltime
+            // 
+            lbltime.BackColor = Color.Silver;
+            lbltime.Location = new Point(192, 58);
+            lbltime.Name = "lbltime";
+            lbltime.Size = new Size(63, 22);
+            lbltime.TabIndex = 4;
+            lbltime.Text = "Время:";
+            // 
+            // txtday
+            // 
+            txtday.Location = new Point(59, 85);
+            txtday.Name = "txtday";
+            txtday.Size = new Size(53, 27);
+            txtday.TabIndex = 5;
+            // 
+            // txttime
+            // 
+            txttime.Location = new Point(192, 85);
+            txttime.Name = "txttime";
+            txttime.Size = new Size(63, 27);
+            txttime.TabIndex = 6;
+            // 
+            // label18
+            // 
+            label18.BackColor = Color.Silver;
+            label18.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label18.Location = new Point(46, 81);
+            label18.Name = "label18";
+            label18.Size = new Size(127, 44);
+            label18.TabIndex = 6;
+            label18.Text = "В очереди:";
+            label18.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // textBox13
+            // 
+            textBox13.BackColor = Color.Silver;
+            textBox13.Location = new Point(210, 90);
+            textBox13.Name = "textBox13";
+            textBox13.Size = new Size(102, 27);
+            textBox13.TabIndex = 7;
+            // 
+            // textBox14
+            // 
+            textBox14.BackColor = Color.Silver;
+            textBox14.Location = new Point(220, 21);
+            textBox14.Name = "textBox14";
+            textBox14.Size = new Size(102, 27);
+            textBox14.TabIndex = 13;
+            // 
+            // label25
+            // 
+            label25.BackColor = Color.Silver;
+            label25.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label25.Location = new Point(56, 17);
+            label25.Name = "label25";
+            label25.Size = new Size(127, 28);
+            label25.TabIndex = 12;
+            label25.Text = "В очереди:";
+            label25.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(671, 902);
+            ClientSize = new Size(845, 902);
+            Controls.Add(txttime);
+            Controls.Add(txtday);
+            Controls.Add(lbltime);
+            Controls.Add(lblday);
             Controls.Add(label8);
             Controls.Add(tabControl1);
             Controls.Add(label7);
@@ -995,17 +1082,20 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             tabPage1.ResumeLayout(false);
-            tabPage2.ResumeLayout(false);
+            tabPage1.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            tabPage2.ResumeLayout(false);
+            tabPage2.PerformLayout();
             groupBox7.ResumeLayout(false);
             groupBox7.PerformLayout();
             groupBox6.ResumeLayout(false);
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -1096,5 +1186,13 @@
         private Label label17;
         private ListBox listBox1;
         private Label label16;
+        private Label lblday;
+        private Label lbltime;
+        private TextBox txtday;
+        private TextBox txttime;
+        private TextBox textBox13;
+        private Label label18;
+        private TextBox textBox14;
+        private Label label25;
     }
 }
