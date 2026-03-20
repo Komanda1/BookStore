@@ -189,36 +189,7 @@ namespace Bookstore
         public bool IsPlagiat { get; set; }
         public bool IsError { get; set; }
 
-        /// <summary>
-        /// Конструктор книги
-        /// </summary>
-        /// <param name="Name"> название книги </param>
-        /// <param name="Author"> автор </param>
-        /// <param name="Genre"> жанр </param>
-        /// <param name="PageNumber">кол-во страниц </param>
-        /// <param name="BasePrice"> цена книги </param>
-        /// <exception cref="ArgumentException"></exception>
-        public Book(string Name, string Author, string Genre, int PageNumber, decimal BasePrice)
-        {
-            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Author) || string.IsNullOrWhiteSpace(Genre))
-                throw new ArgumentException("Название, автор и жанр не могут быть пустыми");
-
-            if (PageNumber <= 0)
-                throw new ArgumentException("Количество страниц должно быть больше 0");
-
-            if (BasePrice <= 0)
-                throw new ArgumentException("Цена должна быть больше 0");
-
-            Id = lastId + 1;
-            Name = Name;
-            Author = Author;
-            Genre = Genre;
-            PageNumber = PageNumber;
-            BasePrice = BasePrice;
-            IsSold = false;
-            IsPlagiat = false;
-            IsError = false;
-        }
+        
 
         /// <summary>
         /// Конструктор для случайной генерации
@@ -228,6 +199,39 @@ namespace Bookstore
             Id = lastId + 1;
             GenerateRandom();
         }
+
+        /// <summary>
+        /// Конструктор книги
+        /// </summary>
+        /// <param name="Name"> название книги </param>
+        /// <param name="Author"> автор </param>
+        /// <param name="Genre"> жанр </param>
+        /// <param name="PageNumber">кол-во страниц </param>
+        /// <param name="BasePrice"> цена книги </param>
+        /// <exception cref="ArgumentException"></exception>
+        public Book(string name, string author, string genre, int pageNumber, decimal basePrice)
+        {
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(author) || string.IsNullOrWhiteSpace(genre))
+                throw new ArgumentException("Название, автор и жанр не могут быть пустыми");
+
+            if (pageNumber <= 0)
+                throw new ArgumentException("Количество страниц должно быть больше 0");
+
+            if (basePrice <= 0)
+                throw new ArgumentException("Цена должна быть больше 0");
+
+            Id = lastId + 1;
+            Name = name;
+            Author = author;
+            Genre = genre;
+            PageNumber = pageNumber;
+            BasePrice = basePrice;
+            IsSold = false;
+            IsPlagiat = false;
+            IsError = false;
+        }
+
+        public static void AddBook() { lastId = lastId + 1; }
 
         /// <summary>
         /// Случайная генерация книги из файлов
@@ -251,8 +255,8 @@ namespace Bookstore
         public static Book CreateWithPossibleError()
         {
             var book = new Book();
-            // 30% шанс ошибки
-            if (rnd.Next(100) < 30)
+            // 60% шанс ошибки
+            if (rnd.Next(100) < 60)
             {
                 if (rnd.Next(2) == 0)
                 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bookstore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,9 @@ namespace Forms
 {
     public partial class Form2 : Form
     {
-        public string SelectedDifficulty { get; private set; } = "";
+        public DifficultyLevel SelectedDifficulty { get; private set; }
+
+        public DifficultyLevel DifficultyLevel { get; private set; }
         public Form2()
         {
             InitializeComponent();
@@ -32,11 +35,24 @@ namespace Forms
 
             // Определяем сложность по имени кнопки
             if (clickedButton.Name == "button1")
-                difficulty = "Лёгкий";
+                DifficultyLevel = DifficultyLevel.Easy;
             else if (clickedButton.Name == "button2")
-                difficulty = "Нормальный";
+                DifficultyLevel = DifficultyLevel.Normal;
             else if (clickedButton.Name == "button3")
-                difficulty = "Сложный";
+                DifficultyLevel = DifficultyLevel.Hard;
+
+            switch (DifficultyLevel)
+            {
+                case DifficultyLevel.Easy:
+                    difficulty = "Легкая";
+                    break;
+                case DifficultyLevel.Normal:
+                    difficulty = "Средняя";
+                    break;
+                case DifficultyLevel.Hard:
+                    difficulty = "Сложная";
+                    break;
+            }
 
             // Диалог подтверждения
             DialogResult result = MessageBox.Show(
@@ -47,7 +63,7 @@ namespace Forms
 
             if (result == DialogResult.Yes)
             {
-                this.SelectedDifficulty = difficulty; // Свойство формы для передачи данных
+                this.SelectedDifficulty = DifficultyLevel; // Свойство формы для передачи данных
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

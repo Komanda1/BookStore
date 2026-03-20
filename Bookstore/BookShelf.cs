@@ -135,19 +135,19 @@ namespace Bookstore
         /// <summary>
         /// Конструктор шкафа
         /// </summary>
-        /// <param name="Genre"> название жанра </param>
-        /// <param name="Capacity"> вместимость </param>
+        /// <param name="genre"> название жанра </param>
+        /// <param name="capacity"> вместимость </param>
         /// <exception cref="ArgumentException"></exception>
-        public BookShelf(string Genre, int Capacity = 10)
+        public BookShelf(string genre, int capacity = 10)
         {
-            if (string.IsNullOrWhiteSpace(Genre))
+            if (string.IsNullOrWhiteSpace(genre))
                 throw new ArgumentException("Жанр должен иметь название");
 
-            if (Capacity <= 0)
+            if (capacity <= 0)
                 throw new ArgumentException("Вместимость должна быть больше 0");
 
-            Genre = Genre;
-            Capacity = Capacity;
+            Genre = genre;
+            Capacity = capacity;
         }
 
         /// <summary>
@@ -170,6 +170,8 @@ namespace Bookstore
             if (book.IsSold)
                 throw new InvalidOperationException("Нельзя добавить уже проданную книгу");
 
+            Book.AddBook();
+
             books.Add(book);
         }
 
@@ -189,8 +191,9 @@ namespace Bookstore
         /// <param name="name"> название книги </param>
         /// <returns> книга </returns>
         public Book FindByName(string name)
-        {
-            return books.FirstOrDefault(b => string.Equals(b.Name, name, StringComparison.OrdinalIgnoreCase));
+        {   
+            //return books.FirstOrDefault(b => string.Equals(b.Name, name, StringComparison.OrdinalIgnoreCase));
+            return books.FirstOrDefault(b => b.Name.StartsWith(name, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

@@ -1,3 +1,4 @@
+using Bookstore;
 using Forms;
 
 namespace Lab3
@@ -23,7 +24,7 @@ namespace Lab3
                 if (result == DialogResult.OK)
                 {
                     // Получаем выбранный режим
-                    string difficulty = titleForm.SelectedDifficulty;
+                    DifficultyLevel difficulty = titleForm.SelectedDifficulty;
 
                     // 4. Создаем главную форму и передаем ей режим сложности
                     // Для этого в Form1 нужно будет добавить специальный конструктор (см. Шаг 2)

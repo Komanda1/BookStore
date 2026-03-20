@@ -10,8 +10,9 @@ namespace Bookstore
     {
         Easy,    // Лёгкий: больше времени, меньше штрафов
         Normal,  // Нормальный: стандартные настройки
-        Hard     // Сложный: мало времени, строгие ограничения
+        Hard     // Сложный: мало времени, строгие 
     }
+
 
     /// <summary>
     /// Состояние игры
@@ -29,16 +30,18 @@ namespace Bookstore
     /// </summary>
     public class GameController
     {
+
         private BookStore store;
 
         private DifficultyLevel difficulty;
+        public String Difficulty;
         private int gameDurationMinutes;
         private DateTime gameStartTime;
 
-        private int deliveryInterval;      // секунды между поставками
-        private int customerInterval;      // секунды между покупателями
-        private int maxQueueSize;          // максимальный размер очереди
-        private int maxUnsatisfied;        // максимальное кол-во недовольных клиентов
+        public int deliveryInterval { get; private set; }      // секунды между поставками
+        public int customerInterval { get; private set; }      // секунды между покупателями
+        public int maxQueueSize { get; private set; }         // максимальный размер очереди
+        public int maxUnsatisfied { get; private set; }         // максимальное кол-во недовольных клиентов
 
         public GameState State { get; set; }
         public BookStore Store => store;
@@ -72,24 +75,27 @@ namespace Bookstore
             switch (difficulty)
             {
                 case DifficultyLevel.Easy:
-                    deliveryInterval = 30000;
-                    customerInterval = 45000;
+                    Difficulty = "Лёгкая";
+                    deliveryInterval = 300;
+                    customerInterval = 450;
                     maxQueueSize = 5;
                     maxUnsatisfied = 5;
                     gameDurationMinutes = 10;
                     break;
 
                 case DifficultyLevel.Normal:
-                    deliveryInterval = 20000;
-                    customerInterval = 30000;
+                    Difficulty = "Средняя";
+                    deliveryInterval = 200;
+                    customerInterval = 300;
                     maxQueueSize = 4;
                     maxUnsatisfied = 3;
                     gameDurationMinutes = 8;
                     break;
 
                 case DifficultyLevel.Hard:
-                    deliveryInterval = 15000;
-                    customerInterval = 20000;
+                    Difficulty = "Сложная";
+                    deliveryInterval = 150;
+                    customerInterval = 200;
                     maxQueueSize = 3;
                     maxUnsatisfied = 2;
                     gameDurationMinutes = 5;
@@ -101,7 +107,7 @@ namespace Bookstore
         /// <summary>
         /// Событие, когда приходит книга
         /// </summary>
-        private void DeliveryTimer_Tick()
+        public void DeliveryTimer_Tick()
         {
             if (State != GameState.Playing)
                 return;
@@ -113,11 +119,11 @@ namespace Bookstore
                 BookDelivered.Invoke(this, book);
             }
         }
-        
+
         /// <summary>
         /// Событие, когда приходит клиент
         /// </summary>
-        private void CustomerTimer_Tick()
+        public void CustomerTimer_Tick()
         {
             if (State != GameState.Playing)
                 return;
@@ -130,11 +136,11 @@ namespace Bookstore
             }
             CheckGameOver();
         }
-        
+
         /// <summary>
         /// Обновление времени
         /// </summary>
-        private void GameTimer_Tick()
+        public void GameTimer_Tick()
         {
             if (State != GameState.Playing)
                 return;
@@ -190,8 +196,8 @@ namespace Bookstore
         public string GetDifficultyInfo()
         {
             return $"Режим: {difficulty}\n" +
-                   $"Поставки: каждые {deliveryInterval / 1000} сек\n" +
-                   $"Покупатели: каждые {customerInterval / 1000} сек\n" +
+                   $"Поставки: каждые {deliveryInterval / 10} сек\n" +
+                   $"Покупатели: каждые {customerInterval / 10} сек\n" +
                    $"Макс. очередь: {maxQueueSize}\n" +
                    $"Макс. недовольных: {maxUnsatisfied}\n" +
                    $"Длительность: {gameDurationMinutes} мин";
