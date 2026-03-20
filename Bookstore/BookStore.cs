@@ -561,5 +561,139 @@ namespace Bookstore
                    $"Шкафов: {shelves.Count}/{MaxShelves}\n" +
                    $"Книг в магазине: {shelves.Sum(s => s.Count)}";
         }
+
+
+
+
+
+        private int lastBookId = 0;
+        private int GetNextBookId()
+        {
+            lastBookId++;
+            return lastBookId;
+        }
+
+        public int GetLastBookId()
+        {
+            return lastBookId;
+        }
+
+        /// <summary>
+        /// Возвращает список всех жанров, для которых есть шкафы в магазине
+        /// </summary>
+        public List<string> GetAvailableGenres()
+        {
+            // Возвращаем жанры из всех шкафов, отсортированные по алфавиту
+            return shelves.Select(shelf => shelf.Genre)
+                          .OrderBy(genre => genre)
+                          .ToList();
+        }
+
+        public BookShelf FindCaseByGenre(string genre)
+        {
+            if (string.IsNullOrWhiteSpace(genre))
+                return null;
+
+            return shelves.FirstOrDefault(shelf =>
+                string.Equals(shelf.Genre, genre, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        /// Ищет книгу по уникальному идентификатору во всех шкафах магазина.
+        /// </summary>
+        /// <param name="id">Идентификатор книги</param>
+        /// <returns>Найденная книга или null, если книга не найдена</returns>
+        public Book FindBookById(int id)
+        {
+            foreach (var shelf in shelves)
+            {
+                var found = shelf.FindById(id);
+                if (found != null)
+                    return found;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Ищет книгу по названию во всех шкафах магазина.
+        /// </summary>
+        /// <param name="name">Название книги</param>
+        /// <returns>Найденная книга или null, если книга не найдена</returns>
+        public Book FindBookByName(string name)
+        {
+            foreach (var shelf in shelves)
+            {
+                var found = shelf.FindByName(name);
+                if (found != null)
+                    return found;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Продажа книги (без покупателя, по базовой цене)
+        /// </summary>
+        /// <param name="book">Продаваемая книга</param>
+        /// <exception cref="ArgumentNullException">Если книга null</exception>
+        /// <exception cref="InvalidOperationException">
+        /// Если книга уже продана, не найдена в магазине или находится в очереди поставок
+        /// </exception>
+        public void SellBook(Book book)
+        {
+            // Проверка на null
+            if (book == null)
+                throw new ArgumentNullException(nameof(book), "Книга не может быть null");
+
+            // Проверка, что книга ещё не продана
+            if (book.IsSold)
+                throw new InvalidOperationException($"Книга \"{book.Name}\" уже была продана ранее");
+
+            // Проверка, что книга не в очереди поставок
+            if (deliveryQueue.Contains(book))
+                throw new InvalidOperationException($"Книга \"{book.Name}\" ещё не принята в магазин. Сначала примите поставку.");
+
+            // Ищем шкаф, содержащий эту книгу
+            var shelf = shelves.FirstOrDefault(s => s.Books.Contains(book));
+
+            if (shelf == null)
+                throw new InvalidOperationException($"Книга \"{book.Name}\" не найдена в магазине");
+
+            bool removed = shelf.RemoveBook(book);
+
+            if (!removed)
+                throw new InvalidOperationException($"Не удалось удалить книгу \"{book.Name}\" из шкафа \"{shelf.Genre}\"");
+
+            Balance += book.BasePrice;
+            book.IsSold = true;
+        }
+
+        /*public void AddBookToStore(Book book)
+        {
+            if (book == null)
+                throw new ArgumentNullException(nameof(book), "Книга не может быть null");
+
+            // Проверяем, есть ли достаточно средств для покупки книги
+            if (Balance < book.BasePrice)
+                throw new InvalidOperationException($"Недостаточно средств для покупки книги. Нужно: {book.BasePrice:C}, доступно: {Balance:C}");
+
+            // Находим или создаём шкаф для этого жанра
+            var shelf = FindOrCreateShelf(book.Genre);
+
+            if (shelf == null)
+                throw new InvalidOperationException($"Нет места для нового жанра. Максимум шкафов: {MaxShelves}");
+
+            if (!shelf.HasSpace)
+                throw new InvalidOperationException($"В шкафу жанра '{book.Genre}' нет места. Вместимость: {shelf.Capacity}, занято: {shelf.Count}");
+
+            // Добавляем книгу в шкаф
+            shelf.AddBook(book);
+
+            // Списываем стоимость книги с баланса
+            Balance -= book.BasePrice;
+
+            // Обновляем ID книги (если нужно)
+            // book.Id = GetNextBookId(); // если требуется назначить новый ID
+        }*/
+
     }
 }

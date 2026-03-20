@@ -243,5 +243,10 @@ namespace Bookstore
             return $"{Genre} ({books.Count}/{Capacity})";
         }
 
+
+        public IEnumerable<Book> GetBooksInOrder()
+        {
+            return books.OrderBy(book => book.Id).ToList();
+        }
     }
 }

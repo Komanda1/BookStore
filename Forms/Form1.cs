@@ -10,7 +10,7 @@ namespace Lab3
         private BookStore store;
         private Book? currentBook;
         private Book selectedBook;
-        private GameController currentShelf;
+        private BookShelf currentShelf;
 
         /// <summary>
         /// Конструктор формы
@@ -71,7 +71,7 @@ namespace Lab3
         /// Заполняет booksMap для быстрого доступа к объектам Book
         /// </summary>
         /// <param name="shelf">Шкаф с книгами для отображения</param>
-        private void DisplayBooks(GameController shelf)
+        private void DisplayBooks(BookShelf shelf)
         {
             lstBook.Items.Clear();
             booksMap.Clear();
@@ -169,18 +169,18 @@ namespace Lab3
                 string? genre = string.IsNullOrWhiteSpace(txtGenre.Text) ? null : txtGenre.Text;
 
                 currentBook = new Book(
-                    name: null,
-                    author: null,
-                    genre: genre,
-                    pageNumber: null,
-                    price: null
+                    null,
+                    null,
+                    genre,
+                    0,
+                    0m
                 );
 
                 txtBookID.Text = (store.GetLastBookId() + 1).ToString();
                 txtBookName.Text = currentBook.Name;
                 txtAuthor.Text = currentBook.Author;
                 txtGenre.Text = currentBook.Genre;
-                txtPrice.Text = currentBook.Price.ToString();
+                txtPrice.Text = currentBook.BasePrice.ToString();
                 txtPageCount.Text = currentBook.PageNumber.ToString();
 
                 UpdateStatus($"Сгенерирована книга: \"{currentBook.Name}\" ({currentBook.Genre})");
@@ -245,22 +245,26 @@ namespace Lab3
                     return;
                 }
 
-                if (currentBook == null)
+                bool success = store.OrderBook(
+                    txtBookName.Text.Trim(),
+                    txtAuthor.Text.Trim(),
+                    txtGenre.Text.Trim(),
+                    page,
+                    price,
+                    out string message
+                );
+
+                if (success)
                 {
-                    currentBook = new Book(
-                        name: txtBookName.Text.Trim(),
-                        author: txtAuthor.Text.Trim(),
-                        genre: txtGenre.Text.Trim(),
-                        pageNumber: page,
-                        price: price
-                    );
+                    UpdateStatus($"Книга \"{txtBookName.Text}\" заказана и добавлена в очередь поставок.");
+                    LoadGenres();
+                    ClearBookFields();
                 }
-
-                store.AddBookToStore(currentBook);
-
-                UpdateStatus($"Книга \"{currentBook.Name}\" добавлена. Жанр: {currentBook.Genre}");
-                LoadGenres();
-                ClearBookFields();
+                else
+                {
+                    MessageBox.Show(message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    UpdateStatus("Не удалось добавить книгу.");
+                }
             }
             catch (InvalidOperationException ex)
             {
@@ -323,7 +327,7 @@ namespace Lab3
             txtStoreCode.Text = book.Id.ToString();
             txtStoreName.Text = book.Name;
             txtStoreAuthor.Text = book.Author;
-            txtStorePrice.Text = book.Price.ToString("C");
+            txtStorePrice.Text = book.BasePrice.ToString("C");
             txtStorePage.Text = book.PageNumber.ToString();
         }
 
@@ -377,7 +381,7 @@ namespace Lab3
                     selectedBook = foundBook;
                     DisplayBookInfo(selectedBook);
 
-                    foreach (var shelf in store.Cases)
+                    foreach (var shelf in store.Shelves)
                     {
                         if (shelf.Books.Contains(foundBook))
                         {
@@ -488,7 +492,7 @@ namespace Lab3
                 foreach (var book in booksToSell)
                 {
                     store.SellBook(book);
-                    totalIncome += book.Price;
+                    totalIncome += book.BasePrice;
                     booksSold++;
                 }
 

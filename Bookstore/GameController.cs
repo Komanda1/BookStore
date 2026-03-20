@@ -1,4 +1,6 @@
 ﻿
+using static System.Reflection.Metadata.BlobBuilder;
+
 namespace Bookstore
 {
     /// <summary>
@@ -45,8 +47,10 @@ namespace Bookstore
         public event EventHandler<(bool Won, string Reason)> GameOver;
         public event EventHandler<int> TimeUpdated;
 
+        //private BookShelf currentDisplayShelf;   // текущий шкаф
+
         /// <summary>
-        /// Кнструктор контроллера
+        /// Конструктор контроллера
         /// </summary>
         /// <param name="difficulty"> сложность игры </param>
         /// <param name="maxShelves"> максимальное кол-во шкафов </param>
@@ -192,5 +196,27 @@ namespace Bookstore
                    $"Макс. недовольных: {maxUnsatisfied}\n" +
                    $"Длительность: {gameDurationMinutes} мин";
         }
+
+
+        /*
+        /// <summary>
+        /// Возвращает колллекцию книг в текущем шкафе
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Book> GetBooksInOrder()
+        {
+            if (currentDisplayShelf == null)
+                return Enumerable.Empty<Book>();
+            return currentDisplayShelf.Books.OrderBy(book => book.Id).ToList();
+        }
+
+        /// <summary>
+        /// Метод для установки текущего шкафа
+        /// </summary>
+        /// <param name="shelf"></param>
+        public void SetCurrentShelf(BookShelf shelf)
+        {
+            currentDisplayShelf = shelf;
+        }*/
     }
 }
