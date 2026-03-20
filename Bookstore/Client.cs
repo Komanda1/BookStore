@@ -64,7 +64,8 @@
             }
             else
             {
-                return new Customer(("Genres.txt"), rnd.Next(200, 2000));
+                string randomGenre = Book.GetRandomLineFromFile("Genres.txt");
+                return new Customer(randomGenre, rnd.Next(200, 2000));
             }
         }
 

@@ -9,14 +9,20 @@ namespace Lab3
     public partial class Form1 : Form
     {
         private BookStore store;
+        private Customer customer;
         private BookShelf currentShelf;
         private Book selectedBook;
+        private Customer selectedCustomer;
         private GameController gameController;
 
         private int DeliveryTicks = 0;
         private int lastDiliveryQueueCount = 0;
 
+        private int CustTicks = 0;
+        private int lastCustQueueCount = 0;
+
         private readonly System.Collections.Generic.Dictionary<string, Book> booksMap = new();
+        private readonly System.Collections.Generic.Dictionary<string, Customer> customersCollection = new();
 
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
@@ -70,6 +76,22 @@ namespace Lab3
                 MessageBox.Show("Поступила новая книга!", "Новая книга");
             }
             DeliveryTicks += 1;
+
+
+            lastCustQueueCount = store.CustomerQueue.Count;
+
+            if (CustTicks == gameController.customerInterval)
+            {
+                gameController.CustomerTimer_Tick();
+                CustTicks = 0;
+            }
+
+            if (lastCustQueueCount != store.CustomerQueue.Count)
+            {
+                UpdateCustomerQueue();
+                MessageBox.Show("Пришёл новый клиент!", "Новый клиент");
+            }
+            CustTicks += 1;
         }
 
         private void LoadGenres()
@@ -246,9 +268,52 @@ namespace Lab3
             txtDelBookGenre.Text = lastDeliveryBook.Genre;
             txtDelBookPageCount.Text = lastDeliveryBook.PageNumber.ToString();
             txtDelBookPrice.Text = lastDeliveryBook.BasePrice.ToString();
-
-
         }
+
+        private void UpdateCustomerQueue()
+        {
+            if (store.CustomerQueue.Count == 0) return;
+
+            Customer lastCustomer = store.CustomerQueue.Last();
+
+            if (lastCustomer == null) return;
+
+            txtDelQueue.Text = store.CustomerQueue.Count.ToString();
+
+            textBox9.Text = lastCustomer.DesiredName;
+            textBox10.Text = lastCustomer.DesiredAuthor;
+            textBox11.Text = lastCustomer.DesiredGenre;
+            textBox12.Text = lastCustomer.MaxPrice.ToString();
+
+            UpdateCustomerList();
+        }
+
+        private void UpdateCustomerList()
+        {
+            listClient.Items.Clear();
+            foreach (var cust in store.CustomerQueue)
+            {
+                string key = $"Пожелания клиента: {cust.DesiredName} | {cust.DesiredAuthor} | {cust.DesiredGenre} | {cust.MaxPrice}";
+                listClient.Items.Add(key);
+                customersCollection[key] = cust;
+            }
+        }
+
+        private void listClient_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listClient.SelectedItem == null) return;
+
+            string key = listClient.SelectedItem.ToString();
+            if (customersCollection.TryGetValue(key, out Customer cust))
+            {
+                selectedCustomer = cust;
+                textBox9.Text = cust.DesiredName;
+                textBox10.Text = cust.DesiredAuthor;
+                textBox11.Text = cust.DesiredGenre;
+                textBox12.Text = cust.MaxPrice.ToString();
+            }
+        }
+
         private void btnСonfirmSelect_Click(object sender, EventArgs e)
         {
             Book lastDeliveryBook = store.DeliveryQueue.Last();
