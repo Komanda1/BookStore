@@ -322,7 +322,7 @@ namespace Lab3
 
             if (radioButton1.Checked == false && radioButton2.Checked == false && radioButton3.Checked == false)
             {
-                MessageBox.Show("Выберите способ доставки!", "Выберите способ доставки!");
+                MessageBox.Show("Выберите принять или отклонить книгу!", "Выберите действие!");
                 return;
             }
 
@@ -378,7 +378,7 @@ namespace Lab3
                 store.DeliveryQueue.Remove(lastDeliveryBook);
                 MessageBox.Show($"Книга \"{lastDeliveryBook.Name}\" отклонена.", $"Книга \"{lastDeliveryBook.Name}\" отклонена.");
             }
-
+            lblBalance.Text = $"{store.Balance}₽";
             UpdateDeliveryQueue();
         }
     }
