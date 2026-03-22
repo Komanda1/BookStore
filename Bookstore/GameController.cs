@@ -1,4 +1,6 @@
-﻿namespace Bookstore
+﻿using System.Timers;
+
+namespace Bookstore
 {
     /// <summary>
     /// Режим сложности игры
@@ -31,6 +33,8 @@
         private DifficultyLevel _difficulty;
         private int _gameDurationMinutes;
         private DateTime _gameStartTime;
+        private List<DateTime> _events;
+        private System.Timers.Timer _timer = new System.Timers.Timer();
 
         public String Difficulty;
         public int deliveryInterval { get; private set; }      // секунды между поставками
@@ -69,8 +73,8 @@
             {
                 case DifficultyLevel.Easy:
                     Difficulty = "Лёгкая";
-                    deliveryInterval = 300;
-                    customerInterval = 450;
+                    deliveryInterval = 30;
+                    customerInterval = 45;
                     maxQueueSize = 5;
                     maxUnsatisfied = 5;
                     _gameDurationMinutes = 10;
@@ -78,8 +82,8 @@
 
                 case DifficultyLevel.Normal:
                     Difficulty = "Средняя";
-                    deliveryInterval = 200;
-                    customerInterval = 300;
+                    deliveryInterval = 20;
+                    customerInterval = 30;
                     maxQueueSize = 4;
                     maxUnsatisfied = 3;
                     _gameDurationMinutes = 8;
@@ -87,8 +91,8 @@
 
                 case DifficultyLevel.Hard:
                     Difficulty = "Сложная";
-                    deliveryInterval = 150;
-                    customerInterval = 200;
+                    deliveryInterval = 15;
+                    customerInterval = 20;
                     maxQueueSize = 3;
                     maxUnsatisfied = 2;
                     _gameDurationMinutes = 5;
@@ -96,10 +100,48 @@
             }
         }
 
+        public void StartGame()
+        {
+            this._events = new List<DateTime>
+            {
+                DateTime.Now.AddSeconds(deliveryInterval),
+                DateTime.Now.AddSeconds(customerInterval)
+            };
+
+            this.State = GameState.Playing;
+            this._gameStartTime = DateTime.Now;
+            this._timer.Interval = 1000;
+            this._timer.Elapsed += (sender, e) => GameTimer_Elapsed(sender, e, this); ;
+            this._timer.AutoReset = true;
+            this._timer.Start();
+
+            
+        }
+
+        private static void GameTimer_Elapsed(object sender, ElapsedEventArgs e, GameController controller)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                if (DateTime.Now >= controller._events[i])
+                {
+                    if (i == 0)
+                    {
+                        controller._events[i] = DateTime.Now.AddSeconds(controller.deliveryInterval);
+                        controller.DeliveryTimer_Tick();
+                    }
+                    else if (i == 1)
+                    {
+                        controller._events[i] = DateTime.Now.AddSeconds(controller.customerInterval);
+                        controller.CustomerTimer_Tick();
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Событие, когда приходит книга
         /// </summary>
-        public void DeliveryTimer_Tick()
+        private void DeliveryTimer_Tick()
         {
             if (State != GameState.Playing)
                 return;
@@ -115,7 +157,7 @@
         /// <summary>
         /// Событие, когда приходит клиент
         /// </summary>
-        public void CustomerTimer_Tick()
+        private void CustomerTimer_Tick()
         {
             if (State != GameState.Playing)
                 return;
@@ -132,7 +174,7 @@
         /// <summary>
         /// Обновление времени
         /// </summary>
-        public void GameTimer_Tick()
+        private void GameTimer_Tick()
         {
             if (State != GameState.Playing)
                 return;

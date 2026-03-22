@@ -15,11 +15,16 @@ namespace Lab3
         private Customer selectedCustomer;
         private GameController gameController;
 
-        private int DeliveryTicks = 0;
         private int lastDiliveryQueueCount = 0;
 
         private int CustTicks = 0;
         private int lastCustQueueCount = 0;
+
+        private bool blinkState = false;
+        private int blinkCounter = 0;
+
+        private bool blinkDelivery = false;
+        private bool blinkCustomers = false;
 
         private readonly System.Collections.Generic.Dictionary<string, Book> booksMap = new();
         private readonly System.Collections.Generic.Dictionary<string, Customer> customersCollection = new();
@@ -34,9 +39,13 @@ namespace Lab3
 
             gameController = new GameController(difficulty);
 
-            gameController.State = GameState.Playing;
-
             store = gameController.Store;
+
+            gameController.BookDelivered += GameController_BookDelivered;
+            gameController.CustomerArrived += GameController_CustomerArrived;
+
+            gameController.StartGame();
+                        
             lblBalance.Text = $"{store.Balance}₽";
             txtStatus.Text = "Магазин готов";
             LoadGenres();
@@ -48,18 +57,102 @@ namespace Lab3
             timer.Interval = 100;
             timer.Tick += Timer_Tick;
             timer.Start();
+
+            tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
+            tabControl1.Appearance = TabAppearance.FlatButtons;
+            tabControl1.DrawItem += TabControl1_DrawItem;
         }
 
+        /// <summary>
+        /// Отрисовка вкладок
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TabControl1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            var tab = tabControl1.TabPages[e.Index];
+            var bounds = e.Bounds;
+
+            Color backColor = SystemColors.Control;
+            Color textColor = Color.Black;
+
+            // Поставки
+            if (tab == tabPage1 && blinkDelivery)
+            {
+                if (blinkState)
+                {
+                    backColor = Color.Gray;
+                    textColor = Color.White;
+                }
+            }
+
+            // Клиенты
+            if (tab == tabPage2 && blinkCustomers)
+            {
+                if (blinkState)
+                {
+                    backColor = Color.Gray;
+                    textColor = Color.White;
+                }
+            }
+
+            using (SolidBrush brush = new SolidBrush(backColor))
+            {
+                e.Graphics.FillRectangle(brush, bounds);
+            }
+
+            TextRenderer.DrawText(
+                e.Graphics,
+                tab.Text,
+                e.Font,
+                bounds,
+                textColor,
+                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
+            );
+        }
+
+        /// <summary>
+        /// Обновление очереди доставки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GameController_BookDelivered(object sender, Book e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => GameController_BookDelivered(sender, e)));
+                return;
+            }
+
+            UpdateDeliveryQueue();
+            //MessageBox.Show("Поступила новая книга!", "Новая книга");
+        }
+
+        /// <summary>
+        /// Обновление очереди клиентов
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GameController_CustomerArrived(object sender, Customer e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => GameController_CustomerArrived(sender, e)));
+                return;
+            }
+
+            UpdateCustomerQueue();
+            //MessageBox.Show("Пришёл новый клиент!", "Новый клиент");
+        }
+
+        /// <summary>
+        /// Таймер отрисовки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
             lastDiliveryQueueCount = store.DeliveryQueue.Count;
-
-            if (DeliveryTicks == gameController.deliveryInterval)
-            {
-                gameController.DeliveryTimer_Tick();
-                DeliveryTicks = 0;
-            }
-
 
             if (store.DeliveryQueue.Count > 0 && !tabControl1.TabPages.Contains(tabPage1))
             {
@@ -70,28 +163,29 @@ namespace Lab3
                 tabControl1.TabPages.Remove(tabPage1);
             }
 
-            if (lastDiliveryQueueCount != store.DeliveryQueue.Count)
+
+            // Переключение каждые 500мс
+            blinkCounter++;
+            if (blinkCounter >= 5)
             {
-                UpdateDeliveryQueue();
-                MessageBox.Show("Поступила новая книга!", "Новая книга");
-            }
-            DeliveryTicks += 1;
-
-
-            lastCustQueueCount = store.CustomerQueue.Count;
-
-            if (CustTicks == gameController.customerInterval)
-            {
-                gameController.CustomerTimer_Tick();
-                CustTicks = 0;
+                blinkState = !blinkState;
+                blinkCounter = 0;
             }
 
-            if (lastCustQueueCount != store.CustomerQueue.Count)
+            // Мигание
+            blinkDelivery = store.DeliveryQueue.Count > 0;
+            blinkCustomers = store.CustomerQueue.Count > 0;
+
+            // Перерисовать вкладки
+            if (blinkDelivery)
             {
-                UpdateCustomerQueue();
-                MessageBox.Show("Пришёл новый клиент!", "Новый клиент");
+                tabControl1.Invalidate(tabControl1.GetTabRect(tabControl1.TabPages.IndexOf(tabPage1)));
             }
-            CustTicks += 1;
+
+            if (blinkCustomers)
+            {
+                tabControl1.Invalidate(tabControl1.GetTabRect(tabControl1.TabPages.IndexOf(tabPage2)));
+            }
         }
 
         private void LoadGenres()
@@ -256,17 +350,19 @@ namespace Lab3
             if (store.CustomerQueue.Count == 0) return;
 
             Customer lastCustomer = store.CustomerQueue.Last();
-
+            
             if (lastCustomer == null) return;
 
             txtDelQueue.Text = store.CustomerQueue.Count.ToString();
+
+            UpdateCustomerList();
 
             textBox9.Text = lastCustomer.DesiredName;
             textBox10.Text = lastCustomer.DesiredAuthor;
             textBox11.Text = lastCustomer.DesiredGenre;
             textBox12.Text = lastCustomer.MaxPrice.ToString();
 
-            UpdateCustomerList();
+            
         }
 
         private void UpdateCustomerList()

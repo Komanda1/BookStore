@@ -91,6 +91,9 @@
             label11 = new Label();
             label10 = new Label();
             tabPage2 = new TabPage();
+            panel4 = new Panel();
+            comboBox1 = new ComboBox();
+            label17 = new Label();
             txtClientCount = new TextBox();
             label25 = new Label();
             groupBox7 = new GroupBox();
@@ -121,9 +124,6 @@
             txttime = new TextBox();
             label26 = new Label();
             label27 = new Label();
-            panel4 = new Panel();
-            label17 = new Label();
-            comboBox1 = new ComboBox();
             tabControl1.SuspendLayout();
             tabNewBook.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -136,10 +136,10 @@
             groupBox4.SuspendLayout();
             groupBox3.SuspendLayout();
             tabPage2.SuspendLayout();
+            panel4.SuspendLayout();
             groupBox7.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
-            panel4.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -161,7 +161,7 @@
             tabNewBook.Controls.Add(groupBox1);
             tabNewBook.Location = new Point(4, 29);
             tabNewBook.Name = "tabNewBook";
-            tabNewBook.Padding = new Padding(3, 3, 3, 3);
+            tabNewBook.Padding = new Padding(3);
             tabNewBook.Size = new Size(723, 743);
             tabNewBook.TabIndex = 0;
             tabNewBook.Text = "Заказать книгу";
@@ -352,7 +352,7 @@
             tabStore.Controls.Add(panel1);
             tabStore.Location = new Point(4, 29);
             tabStore.Name = "tabStore";
-            tabStore.Padding = new Padding(3, 3, 3, 3);
+            tabStore.Padding = new Padding(3);
             tabStore.Size = new Size(723, 743);
             tabStore.TabIndex = 1;
             tabStore.Text = "Магазин";
@@ -574,6 +574,7 @@
             // 
             // tabPage1
             // 
+            tabPage1.BackColor = Color.FromArgb(224, 224, 224);
             tabPage1.CausesValidation = false;
             tabPage1.Controls.Add(txtDelQueue);
             tabPage1.Controls.Add(label18);
@@ -585,7 +586,6 @@
             tabPage1.Size = new Size(723, 743);
             tabPage1.TabIndex = 2;
             tabPage1.Text = "Поставки";
-            tabPage1.UseVisualStyleBackColor = true;
             // 
             // txtDelQueue
             // 
@@ -781,6 +781,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.BackColor = Color.FromArgb(224, 224, 224);
             tabPage2.Controls.Add(panel4);
             tabPage2.Controls.Add(txtClientCount);
             tabPage2.Controls.Add(label25);
@@ -794,7 +795,33 @@
             tabPage2.Size = new Size(723, 743);
             tabPage2.TabIndex = 3;
             tabPage2.Text = "Покупатели";
-            tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.Gainsboro;
+            panel4.Controls.Add(comboBox1);
+            panel4.Controls.Add(label17);
+            panel4.Location = new Point(52, 512);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(617, 52);
+            panel4.TabIndex = 14;
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(272, 11);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(206, 28);
+            comboBox1.TabIndex = 8;
+            // 
+            // label17
+            // 
+            label17.BackColor = Color.Silver;
+            label17.Location = new Point(18, 9);
+            label17.Name = "label17";
+            label17.Size = new Size(162, 31);
+            label17.TabIndex = 7;
+            label17.Text = "ID | Название книги ";
             // 
             // txtClientCount
             // 
@@ -1069,33 +1096,6 @@
             label27.Size = new Size(120, 43);
             label27.TabIndex = 8;
             // 
-            // panel4
-            // 
-            panel4.BackColor = Color.Gainsboro;
-            panel4.Controls.Add(comboBox1);
-            panel4.Controls.Add(label17);
-            panel4.Location = new Point(52, 512);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(617, 52);
-            panel4.TabIndex = 14;
-            // 
-            // label17
-            // 
-            label17.BackColor = Color.Silver;
-            label17.Location = new Point(18, 9);
-            label17.Name = "label17";
-            label17.Size = new Size(162, 31);
-            label17.TabIndex = 7;
-            label17.Text = "ID | Название книги ";
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(272, 11);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(206, 28);
-            comboBox1.TabIndex = 8;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1134,12 +1134,12 @@
             groupBox3.PerformLayout();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
+            panel4.ResumeLayout(false);
             groupBox7.ResumeLayout(false);
             groupBox7.PerformLayout();
             groupBox6.ResumeLayout(false);
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
-            panel4.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
