@@ -43,6 +43,7 @@ namespace Lab3
 
             gameController.BookDelivered += GameController_BookDelivered;
             gameController.CustomerArrived += GameController_CustomerArrived;
+            gameController.TimeUpdated += (s, e) => GameController_TimeUpdated(s, e);
 
             gameController.StartGame();
                         
@@ -120,7 +121,7 @@ namespace Lab3
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => GameController_BookDelivered(sender, e)));
+                Invoke(new Action(() => UpdateDeliveryQueue()));
                 return;
             }
 
@@ -137,12 +138,26 @@ namespace Lab3
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => GameController_CustomerArrived(sender, e)));
+                Invoke(new Action(() => UpdateCustomerQueue()));
                 return;
             }
 
             UpdateCustomerQueue();
             //MessageBox.Show("Пришёл новый клиент!", "Новый клиент");
+        }
+
+        private void GameController_TimeUpdated(object sender, TimeUpdatedEventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() =>
+                {
+                    txttime.Text = e.GameTime.ToString(@"hh\:mm");
+                }));
+                return;
+            }
+
+            txttime.Text = e.GameTime.ToString(@"hh\:mm");
         }
 
         /// <summary>

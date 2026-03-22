@@ -1075,8 +1075,10 @@
             // 
             txttime.Location = new Point(137, 91);
             txttime.Name = "txttime";
+            txttime.ReadOnly = true;
             txttime.Size = new Size(63, 27);
             txttime.TabIndex = 6;
+            txttime.Text = "08:00";
             // 
             // label26
             // 

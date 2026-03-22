@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System;
+using System.Timers;
 
 namespace Bookstore
 {
@@ -23,6 +24,12 @@ namespace Bookstore
         Lost
     }
 
+    public class TimeUpdatedEventArgs : EventArgs
+    {
+        public int RemainingSeconds { get; set; }
+        public TimeSpan GameTime { get; set; }
+    }
+
     /// <summary>
     /// Контроллер игры
     /// </summary>
@@ -36,6 +43,9 @@ namespace Bookstore
         private List<DateTime> _events;
         private System.Timers.Timer _timer = new System.Timers.Timer();
 
+        private TimeSpan _gameDayStart = new TimeSpan(8, 0, 0);  // 08:00
+        private TimeSpan _gameDayEnd = new TimeSpan(20, 0, 0);   // 20:00
+
         public String Difficulty;
         public int deliveryInterval { get; private set; }      // секунды между поставками
         public int customerInterval { get; private set; }      // секунды между покупателями
@@ -47,7 +57,7 @@ namespace Bookstore
         public event EventHandler<Book> BookDelivered;
         public event EventHandler<Customer> CustomerArrived;
         public event EventHandler<(bool Won, string Reason)> GameOver;
-        public event EventHandler<int> TimeUpdated;
+        public event EventHandler<TimeUpdatedEventArgs> TimeUpdated;
 
         /// <summary>
         /// Конструктор контроллера
@@ -120,6 +130,7 @@ namespace Bookstore
 
         private static void GameTimer_Elapsed(object sender, ElapsedEventArgs e, GameController controller)
         {
+            controller.GameTimer_Tick();
             for (int i = 0; i < 2; i++)
             {
                 if (DateTime.Now >= controller._events[i])
@@ -182,7 +193,9 @@ namespace Bookstore
             var elapsed = DateTime.Now - _gameStartTime;
             var remaining = _gameDurationMinutes * 60 - (int)elapsed.TotalSeconds;
 
-            if (remaining <= 0)
+            var gameTime = GetCurrentGameTime();
+
+            if (gameTime >= _gameDayEnd)
             {
                 EndGame(true, "Поздравляем! Вы успешно завершили рабочий день!");
                 return;
@@ -190,9 +203,31 @@ namespace Bookstore
 
             if (TimeUpdated != null)
             {
-                TimeUpdated.Invoke(this, remaining);
+                TimeUpdated?.Invoke(this, new TimeUpdatedEventArgs
+                {
+                    RemainingSeconds = remaining,
+                    GameTime = gameTime
+                });
             }
             CheckGameOver();
+        }
+
+        private TimeSpan GetCurrentGameTime()
+        {
+            var elapsed = DateTime.Now - _gameStartTime;
+
+            double progress = elapsed.TotalSeconds / (_gameDurationMinutes * 60.0);
+
+            // ограничим от 0 до 1
+            progress = Math.Max(0, Math.Min(1, progress));
+
+            var gameDayLength = _gameDayEnd - _gameDayStart;
+
+            var currentGameTime = _gameDayStart + TimeSpan.FromTicks(
+                (long)(gameDayLength.Ticks * progress)
+            );
+
+            return currentGameTime;
         }
 
         /// <summary>
