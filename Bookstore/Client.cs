@@ -23,9 +23,9 @@
         /// <summary>
         /// Конструктор покупателя с конкретным запросом
         /// </summary>
-        /// <param name="name"> название книги </param>
-        /// <param name="author"> автор </param>
-        /// <param name="maxPrice"> максимальная цена </param>
+        /// <param name="name">Название книги</param>
+        /// <param name="author">Автор</param>
+        /// <param name="maxPrice">Максимальная цена</param>
         public Customer(string name, string author, decimal maxPrice)
         {
             RequestType = CustomerRequestType.SpecificBook;
@@ -38,8 +38,8 @@
         /// <summary>
         /// Конструктор покупателя с запросом по жанру
         /// </summary>
-        /// <param name="genre"> жанр </param>
-        /// <param name="maxPrice"> максимальная цена </param>
+        /// <param name="genre">Жанр</param>
+        /// <param name="maxPrice">Максимальная цена</param>
         public Customer(string genre, decimal maxPrice)
         {
             RequestType = CustomerRequestType.Genre;
@@ -52,7 +52,7 @@
         /// <summary>
         /// Случайная генерация покупателя
         /// </summary>
-        /// <returns> запрос </returns>
+        /// <returns>Запрос</returns>
         public static Customer GenerateRandom()
         {
             var rnd = new Random();
@@ -72,7 +72,7 @@
         /// <summary>
         /// Упрощенная версия получения пары название-автор для чтения
         /// </summary>
-        /// <returns> метод из класса Book </returns>
+        /// <returns>Метод из класса Book</returns>
         private static (string name, string author) GetRandomNameAuthor()
         {
             return Book.GetRandomNameAuthorPair();
@@ -81,7 +81,7 @@
         /// <summary>
         /// Вывод запроса
         /// </summary>
-        /// <returns> текст запроса </returns>
+        /// <returns>Текст запроса</returns>
         public override string ToString()
         {
             if (RequestType == CustomerRequestType.SpecificBook)

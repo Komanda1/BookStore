@@ -1,7 +1,4 @@
-﻿
-using static System.Reflection.Metadata.BlobBuilder;
-
-namespace Bookstore
+﻿namespace Bookstore
 {
     /// <summary>
     /// Режим сложности игры
@@ -12,7 +9,6 @@ namespace Bookstore
         Normal,  // Нормальный: стандартные настройки
         Hard     // Сложный: мало времени, строгие 
     }
-
 
     /// <summary>
     /// Состояние игры
@@ -31,37 +27,34 @@ namespace Bookstore
     public class GameController
     {
 
-        private BookStore store;
+        private BookStore _store;
+        private DifficultyLevel _difficulty;
+        private int _gameDurationMinutes;
+        private DateTime _gameStartTime;
 
-        private DifficultyLevel difficulty;
         public String Difficulty;
-        private int gameDurationMinutes;
-        private DateTime gameStartTime;
-
         public int deliveryInterval { get; private set; }      // секунды между поставками
         public int customerInterval { get; private set; }      // секунды между покупателями
         public int maxQueueSize { get; private set; }         // максимальный размер очереди
         public int maxUnsatisfied { get; private set; }         // максимальное кол-во недовольных клиентов
 
         public GameState State { get; set; }
-        public BookStore Store => store;
+        public BookStore Store => _store;
         public event EventHandler<Book> BookDelivered;
         public event EventHandler<Customer> CustomerArrived;
         public event EventHandler<(bool Won, string Reason)> GameOver;
         public event EventHandler<int> TimeUpdated;
 
-        //private BookShelf currentDisplayShelf;   // текущий шкаф
-
         /// <summary>
         /// Конструктор контроллера
         /// </summary>
-        /// <param name="difficulty"> сложность игры </param>
-        /// <param name="maxShelves"> максимальное кол-во шкафов </param>
-        /// <param name="startBalance"> начальный баланс </param>
+        /// <param name="difficulty">Сложность игры</param>
+        /// <param name="maxShelves">Максимальное кол-во шкафов</param>
+        /// <param name="startBalance">Начальный баланс</param>
         public GameController(DifficultyLevel difficulty, int maxShelves = 3, decimal startBalance = 1000)
         {
-            this.difficulty = difficulty;
-            store = new BookStore(maxShelves, startBalance);
+            this._difficulty = difficulty;
+            _store = new BookStore(maxShelves, startBalance);
             State = GameState.NotStarted;
 
             ConfigureDifficulty();
@@ -72,7 +65,7 @@ namespace Bookstore
         /// </summary>
         private void ConfigureDifficulty()
         {
-            switch (difficulty)
+            switch (_difficulty)
             {
                 case DifficultyLevel.Easy:
                     Difficulty = "Лёгкая";
@@ -80,7 +73,7 @@ namespace Bookstore
                     customerInterval = 450;
                     maxQueueSize = 5;
                     maxUnsatisfied = 5;
-                    gameDurationMinutes = 10;
+                    _gameDurationMinutes = 10;
                     break;
 
                 case DifficultyLevel.Normal:
@@ -89,7 +82,7 @@ namespace Bookstore
                     customerInterval = 300;
                     maxQueueSize = 4;
                     maxUnsatisfied = 3;
-                    gameDurationMinutes = 8;
+                    _gameDurationMinutes = 8;
                     break;
 
                 case DifficultyLevel.Hard:
@@ -98,11 +91,10 @@ namespace Bookstore
                     customerInterval = 200;
                     maxQueueSize = 3;
                     maxUnsatisfied = 2;
-                    gameDurationMinutes = 5;
+                    _gameDurationMinutes = 5;
                     break;
             }
         }
-
 
         /// <summary>
         /// Событие, когда приходит книга
@@ -112,8 +104,8 @@ namespace Bookstore
             if (State != GameState.Playing)
                 return;
 
-            store.AddRandomDelivery();
-            var book = store.DeliveryQueue[store.DeliveryQueue.Count - 1];
+            _store.AddRandomDelivery();
+            var book = _store.DeliveryQueue[_store.DeliveryQueue.Count - 1];
             if (BookDelivered != null)
             {
                 BookDelivered.Invoke(this, book);
@@ -128,8 +120,8 @@ namespace Bookstore
             if (State != GameState.Playing)
                 return;
 
-            store.AddCustomer();
-            var customer = store.CustomerQueue[store.CustomerQueue.Count - 1];
+            _store.AddCustomer();
+            var customer = _store.CustomerQueue[_store.CustomerQueue.Count - 1];
             if (CustomerArrived != null)
             {
                 CustomerArrived.Invoke(this, customer);
@@ -145,8 +137,8 @@ namespace Bookstore
             if (State != GameState.Playing)
                 return;
 
-            var elapsed = DateTime.Now - gameStartTime;
-            var remaining = gameDurationMinutes * 60 - (int)elapsed.TotalSeconds;
+            var elapsed = DateTime.Now - _gameStartTime;
+            var remaining = _gameDurationMinutes * 60 - (int)elapsed.TotalSeconds;
 
             if (remaining <= 0)
             {
@@ -166,7 +158,7 @@ namespace Bookstore
         /// </summary>
         private void CheckGameOver()
         {
-            var (isGameOver, reason) = store.CheckGameOver(maxQueueSize, maxUnsatisfied);
+            var (isGameOver, reason) = _store.CheckGameOver(maxQueueSize, maxUnsatisfied);
 
             if (isGameOver)
             {
@@ -177,12 +169,12 @@ namespace Bookstore
         /// <summary>
         /// Завершение игры
         /// </summary>
-        /// <param name="won"> флаг выигрыша </param>
-        /// <param name="reason"> причина </param>
+        /// <param name="won">Флаг выигрыш </param>
+        /// <param name="reason">Причина</param>
         private void EndGame(bool won, string reason)
         {
             State = won ? GameState.Won : GameState.Lost;
-            
+
             if (GameOver != null)
             {
                 GameOver.Invoke(this, (won, reason));
@@ -192,17 +184,16 @@ namespace Bookstore
         /// <summary>
         /// Получение настроек сложности
         /// </summary>
-        /// <returns> информация </returns>
+        /// <returns>Информация</returns>
         public string GetDifficultyInfo()
         {
-            return $"Режим: {difficulty}\n" +
+            return $"Режим: {_difficulty}\n" +
                    $"Поставки: каждые {deliveryInterval / 10} сек\n" +
                    $"Покупатели: каждые {customerInterval / 10} сек\n" +
                    $"Макс. очередь: {maxQueueSize}\n" +
                    $"Макс. недовольных: {maxUnsatisfied}\n" +
-                   $"Длительность: {gameDurationMinutes} мин";
+                   $"Длительность: {_gameDurationMinutes} мин";
         }
-
 
         /*
         /// <summary>

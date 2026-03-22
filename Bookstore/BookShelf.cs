@@ -118,6 +118,7 @@
     }
 }
 */
+
 namespace Bookstore
 {
     /// <summary>
@@ -125,20 +126,21 @@ namespace Bookstore
     /// </summary>
     public class BookShelf
     {
-        private readonly List<Book> books = new List<Book>();
+        private readonly List<Book> _books = new List<Book>();
         public string Genre { get; private set; }
         public int Capacity { get; }
-        public int Count => books.Count;
-        public bool HasSpace => books.Count < Capacity;
-        public List<Book> Books => books;
+        public int Count => _books.Count;
+        public bool HasSpace => _books.Count < Capacity;
+        public List<Book> Books => _books;
 
         /// <summary>
         /// Конструктор шкафа
         /// </summary>
-        /// <param name="genre"> название жанра </param>
-        /// <param name="capacity"> вместимость </param>
+        /// <param name="genre">Название жанра</param>
+        /// <param name="capacity">Вместимость</param>
         /// <exception cref="ArgumentException"></exception>
-        public BookShelf(string genre, int capacity = 10)
+        public BookShelf(string genre,
+            int capacity = 10)
         {
             if (string.IsNullOrWhiteSpace(genre))
                 throw new ArgumentException("Жанр должен иметь название");
@@ -153,7 +155,7 @@ namespace Bookstore
         /// <summary>
         /// Добавление книги в шкаф
         /// </summary>
-        /// <param name="book"> название книги </param>
+        /// <param name="book">Название книги </param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
         public void AddBook(Book book)
@@ -171,29 +173,27 @@ namespace Bookstore
                 throw new InvalidOperationException("Нельзя добавить уже проданную книгу");
 
             Book.AddBook();
-
-            books.Add(book);
+            _books.Add(book);
         }
 
         /// <summary>
         /// Поиск книги по ID
         /// </summary>
-        /// <param name="id"> id номер книги </param>
-        /// <returns> книга </returns>
+        /// <param name="id">Id книги</param>
+        /// <returns>Найденная книга</returns>
         public Book FindById(int id)
         {
-            return books.FirstOrDefault(b => b.Id == id);
+            return _books.FirstOrDefault(b => b.Id == id);
         }
 
         /// <summary>
         /// Поиск книги по названию
         /// </summary>
         /// <param name="name"> название книги </param>
-        /// <returns> книга </returns>
+        /// <returns>Найденная книга</returns>
         public Book FindByName(string name)
-        {   
-            //return books.FirstOrDefault(b => string.Equals(b.Name, name, StringComparison.OrdinalIgnoreCase));
-            return books.FirstOrDefault(b => b.Name.StartsWith(name, StringComparison.OrdinalIgnoreCase));
+        {
+            return _books.FirstOrDefault(b => b.Name.StartsWith(name, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -203,7 +203,16 @@ namespace Bookstore
         /// <returns></returns>
         public bool RemoveBook(Book book)
         {
-            return books.Remove(book);
+            return _books.Remove(book);
+        }
+
+        /// <summary>
+        /// Получение списка книг в порядке ID
+        /// </summary>
+        /// <returns>Список книг</returns>
+        public IEnumerable<Book> GetBooksInOrder()
+        {
+            return _books.OrderBy(book => book.Id).ToList();
         }
 
         /// <summary>
@@ -213,23 +222,23 @@ namespace Bookstore
         public decimal SellAll()
         {
             decimal total = 0;
-            foreach (var book in books)
+            foreach (var book in _books)
             {
                 total += book.Sell();
             }
-            books.Clear();
+            _books.Clear();
             return total;
         }
 
         /// <summary>
         /// Смена жанра шкафа (только если пуст)
         /// </summary>
-        /// <param name="newGenre"> название нового жанра </param>
+        /// <param name="newGenre">Название нового жанра</param>
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="ArgumentException"></exception>
         public void ChangeGenre(string newGenre)
         {
-            if (books.Count > 0)
+            if (_books.Count > 0)
                 throw new InvalidOperationException("Нельзя сменить жанр непустого шкафа");
 
             if (string.IsNullOrWhiteSpace(newGenre))
@@ -239,17 +248,12 @@ namespace Bookstore
         }
 
         /// <summary>
-        /// Вывод
+        /// Ввод информации о шкафе
         /// </summary>
+        /// <returns>Информация</returns>
         public override string ToString()
         {
-            return $"{Genre} ({books.Count}/{Capacity})";
-        }
-
-
-        public IEnumerable<Book> GetBooksInOrder()
-        {
-            return books.OrderBy(book => book.Id).ToList();
+            return $"{Genre} ({_books.Count}/{Capacity})";
         }
     }
 }

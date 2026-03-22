@@ -167,7 +167,6 @@ namespace Book
          }
      }
     */
-using System;
 
 namespace Bookstore
 {
@@ -176,7 +175,7 @@ namespace Bookstore
     /// </summary>
     public class Book
     {
-        private static int lastId = 0;
+        private static int _lastId = 0;
         private static Random rnd = new Random();
         public int Id { get; set; }
         public string Name { get; set; }
@@ -189,14 +188,12 @@ namespace Bookstore
         public bool IsPlagiat { get; set; }
         public bool IsError { get; set; }
 
-        
-
         /// <summary>
         /// Конструктор для случайной генерации
         /// </summary>
         public Book()
         {
-            Id = lastId + 1;
+            Id = _lastId + 1;
             GenerateRandom();
         }
 
@@ -220,7 +217,7 @@ namespace Bookstore
             if (basePrice <= 0)
                 throw new ArgumentException("Цена должна быть больше 0");
 
-            Id = lastId + 1;
+            Id = _lastId + 1;
             Name = name;
             Author = author;
             Genre = genre;
@@ -231,7 +228,7 @@ namespace Bookstore
             IsError = false;
         }
 
-        public static void AddBook() { lastId = lastId + 1; }
+        public static void AddBook() { _lastId = _lastId + 1; }
 
         /// <summary>
         /// Случайная генерация книги из файлов
@@ -277,8 +274,8 @@ namespace Bookstore
         /// <summary>
         /// Создание опечатки в названии
         /// </summary>
-        /// <param name="name"> название книги </param>
-        /// <returns> измененное название </returns>
+        /// <param name="name">Название книги</param>
+        /// <returns>Измененное название</returns>
         private static string CreateErrorInName(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -300,7 +297,7 @@ namespace Bookstore
         /// <summary>
         /// Продажа книги
         /// </summary>
-        /// <returns> цена книги (базовая)  </returns>
+        /// <returns>Базовая цена книги</returns>
         /// <exception cref="InvalidOperationException"></exception>
         public decimal Sell()
         {
@@ -313,8 +310,8 @@ namespace Bookstore
         /// <summary>
         /// Проверка на плагиат
         /// </summary>
-        /// <param name="book"> название проверяемой книги </param>
-        /// <returns></returns>
+        /// <param name="book">Название проверяемой книги</param>
+        /// <returns>True, если книга является плагиатом</returns>
         public bool CheckPlagiat(Book book)
         {
             return string.Equals(Name, book.Name, StringComparison.OrdinalIgnoreCase) && !string.Equals(Author, book.Author, StringComparison.OrdinalIgnoreCase);
@@ -323,7 +320,7 @@ namespace Bookstore
         /// <summary>
         /// Получение пары название-автор из файла
         /// </summary>
-        /// <returns> название книги и автор</returns>
+        /// <returns>Название книги и автор</returns>
         /// <exception cref="InvalidOperationException"></exception>
         public static (string Name, string Author) GetRandomNameAuthorPair()
         {
@@ -340,7 +337,7 @@ namespace Bookstore
         /// <summary>
         /// Получение случайного автора, отличного от указанного
         /// </summary>
-        /// <param name="Author"> текущий автор </param>
+        /// <param name="Author">Текущий автор</param>
         /// <returns></returns>
         private static string GetRandomAuthorDifferent(string Author)
         {
@@ -356,8 +353,8 @@ namespace Bookstore
         /// <summary>
         /// Чтение случайной строки из файла
         /// </summary>
-        /// <param name="path"> файл </param>
-        /// <returns> строка </returns>
+        /// <param name="path">Файл</param>
+        /// <returns>Строка</returns>
         /// <exception cref="Exception"></exception>
         public static string GetRandomLineFromFile(string path)
         {

@@ -163,28 +163,9 @@ namespace Lab3
                 return;
             }
             Book newBook = new Book(txtBookName.Text, txtAuthor.Text, txtGenre.Text, pages, price);
-            // Найти или создать полку
-            var shelf = store.Shelves.FirstOrDefault(s => s.Genre.Equals(newBook.Genre, StringComparison.OrdinalIgnoreCase));
-            if (shelf == null)
-            {
-                if (store.Shelves.Any(s => s.Count == 0))
-                {
-                    shelf = store.Shelves.First(s => s.Count == 0);
-                    shelf.ChangeGenre(newBook.Genre);
-                }
-                else if (store.Shelves.Count < store.MaxShelves)
-                {
-                    shelf = new BookShelf(genre: newBook.Genre);
-                    store.Shelves.Add(shelf);
-                }
-            }
-            if (shelf == null || !shelf.HasSpace)
-            {
-                txtStatus.Text = "Нет места для этой книги";
-                return;
-            }
-            shelf.AddBook(newBook);
-            txtStatus.Text = $"Книга \"{newBook.Name}\" добавлена";
+            
+            store.AddBookToShelf(newBook.Genre, newBook, out string msg);
+            txtStatus.Text = msg;
             LoadGenres();
             txtBookID.Clear(); txtBookName.Clear(); txtAuthor.Clear(); txtPrice.Clear(); txtPageCount.Clear(); txtGenre.Clear();
         }
@@ -331,52 +312,20 @@ namespace Lab3
                 if (lastDeliveryBook.IsPlagiat == true || lastDeliveryBook.IsError == true)
                     store.Balance = store.Balance - 15;
 
-                // Найти или создать полку
-                var shelf = store.Shelves.FirstOrDefault(s => s.Genre.Equals(lastDeliveryBook.Genre, StringComparison.OrdinalIgnoreCase));
-                if (shelf == null)
-                {
-                    if (store.Shelves.Any(s => s.Count == 0))
-                    {
-                        shelf = store.Shelves.First(s => s.Count == 0);
-                        shelf.ChangeGenre(lastDeliveryBook.Genre);
-                    }
-                    else if (store.Shelves.Count < store.MaxShelves)
-                    {
-                        shelf = new BookShelf(genre: lastDeliveryBook.Genre);
-                        store.Shelves.Add(shelf);
-                    }
-                }
-                if (shelf == null || !shelf.HasSpace)
-                {
-                    MessageBox.Show("Нет места для этой книги.", "Нет места для этой книги.");
-                    return;
-                }
-                shelf.AddBook(lastDeliveryBook);
-                MessageBox.Show($"Книга \"{lastDeliveryBook.Name}\" добавлена.", $"Книга \"{lastDeliveryBook.Name}\" добавлена.");
-                LoadGenres();
+                store.AcceptDelivery(lastDeliveryBook, lastDeliveryBook.IsPlagiat, lastDeliveryBook.IsError, out decimal fine, out string msg);
 
-                store.DeliveryQueue.Remove(lastDeliveryBook);
+                MessageBox.Show(msg, msg);
+                LoadGenres();
             }
             else if (radioButton2.Checked == true)
             {
-                if (lastDeliveryBook.IsPlagiat == true)
-                    store.Balance = store.Balance + 10;
-                else if (lastDeliveryBook.IsError == true)
-                    store.Balance = store.Balance - 10;
-
-                store.DeliveryQueue.Remove(lastDeliveryBook);
-                MessageBox.Show($"Книга \"{lastDeliveryBook.Name}\" отклонена.", $"Книга \"{lastDeliveryBook.Name}\" отклонена.");
-
+                store.RejectDelivery(lastDeliveryBook, lastDeliveryBook.IsPlagiat, lastDeliveryBook.IsError, out decimal reward, out string msg);
+                MessageBox.Show(msg, msg);
             }
             else if (radioButton3.Checked == true)
             {
-                if (lastDeliveryBook.IsError == true)
-                    store.Balance = store.Balance + 10;
-                else if (lastDeliveryBook.IsPlagiat == true)
-                    store.Balance = store.Balance - 10;
-
-                store.DeliveryQueue.Remove(lastDeliveryBook);
-                MessageBox.Show($"Книга \"{lastDeliveryBook.Name}\" отклонена.", $"Книга \"{lastDeliveryBook.Name}\" отклонена.");
+                store.RejectDelivery(lastDeliveryBook, lastDeliveryBook.IsPlagiat, lastDeliveryBook.IsError, out decimal reward, out string msg);
+                MessageBox.Show(msg, msg);
             }
             lblBalance.Text = $"{store.Balance}₽";
             UpdateDeliveryQueue();
