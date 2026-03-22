@@ -119,11 +119,11 @@ namespace Lab3
         /// <param name="e"></param>
         private void GameController_BookDelivered(object sender, Book e)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => UpdateDeliveryQueue()));
-                return;
-            }
+            //if (InvokeRequired)
+            //{
+            //    Invoke(new Action(() => UpdateDeliveryQueue()));
+            //    return;
+            //}
 
             UpdateDeliveryQueue();
             //MessageBox.Show("Поступила новая книга!", "Новая книга");
@@ -136,11 +136,11 @@ namespace Lab3
         /// <param name="e"></param>
         private void GameController_CustomerArrived(object sender, Customer e)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => UpdateCustomerQueue()));
-                return;
-            }
+            //if (InvokeRequired)
+            //{
+            //    Invoke(new Action(() => UpdateCustomerQueue()));
+            //    return;
+            //}
 
             UpdateCustomerQueue();
             //MessageBox.Show("Пришёл новый клиент!", "Новый клиент");
@@ -148,14 +148,14 @@ namespace Lab3
 
         private void GameController_TimeUpdated(object sender, TimeUpdatedEventArgs e)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() =>
-                {
-                    txttime.Text = e.GameTime.ToString(@"hh\:mm");
-                }));
-                return;
-            }
+            //if (InvokeRequired)
+            //{
+            //    Invoke(new Action(() =>
+            //    {
+            //        txttime.Text = e.GameTime.ToString(@"hh\:mm");
+            //    }));
+            //    return;
+            //}
 
             txttime.Text = e.GameTime.ToString(@"hh\:mm");
         }
@@ -167,6 +167,8 @@ namespace Lab3
         /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
+            gameController.Tick();
+
             lastDiliveryQueueCount = store.DeliveryQueue.Count;
 
             if (store.DeliveryQueue.Count > 0 && !tabControl1.TabPages.Contains(tabPage1))

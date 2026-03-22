@@ -41,7 +41,7 @@ namespace Bookstore
         private int _gameDurationMinutes;
         private DateTime _gameStartTime;
         private List<DateTime> _events;
-        private System.Timers.Timer _timer = new System.Timers.Timer();
+        //private System.Timers.Timer _timer = new System.Timers.Timer();
 
         private TimeSpan _gameDayStart = new TimeSpan(8, 0, 0);  // 08:00
         private TimeSpan _gameDayEnd = new TimeSpan(20, 0, 0);   // 20:00
@@ -120,10 +120,10 @@ namespace Bookstore
 
             this.State = GameState.Playing;
             this._gameStartTime = DateTime.Now;
-            this._timer.Interval = 1000;
-            this._timer.Elapsed += (sender, e) => GameTimer_Elapsed(sender, e, this); ;
-            this._timer.AutoReset = true;
-            this._timer.Start();
+            //this._timer.Interval = 1000;
+            //this._timer.Elapsed += (sender, e) => GameTimer_Elapsed(sender, e, this); ;
+            //this._timer.AutoReset = true;
+            //this._timer.Start();
 
             
         }
@@ -144,6 +144,31 @@ namespace Bookstore
                     {
                         controller._events[i] = DateTime.Now.AddSeconds(controller.customerInterval);
                         controller.CustomerTimer_Tick();
+                    }
+                }
+            }
+        }
+
+        public void Tick()
+        {
+            if (State != GameState.Playing)
+                return;
+
+            GameTimer_Tick();
+
+            for (int i = 0; i < 2; i++)
+            {
+                if (DateTime.Now >= _events[i])
+                {
+                    if (i == 0)
+                    {
+                        _events[i] = DateTime.Now.AddSeconds(deliveryInterval);
+                        DeliveryTimer_Tick();
+                    }
+                    else
+                    {
+                        _events[i] = DateTime.Now.AddSeconds(customerInterval);
+                        CustomerTimer_Tick();
                     }
                 }
             }
