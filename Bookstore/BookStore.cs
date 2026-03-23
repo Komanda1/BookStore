@@ -498,6 +498,13 @@ namespace Bookstore
             return true;
         }
 
+        public void NotSellToCustomer(Customer customer, out string message)
+        {
+            message = "Вы отказали покупателю!";
+            UnsatisfiedCustomers++;
+            _customerQueue.Remove(customer);
+        }
+
         /// <summary>
         /// Продажа книги без покупателя (по базовой цене)
         /// </summary>

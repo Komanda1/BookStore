@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Bookstore;
+using Microsoft.VisualBasic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Bookstore;
-using Microsoft.VisualBasic;
 
 namespace Lab3
 {
@@ -26,8 +27,11 @@ namespace Lab3
         private bool blinkDelivery = false;
         private bool blinkCustomers = false;
 
+        public Book bookForSellCust;
+
         private readonly System.Collections.Generic.Dictionary<string, Book> booksMap = new();
         private readonly System.Collections.Generic.Dictionary<string, Customer> customersCollection = new();
+        private readonly System.Collections.Generic.Dictionary<string, Book> allBooks = new();
 
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
@@ -46,7 +50,7 @@ namespace Lab3
             gameController.TimeUpdated += (s, e) => GameController_TimeUpdated(s, e);
 
             gameController.StartGame();
-                        
+
             lblBalance.Text = $"{store.Balance}₽";
             txtStatus.Text = "Магазин готов";
             LoadGenres();
@@ -274,11 +278,12 @@ namespace Lab3
                 return;
             }
             Book newBook = new Book(txtBookName.Text, txtAuthor.Text, txtGenre.Text, pages, price);
-            
+
             store.AddBookToShelf(newBook.Genre, newBook, out string msg);
             txtStatus.Text = msg;
             LoadGenres();
             txtBookID.Clear(); txtBookName.Clear(); txtAuthor.Clear(); txtPrice.Clear(); txtPageCount.Clear(); txtGenre.Clear();
+            UpdateBooksList();
         }
 
         private void btnFindBook_Click(object sender, EventArgs e)
@@ -319,6 +324,7 @@ namespace Lab3
             if (currentShelf != null)
                 lstBook.Items.Remove(lstBook.SelectedItem);
             ClearBookInfo();
+            UpdateBooksList();
         }
 
         private void btnClearShelf_Click(object sender, EventArgs e)
@@ -331,6 +337,7 @@ namespace Lab3
             lblBalance.Text = $"{store.Balance}₽";
             txtStatus.Text = $"Шкаф \"{currentShelf.Genre}\" очищен";
             lstBook.Items.Clear();
+            UpdateBooksList();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -367,7 +374,7 @@ namespace Lab3
             if (store.CustomerQueue.Count == 0) return;
 
             Customer lastCustomer = store.CustomerQueue.Last();
-            
+
             if (lastCustomer == null) return;
 
             txtDelQueue.Text = store.CustomerQueue.Count.ToString();
@@ -378,8 +385,6 @@ namespace Lab3
             textBox10.Text = lastCustomer.DesiredAuthor;
             textBox11.Text = lastCustomer.DesiredGenre;
             textBox12.Text = lastCustomer.MaxPrice.ToString();
-
-            
         }
 
         private void UpdateCustomerList()
@@ -390,6 +395,21 @@ namespace Lab3
                 string key = $"Пожелания клиента: {cust.DesiredName} | {cust.DesiredAuthor} | {cust.DesiredGenre} | {cust.MaxPrice}";
                 listClient.Items.Add(key);
                 customersCollection[key] = cust;
+            }
+            txtClientCount.Text = store.CustomerQueue.Count.ToString();
+        }
+
+        private void UpdateBooksList()
+        {
+            comboBox1.Items.Clear();
+            foreach (var s in store.Shelves)
+            {
+                foreach (var b in s.Books)
+                {
+                    string key = $"{b.Id} | {b.Name}";
+                    comboBox1.Items.Add(key);
+                    allBooks[key] = b;
+                }
             }
         }
 
@@ -442,6 +462,58 @@ namespace Lab3
             }
             lblBalance.Text = $"{store.Balance}₽";
             UpdateDeliveryQueue();
+            UpdateBooksList();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedItem == null) return;
+
+            string selectbook = comboBox1.SelectedItem.ToString();
+            selectbook = selectbook.Split(' ')[0];
+            int id = int.Parse(selectbook);
+            bookForSellCust = store.FindBookById(id);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (selectedCustomer == null)
+            {
+                MessageBox.Show("Выберите покупателя!", "Выберите покупателя!");
+                return;
+            }
+            if (bookForSellCust != null)
+            {
+                bookForSellCust.IsSold = store.SellToCustomer(selectedCustomer, bookForSellCust, bookForSellCust.BasePrice, out string msg);
+                MessageBox.Show(msg, msg);
+                selectedCustomer = null;
+                bookForSellCust = null;
+                UpdateBooksList();
+                UpdateCustomerList();
+            }
+            else
+            {
+                MessageBox.Show("Выберите книгу для продажи!", "Выберите книгу!");
+            }
+            comboBox1.Text = null;
+            textBox7.Text = store.UnsatisfiedCustomers.ToString();
+            textBox8.Text = store.SatisfiedCustomers.ToString();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (selectedCustomer == null)
+            {
+                MessageBox.Show("Выберите покупателя!", "Выберите покупателя!");
+                return;
+            }
+            store.NotSellToCustomer(selectedCustomer, out string msg);
+            MessageBox.Show(msg, msg);
+            selectedCustomer = null;
+            comboBox1.Text = null;
+            UpdateCustomerList();
+            textBox7.Text = store.UnsatisfiedCustomers.ToString();
+            textBox8.Text = store.SatisfiedCustomers.ToString();
         }
     }
 }

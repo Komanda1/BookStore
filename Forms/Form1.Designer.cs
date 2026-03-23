@@ -148,10 +148,11 @@
             tabControl1.Controls.Add(tabStore);
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Location = new Point(51, 173);
+            tabControl1.Location = new Point(45, 130);
+            tabControl1.Margin = new Padding(3, 2, 3, 2);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(731, 776);
+            tabControl1.Size = new Size(640, 582);
             tabControl1.TabIndex = 0;
             // 
             // tabNewBook
@@ -159,10 +160,11 @@
             tabNewBook.BackColor = Color.FromArgb(224, 224, 224);
             tabNewBook.Controls.Add(groupBox2);
             tabNewBook.Controls.Add(groupBox1);
-            tabNewBook.Location = new Point(4, 29);
+            tabNewBook.Location = new Point(4, 24);
+            tabNewBook.Margin = new Padding(3, 2, 3, 2);
             tabNewBook.Name = "tabNewBook";
-            tabNewBook.Padding = new Padding(3);
-            tabNewBook.Size = new Size(723, 743);
+            tabNewBook.Padding = new Padding(3, 2, 3, 2);
+            tabNewBook.Size = new Size(632, 554);
             tabNewBook.TabIndex = 0;
             tabNewBook.Text = "Заказать книгу";
             // 
@@ -172,9 +174,11 @@
             groupBox2.Controls.Add(txtStatus);
             groupBox2.Controls.Add(btnAddBook);
             groupBox2.Controls.Add(btnGenerateRandom);
-            groupBox2.Location = new Point(38, 441);
+            groupBox2.Location = new Point(33, 331);
+            groupBox2.Margin = new Padding(3, 2, 3, 2);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(639, 165);
+            groupBox2.Padding = new Padding(3, 2, 3, 2);
+            groupBox2.Size = new Size(559, 124);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             groupBox2.Text = "Управление";
@@ -182,17 +186,18 @@
             // txtStatus
             // 
             txtStatus.BackColor = Color.FromArgb(224, 224, 224);
-            txtStatus.Location = new Point(11, 108);
+            txtStatus.Location = new Point(10, 81);
             txtStatus.Name = "txtStatus";
-            txtStatus.Size = new Size(566, 37);
+            txtStatus.Size = new Size(495, 28);
             txtStatus.TabIndex = 2;
             txtStatus.Text = "Строка состояния";
             // 
             // btnAddBook
             // 
-            btnAddBook.Location = new Point(349, 37);
+            btnAddBook.Location = new Point(305, 28);
+            btnAddBook.Margin = new Padding(3, 2, 3, 2);
             btnAddBook.Name = "btnAddBook";
-            btnAddBook.Size = new Size(229, 37);
+            btnAddBook.Size = new Size(200, 28);
             btnAddBook.TabIndex = 1;
             btnAddBook.Text = "Добавить книгу";
             btnAddBook.UseVisualStyleBackColor = true;
@@ -200,9 +205,10 @@
             // 
             // btnGenerateRandom
             // 
-            btnGenerateRandom.Location = new Point(11, 37);
+            btnGenerateRandom.Location = new Point(10, 28);
+            btnGenerateRandom.Margin = new Padding(3, 2, 3, 2);
             btnGenerateRandom.Name = "btnGenerateRandom";
-            btnGenerateRandom.Size = new Size(229, 37);
+            btnGenerateRandom.Size = new Size(200, 28);
             btnGenerateRandom.TabIndex = 0;
             btnGenerateRandom.Text = "Случайная генерация";
             btnGenerateRandom.UseVisualStyleBackColor = true;
@@ -223,9 +229,11 @@
             groupBox1.Controls.Add(txtBookName);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(39, 12);
+            groupBox1.Location = new Point(34, 9);
+            groupBox1.Margin = new Padding(3, 2, 3, 2);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(638, 409);
+            groupBox1.Padding = new Padding(3, 2, 3, 2);
+            groupBox1.Size = new Size(558, 307);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Данные книги";
@@ -234,27 +242,29 @@
             // 
             txtBookID.BackColor = Color.FromArgb(224, 224, 224);
             txtBookID.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            txtBookID.Location = new Point(293, 49);
+            txtBookID.Location = new Point(256, 37);
+            txtBookID.Margin = new Padding(3, 2, 3, 2);
             txtBookID.Name = "txtBookID";
-            txtBookID.Size = new Size(285, 27);
+            txtBookID.Size = new Size(250, 23);
             txtBookID.TabIndex = 13;
             // 
             // txtGenre
             // 
             txtGenre.BackColor = Color.FromArgb(224, 224, 224);
             txtGenre.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            txtGenre.Location = new Point(293, 355);
+            txtGenre.Location = new Point(256, 266);
+            txtGenre.Margin = new Padding(3, 2, 3, 2);
             txtGenre.Name = "txtGenre";
-            txtGenre.Size = new Size(285, 27);
+            txtGenre.Size = new Size(250, 23);
             txtGenre.TabIndex = 12;
             // 
             // label6
             // 
             label6.BackColor = Color.FromArgb(224, 224, 224);
             label6.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label6.Location = new Point(11, 341);
+            label6.Location = new Point(10, 256);
             label6.Name = "label6";
-            label6.Size = new Size(234, 48);
+            label6.Size = new Size(205, 36);
             label6.TabIndex = 11;
             label6.Text = "Жанр";
             // 
@@ -262,18 +272,19 @@
             // 
             txtPageCount.BackColor = Color.FromArgb(224, 224, 224);
             txtPageCount.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            txtPageCount.Location = new Point(293, 293);
+            txtPageCount.Location = new Point(256, 220);
+            txtPageCount.Margin = new Padding(3, 2, 3, 2);
             txtPageCount.Name = "txtPageCount";
-            txtPageCount.Size = new Size(285, 27);
+            txtPageCount.Size = new Size(250, 23);
             txtPageCount.TabIndex = 9;
             // 
             // label5
             // 
             label5.BackColor = Color.FromArgb(224, 224, 224);
             label5.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label5.Location = new Point(11, 281);
+            label5.Location = new Point(10, 211);
             label5.Name = "label5";
-            label5.Size = new Size(234, 48);
+            label5.Size = new Size(205, 36);
             label5.TabIndex = 8;
             label5.Text = "Кол-во страниц";
             // 
@@ -281,18 +292,19 @@
             // 
             txtPrice.BackColor = Color.FromArgb(224, 224, 224);
             txtPrice.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            txtPrice.Location = new Point(293, 231);
+            txtPrice.Location = new Point(256, 173);
+            txtPrice.Margin = new Padding(3, 2, 3, 2);
             txtPrice.Name = "txtPrice";
-            txtPrice.Size = new Size(285, 27);
+            txtPrice.Size = new Size(250, 23);
             txtPrice.TabIndex = 7;
             // 
             // label4
             // 
             label4.BackColor = Color.FromArgb(224, 224, 224);
             label4.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label4.Location = new Point(11, 219);
+            label4.Location = new Point(10, 164);
             label4.Name = "label4";
-            label4.Size = new Size(234, 48);
+            label4.Size = new Size(205, 36);
             label4.TabIndex = 6;
             label4.Text = "Цена";
             // 
@@ -300,18 +312,19 @@
             // 
             txtAuthor.BackColor = Color.FromArgb(224, 224, 224);
             txtAuthor.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            txtAuthor.Location = new Point(293, 169);
+            txtAuthor.Location = new Point(256, 127);
+            txtAuthor.Margin = new Padding(3, 2, 3, 2);
             txtAuthor.Name = "txtAuthor";
-            txtAuthor.Size = new Size(285, 27);
+            txtAuthor.Size = new Size(250, 23);
             txtAuthor.TabIndex = 5;
             // 
             // label3
             // 
             label3.BackColor = Color.FromArgb(224, 224, 224);
             label3.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label3.Location = new Point(11, 157);
+            label3.Location = new Point(10, 118);
             label3.Name = "label3";
-            label3.Size = new Size(234, 48);
+            label3.Size = new Size(205, 36);
             label3.TabIndex = 4;
             label3.Text = "Автор";
             // 
@@ -319,18 +332,19 @@
             // 
             txtBookName.BackColor = Color.FromArgb(224, 224, 224);
             txtBookName.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            txtBookName.Location = new Point(293, 109);
+            txtBookName.Location = new Point(256, 82);
+            txtBookName.Margin = new Padding(3, 2, 3, 2);
             txtBookName.Name = "txtBookName";
-            txtBookName.Size = new Size(285, 27);
+            txtBookName.Size = new Size(250, 23);
             txtBookName.TabIndex = 3;
             // 
             // label2
             // 
             label2.BackColor = Color.FromArgb(224, 224, 224);
             label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label2.Location = new Point(11, 99);
+            label2.Location = new Point(10, 74);
             label2.Name = "label2";
-            label2.Size = new Size(234, 48);
+            label2.Size = new Size(205, 36);
             label2.TabIndex = 2;
             label2.Text = "Название";
             // 
@@ -338,9 +352,9 @@
             // 
             label1.BackColor = Color.FromArgb(224, 224, 224);
             label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label1.Location = new Point(11, 37);
+            label1.Location = new Point(10, 28);
             label1.Name = "label1";
-            label1.Size = new Size(234, 48);
+            label1.Size = new Size(205, 36);
             label1.TabIndex = 0;
             label1.Text = "Код Книги";
             // 
@@ -350,10 +364,11 @@
             tabStore.Controls.Add(panel3);
             tabStore.Controls.Add(panel2);
             tabStore.Controls.Add(panel1);
-            tabStore.Location = new Point(4, 29);
+            tabStore.Location = new Point(4, 24);
+            tabStore.Margin = new Padding(3, 2, 3, 2);
             tabStore.Name = "tabStore";
-            tabStore.Padding = new Padding(3);
-            tabStore.Size = new Size(723, 743);
+            tabStore.Padding = new Padding(3, 2, 3, 2);
+            tabStore.Size = new Size(632, 554);
             tabStore.TabIndex = 1;
             tabStore.Text = "Магазин";
             // 
@@ -374,51 +389,58 @@
             panel3.Controls.Add(lblStoreName);
             panel3.Controls.Add(lstBook);
             panel3.Controls.Add(txtShelfName);
-            panel3.Location = new Point(273, 80);
+            panel3.Location = new Point(239, 60);
+            panel3.Margin = new Padding(3, 2, 3, 2);
             panel3.Name = "panel3";
-            panel3.Size = new Size(399, 487);
+            panel3.Size = new Size(349, 365);
             panel3.TabIndex = 2;
             // 
             // txtStoreCode
             // 
-            txtStoreCode.Location = new Point(213, 388);
+            txtStoreCode.Location = new Point(186, 291);
+            txtStoreCode.Margin = new Padding(3, 2, 3, 2);
             txtStoreCode.Name = "txtStoreCode";
-            txtStoreCode.Size = new Size(172, 27);
+            txtStoreCode.Size = new Size(151, 23);
             txtStoreCode.TabIndex = 13;
             // 
             // txtStorePage
             // 
-            txtStorePage.Location = new Point(213, 355);
+            txtStorePage.Location = new Point(186, 266);
+            txtStorePage.Margin = new Padding(3, 2, 3, 2);
             txtStorePage.Name = "txtStorePage";
-            txtStorePage.Size = new Size(172, 27);
+            txtStorePage.Size = new Size(151, 23);
             txtStorePage.TabIndex = 12;
             // 
             // txtStorePrice
             // 
-            txtStorePrice.Location = new Point(213, 320);
+            txtStorePrice.Location = new Point(186, 240);
+            txtStorePrice.Margin = new Padding(3, 2, 3, 2);
             txtStorePrice.Name = "txtStorePrice";
-            txtStorePrice.Size = new Size(172, 27);
+            txtStorePrice.Size = new Size(151, 23);
             txtStorePrice.TabIndex = 11;
             // 
             // txtStoreAuthor
             // 
-            txtStoreAuthor.Location = new Point(213, 287);
+            txtStoreAuthor.Location = new Point(186, 215);
+            txtStoreAuthor.Margin = new Padding(3, 2, 3, 2);
             txtStoreAuthor.Name = "txtStoreAuthor";
-            txtStoreAuthor.Size = new Size(172, 27);
+            txtStoreAuthor.Size = new Size(151, 23);
             txtStoreAuthor.TabIndex = 10;
             // 
             // txtStoreName
             // 
-            txtStoreName.Location = new Point(213, 252);
+            txtStoreName.Location = new Point(186, 189);
+            txtStoreName.Margin = new Padding(3, 2, 3, 2);
             txtStoreName.Name = "txtStoreName";
-            txtStoreName.Size = new Size(172, 27);
+            txtStoreName.Size = new Size(151, 23);
             txtStoreName.TabIndex = 9;
             // 
             // btnClose
             // 
-            btnClose.Location = new Point(230, 435);
+            btnClose.Location = new Point(201, 326);
+            btnClose.Margin = new Padding(3, 2, 3, 2);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(146, 37);
+            btnClose.Size = new Size(128, 28);
             btnClose.TabIndex = 8;
             btnClose.Text = "Закрыть";
             btnClose.UseVisualStyleBackColor = true;
@@ -426,9 +448,10 @@
             // 
             // btnSellBook
             // 
-            btnSellBook.Location = new Point(21, 435);
+            btnSellBook.Location = new Point(18, 326);
+            btnSellBook.Margin = new Padding(3, 2, 3, 2);
             btnSellBook.Name = "btnSellBook";
-            btnSellBook.Size = new Size(146, 37);
+            btnSellBook.Size = new Size(128, 28);
             btnSellBook.TabIndex = 7;
             btnSellBook.Text = "Продать книгу";
             btnSellBook.UseVisualStyleBackColor = true;
@@ -437,45 +460,45 @@
             // lblStoreCode
             // 
             lblStoreCode.BackColor = Color.FromArgb(224, 224, 224);
-            lblStoreCode.Location = new Point(21, 388);
+            lblStoreCode.Location = new Point(18, 291);
             lblStoreCode.Name = "lblStoreCode";
-            lblStoreCode.Size = new Size(168, 32);
+            lblStoreCode.Size = new Size(147, 24);
             lblStoreCode.TabIndex = 6;
             lblStoreCode.Text = "Код Книги";
             // 
             // lblStorePage
             // 
             lblStorePage.BackColor = Color.FromArgb(224, 224, 224);
-            lblStorePage.Location = new Point(21, 355);
+            lblStorePage.Location = new Point(18, 266);
             lblStorePage.Name = "lblStorePage";
-            lblStorePage.Size = new Size(168, 32);
+            lblStorePage.Size = new Size(147, 24);
             lblStorePage.TabIndex = 5;
             lblStorePage.Text = "Кол-во страниц";
             // 
             // lblStorePrice
             // 
             lblStorePrice.BackColor = Color.FromArgb(224, 224, 224);
-            lblStorePrice.Location = new Point(21, 320);
+            lblStorePrice.Location = new Point(18, 240);
             lblStorePrice.Name = "lblStorePrice";
-            lblStorePrice.Size = new Size(168, 32);
+            lblStorePrice.Size = new Size(147, 24);
             lblStorePrice.TabIndex = 4;
             lblStorePrice.Text = "Цена";
             // 
             // lblStoreAuthor
             // 
             lblStoreAuthor.BackColor = Color.FromArgb(224, 224, 224);
-            lblStoreAuthor.Location = new Point(21, 285);
+            lblStoreAuthor.Location = new Point(18, 214);
             lblStoreAuthor.Name = "lblStoreAuthor";
-            lblStoreAuthor.Size = new Size(168, 32);
+            lblStoreAuthor.Size = new Size(147, 24);
             lblStoreAuthor.TabIndex = 3;
             lblStoreAuthor.Text = "Автор";
             // 
             // lblStoreName
             // 
             lblStoreName.BackColor = Color.FromArgb(224, 224, 224);
-            lblStoreName.Location = new Point(21, 252);
+            lblStoreName.Location = new Point(18, 189);
             lblStoreName.Name = "lblStoreName";
-            lblStoreName.Size = new Size(168, 32);
+            lblStoreName.Size = new Size(147, 24);
             lblStoreName.TabIndex = 2;
             lblStoreName.Text = "Название";
             // 
@@ -483,10 +506,12 @@
             // 
             lstBook.FormattingEnabled = true;
             lstBook.HorizontalScrollbar = true;
+            lstBook.ItemHeight = 15;
             lstBook.Items.AddRange(new object[] { "Список книг текущего жанра:" });
-            lstBook.Location = new Point(21, 59);
+            lstBook.Location = new Point(18, 44);
+            lstBook.Margin = new Padding(3, 2, 3, 2);
             lstBook.Name = "lstBook";
-            lstBook.Size = new Size(365, 184);
+            lstBook.Size = new Size(320, 139);
             lstBook.TabIndex = 1;
             lstBook.SelectedIndexChanged += lstBook_SelectedIndexChanged;
             // 
@@ -494,9 +519,9 @@
             // 
             txtShelfName.BackColor = Color.FromArgb(224, 224, 224);
             txtShelfName.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            txtShelfName.Location = new Point(21, 11);
+            txtShelfName.Location = new Point(18, 8);
             txtShelfName.Name = "txtShelfName";
-            txtShelfName.Size = new Size(365, 43);
+            txtShelfName.Size = new Size(319, 32);
             txtShelfName.TabIndex = 0;
             txtShelfName.Text = "Книги в шкафу";
             // 
@@ -506,16 +531,18 @@
             panel2.Controls.Add(btnClearShelf);
             panel2.Controls.Add(lstGenres);
             panel2.Controls.Add(label9);
-            panel2.Location = new Point(53, 77);
+            panel2.Location = new Point(46, 58);
+            panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(207, 489);
+            panel2.Size = new Size(181, 367);
             panel2.TabIndex = 1;
             // 
             // btnClearShelf
             // 
-            btnClearShelf.Location = new Point(10, 417);
+            btnClearShelf.Location = new Point(9, 313);
+            btnClearShelf.Margin = new Padding(3, 2, 3, 2);
             btnClearShelf.Name = "btnClearShelf";
-            btnClearShelf.Size = new Size(187, 45);
+            btnClearShelf.Size = new Size(164, 34);
             btnClearShelf.TabIndex = 2;
             btnClearShelf.Text = "Очистить шкаф";
             btnClearShelf.UseVisualStyleBackColor = true;
@@ -525,10 +552,12 @@
             // 
             lstGenres.BackColor = Color.FromArgb(224, 224, 224);
             lstGenres.FormattingEnabled = true;
+            lstGenres.ItemHeight = 15;
             lstGenres.Items.AddRange(new object[] { "Список жанров (шкафов)" });
-            lstGenres.Location = new Point(11, 67);
+            lstGenres.Location = new Point(10, 50);
+            lstGenres.Margin = new Padding(3, 2, 3, 2);
             lstGenres.Name = "lstGenres";
-            lstGenres.Size = new Size(185, 324);
+            lstGenres.Size = new Size(162, 244);
             lstGenres.TabIndex = 1;
             lstGenres.SelectedIndexChanged += lstGenres_SelectedIndexChanged_1;
             // 
@@ -536,9 +565,9 @@
             // 
             label9.BackColor = Color.FromArgb(224, 224, 224);
             label9.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label9.Location = new Point(18, 12);
+            label9.Location = new Point(16, 9);
             label9.Name = "label9";
-            label9.Size = new Size(171, 37);
+            label9.Size = new Size(150, 28);
             label9.TabIndex = 0;
             label9.Text = "Список жанров";
             // 
@@ -547,16 +576,18 @@
             panel1.BackColor = Color.White;
             panel1.Controls.Add(btnFindBook);
             panel1.Controls.Add(txtSearchBook);
-            panel1.Location = new Point(53, 9);
+            panel1.Location = new Point(46, 7);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(619, 63);
+            panel1.Size = new Size(542, 47);
             panel1.TabIndex = 0;
             // 
             // btnFindBook
             // 
-            btnFindBook.Location = new Point(478, 13);
+            btnFindBook.Location = new Point(418, 10);
+            btnFindBook.Margin = new Padding(3, 2, 3, 2);
             btnFindBook.Name = "btnFindBook";
-            btnFindBook.Size = new Size(118, 37);
+            btnFindBook.Size = new Size(103, 28);
             btnFindBook.TabIndex = 3;
             btnFindBook.Text = "Найти";
             btnFindBook.UseVisualStyleBackColor = true;
@@ -566,10 +597,11 @@
             // 
             txtSearchBook.AccessibleDescription = "";
             txtSearchBook.AccessibleName = "";
-            txtSearchBook.Location = new Point(11, 19);
+            txtSearchBook.Location = new Point(10, 14);
+            txtSearchBook.Margin = new Padding(3, 2, 3, 2);
             txtSearchBook.Name = "txtSearchBook";
             txtSearchBook.PlaceholderText = "Название или код книги";
-            txtSearchBook.Size = new Size(268, 27);
+            txtSearchBook.Size = new Size(235, 23);
             txtSearchBook.TabIndex = 2;
             // 
             // tabPage1
@@ -581,27 +613,29 @@
             tabPage1.Controls.Add(groupBox4);
             tabPage1.Controls.Add(groupBox3);
             tabPage1.Controls.Add(label10);
-            tabPage1.Location = new Point(4, 29);
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Margin = new Padding(3, 2, 3, 2);
             tabPage1.Name = "tabPage1";
-            tabPage1.Size = new Size(723, 743);
+            tabPage1.Size = new Size(632, 554);
             tabPage1.TabIndex = 2;
             tabPage1.Text = "Поставки";
             // 
             // txtDelQueue
             // 
             txtDelQueue.BackColor = Color.Silver;
-            txtDelQueue.Location = new Point(210, 91);
+            txtDelQueue.Location = new Point(184, 68);
+            txtDelQueue.Margin = new Padding(3, 2, 3, 2);
             txtDelQueue.Name = "txtDelQueue";
-            txtDelQueue.Size = new Size(102, 27);
+            txtDelQueue.Size = new Size(90, 23);
             txtDelQueue.TabIndex = 7;
             // 
             // label18
             // 
             label18.BackColor = Color.Silver;
             label18.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label18.Location = new Point(46, 81);
+            label18.Location = new Point(40, 61);
             label18.Name = "label18";
-            label18.Size = new Size(127, 44);
+            label18.Size = new Size(111, 33);
             label18.TabIndex = 6;
             label18.Text = "В очереди:";
             label18.TextAlign = ContentAlignment.MiddleLeft;
@@ -612,18 +646,21 @@
             groupBox4.Controls.Add(radioButton3);
             groupBox4.Controls.Add(radioButton2);
             groupBox4.Controls.Add(radioButton1);
-            groupBox4.Location = new Point(46, 420);
+            groupBox4.Location = new Point(40, 315);
+            groupBox4.Margin = new Padding(3, 2, 3, 2);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(613, 151);
+            groupBox4.Padding = new Padding(3, 2, 3, 2);
+            groupBox4.Size = new Size(536, 113);
             groupBox4.TabIndex = 5;
             groupBox4.TabStop = false;
             groupBox4.Text = "Ваши действия";
             // 
             // btnСonfirmSelect
             // 
-            btnСonfirmSelect.Location = new Point(181, 87);
+            btnСonfirmSelect.Location = new Point(158, 65);
+            btnСonfirmSelect.Margin = new Padding(3, 2, 3, 2);
             btnСonfirmSelect.Name = "btnСonfirmSelect";
-            btnСonfirmSelect.Size = new Size(214, 44);
+            btnСonfirmSelect.Size = new Size(187, 33);
             btnСonfirmSelect.TabIndex = 3;
             btnСonfirmSelect.Text = "Подтвердить выбор";
             btnСonfirmSelect.UseVisualStyleBackColor = true;
@@ -633,9 +670,10 @@
             // 
             radioButton3.AutoSize = true;
             radioButton3.BackColor = Color.Silver;
-            radioButton3.Location = new Point(415, 40);
+            radioButton3.Location = new Point(363, 30);
+            radioButton3.Margin = new Padding(3, 2, 3, 2);
             radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(173, 24);
+            radioButton3.Size = new Size(141, 19);
             radioButton3.TabIndex = 2;
             radioButton3.TabStop = true;
             radioButton3.Text = "Отклонить (Ошибка)";
@@ -645,9 +683,10 @@
             // 
             radioButton2.AutoSize = true;
             radioButton2.BackColor = Color.Silver;
-            radioButton2.Location = new Point(185, 40);
+            radioButton2.Location = new Point(162, 30);
+            radioButton2.Margin = new Padding(3, 2, 3, 2);
             radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(173, 24);
+            radioButton2.Size = new Size(140, 19);
             radioButton2.TabIndex = 1;
             radioButton2.TabStop = true;
             radioButton2.Text = "Отклонить (Плагиат)";
@@ -657,9 +696,10 @@
             // 
             radioButton1.AutoSize = true;
             radioButton1.BackColor = Color.Silver;
-            radioButton1.Location = new Point(16, 40);
+            radioButton1.Location = new Point(14, 30);
+            radioButton1.Margin = new Padding(3, 2, 3, 2);
             radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(90, 24);
+            radioButton1.Size = new Size(72, 19);
             radioButton1.TabIndex = 0;
             radioButton1.TabStop = true;
             radioButton1.Text = "Принять";
@@ -677,95 +717,102 @@
             groupBox3.Controls.Add(label12);
             groupBox3.Controls.Add(txtDelBookName);
             groupBox3.Controls.Add(label11);
-            groupBox3.Location = new Point(46, 139);
+            groupBox3.Location = new Point(40, 104);
+            groupBox3.Margin = new Padding(3, 2, 3, 2);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(617, 261);
+            groupBox3.Padding = new Padding(3, 2, 3, 2);
+            groupBox3.Size = new Size(540, 196);
             groupBox3.TabIndex = 4;
             groupBox3.TabStop = false;
             groupBox3.Text = "Данные";
             // 
             // txtDelBookPageCount
             // 
-            txtDelBookPageCount.Location = new Point(233, 211);
+            txtDelBookPageCount.Location = new Point(204, 158);
+            txtDelBookPageCount.Margin = new Padding(3, 2, 3, 2);
             txtDelBookPageCount.Name = "txtDelBookPageCount";
             txtDelBookPageCount.ReadOnly = true;
-            txtDelBookPageCount.Size = new Size(174, 27);
+            txtDelBookPageCount.Size = new Size(153, 23);
             txtDelBookPageCount.TabIndex = 9;
             // 
             // label15
             // 
             label15.BackColor = Color.Silver;
-            label15.Location = new Point(16, 208);
+            label15.Location = new Point(14, 156);
             label15.Name = "label15";
-            label15.Size = new Size(159, 37);
+            label15.Size = new Size(139, 28);
             label15.TabIndex = 8;
             label15.Text = "Страницы";
             // 
             // txtDelBookPrice
             // 
-            txtDelBookPrice.Location = new Point(233, 167);
+            txtDelBookPrice.Location = new Point(204, 125);
+            txtDelBookPrice.Margin = new Padding(3, 2, 3, 2);
             txtDelBookPrice.Name = "txtDelBookPrice";
             txtDelBookPrice.ReadOnly = true;
-            txtDelBookPrice.Size = new Size(174, 27);
+            txtDelBookPrice.Size = new Size(153, 23);
             txtDelBookPrice.TabIndex = 7;
             // 
             // label14
             // 
             label14.BackColor = Color.Silver;
-            label14.Location = new Point(16, 164);
+            label14.Location = new Point(14, 123);
             label14.Name = "label14";
-            label14.Size = new Size(159, 33);
+            label14.Size = new Size(139, 25);
             label14.TabIndex = 6;
             label14.Text = "Цена";
             // 
             // txtDelBookGenre
             // 
-            txtDelBookGenre.Location = new Point(233, 123);
+            txtDelBookGenre.Location = new Point(204, 92);
+            txtDelBookGenre.Margin = new Padding(3, 2, 3, 2);
             txtDelBookGenre.Name = "txtDelBookGenre";
             txtDelBookGenre.ReadOnly = true;
-            txtDelBookGenre.Size = new Size(174, 27);
+            txtDelBookGenre.Size = new Size(153, 23);
             txtDelBookGenre.TabIndex = 5;
             // 
             // label13
             // 
             label13.BackColor = Color.Silver;
-            label13.Location = new Point(16, 120);
+            label13.Location = new Point(14, 90);
             label13.Name = "label13";
-            label13.Size = new Size(159, 33);
+            label13.Size = new Size(139, 25);
             label13.TabIndex = 4;
             label13.Text = "Жанр";
             // 
             // txtDelBookAuthor
             // 
-            txtDelBookAuthor.Location = new Point(233, 79);
+            txtDelBookAuthor.Location = new Point(204, 59);
+            txtDelBookAuthor.Margin = new Padding(3, 2, 3, 2);
             txtDelBookAuthor.Name = "txtDelBookAuthor";
             txtDelBookAuthor.ReadOnly = true;
-            txtDelBookAuthor.Size = new Size(174, 27);
+            txtDelBookAuthor.Size = new Size(153, 23);
             txtDelBookAuthor.TabIndex = 3;
             // 
             // label12
             // 
             label12.BackColor = Color.Silver;
-            label12.Location = new Point(16, 76);
+            label12.Location = new Point(14, 57);
             label12.Name = "label12";
-            label12.Size = new Size(159, 33);
+            label12.Size = new Size(139, 25);
             label12.TabIndex = 2;
             label12.Text = "Автор";
             // 
             // txtDelBookName
             // 
-            txtDelBookName.Location = new Point(233, 35);
+            txtDelBookName.Location = new Point(204, 26);
+            txtDelBookName.Margin = new Padding(3, 2, 3, 2);
             txtDelBookName.Name = "txtDelBookName";
             txtDelBookName.ReadOnly = true;
-            txtDelBookName.Size = new Size(174, 27);
+            txtDelBookName.Size = new Size(153, 23);
             txtDelBookName.TabIndex = 1;
             // 
             // label11
             // 
             label11.BackColor = Color.Silver;
-            label11.Location = new Point(16, 32);
+            label11.Location = new Point(14, 24);
             label11.Name = "label11";
-            label11.Size = new Size(159, 33);
+            label11.Size = new Size(139, 25);
             label11.TabIndex = 0;
             label11.Text = "Название";
             // 
@@ -773,9 +820,9 @@
             // 
             label10.BackColor = Color.Silver;
             label10.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label10.Location = new Point(47, 19);
+            label10.Location = new Point(41, 14);
             label10.Name = "label10";
-            label10.Size = new Size(615, 48);
+            label10.Size = new Size(538, 36);
             label10.TabIndex = 3;
             label10.Text = "Поступила книга";
             // 
@@ -790,9 +837,10 @@
             tabPage2.Controls.Add(groupBox5);
             tabPage2.Controls.Add(listClient);
             tabPage2.Controls.Add(label16);
-            tabPage2.Location = new Point(4, 29);
+            tabPage2.Location = new Point(4, 24);
+            tabPage2.Margin = new Padding(3, 2, 3, 2);
             tabPage2.Name = "tabPage2";
-            tabPage2.Size = new Size(723, 743);
+            tabPage2.Size = new Size(632, 554);
             tabPage2.TabIndex = 3;
             tabPage2.Text = "Покупатели";
             // 
@@ -801,43 +849,48 @@
             panel4.BackColor = Color.Gainsboro;
             panel4.Controls.Add(comboBox1);
             panel4.Controls.Add(label17);
-            panel4.Location = new Point(52, 512);
+            panel4.Location = new Point(46, 384);
+            panel4.Margin = new Padding(3, 2, 3, 2);
             panel4.Name = "panel4";
-            panel4.Size = new Size(617, 52);
+            panel4.Size = new Size(540, 39);
             panel4.TabIndex = 14;
             // 
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(272, 11);
+            comboBox1.Location = new Point(238, 8);
+            comboBox1.Margin = new Padding(3, 2, 3, 2);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(206, 28);
+            comboBox1.Size = new Size(181, 23);
             comboBox1.TabIndex = 8;
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // label17
             // 
             label17.BackColor = Color.Silver;
-            label17.Location = new Point(18, 9);
+            label17.Location = new Point(16, 7);
             label17.Name = "label17";
-            label17.Size = new Size(162, 31);
+            label17.Size = new Size(142, 23);
             label17.TabIndex = 7;
             label17.Text = "ID | Название книги ";
             // 
             // txtClientCount
             // 
             txtClientCount.BackColor = Color.Silver;
-            txtClientCount.Location = new Point(219, 21);
+            txtClientCount.Location = new Point(192, 16);
+            txtClientCount.Margin = new Padding(3, 2, 3, 2);
             txtClientCount.Name = "txtClientCount";
-            txtClientCount.Size = new Size(102, 27);
+            txtClientCount.ReadOnly = true;
+            txtClientCount.Size = new Size(90, 23);
             txtClientCount.TabIndex = 13;
             // 
             // label25
             // 
             label25.BackColor = Color.Silver;
             label25.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label25.Location = new Point(56, 17);
+            label25.Location = new Point(49, 13);
             label25.Name = "label25";
-            label25.Size = new Size(127, 28);
+            label25.Size = new Size(111, 21);
             label25.TabIndex = 12;
             label25.Text = "В очереди:";
             label25.TextAlign = ContentAlignment.MiddleLeft;
@@ -848,42 +901,48 @@
             groupBox7.Controls.Add(textBox7);
             groupBox7.Controls.Add(label24);
             groupBox7.Controls.Add(label23);
-            groupBox7.Location = new Point(56, 645);
+            groupBox7.Location = new Point(49, 484);
+            groupBox7.Margin = new Padding(3, 2, 3, 2);
             groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(618, 99);
+            groupBox7.Padding = new Padding(3, 2, 3, 2);
+            groupBox7.Size = new Size(541, 74);
             groupBox7.TabIndex = 11;
             groupBox7.TabStop = false;
             groupBox7.Text = "Статистика";
             // 
             // textBox8
             // 
-            textBox8.Location = new Point(281, 59);
+            textBox8.Location = new Point(246, 44);
+            textBox8.Margin = new Padding(3, 2, 3, 2);
             textBox8.Name = "textBox8";
-            textBox8.Size = new Size(69, 27);
+            textBox8.ReadOnly = true;
+            textBox8.Size = new Size(61, 23);
             textBox8.TabIndex = 3;
             // 
             // textBox7
             // 
-            textBox7.Location = new Point(281, 24);
+            textBox7.Location = new Point(246, 18);
+            textBox7.Margin = new Padding(3, 2, 3, 2);
             textBox7.Name = "textBox7";
-            textBox7.Size = new Size(69, 27);
+            textBox7.ReadOnly = true;
+            textBox7.Size = new Size(61, 23);
             textBox7.TabIndex = 2;
             // 
             // label24
             // 
             label24.BackColor = Color.Silver;
-            label24.Location = new Point(14, 60);
+            label24.Location = new Point(12, 45);
             label24.Name = "label24";
-            label24.Size = new Size(230, 27);
+            label24.Size = new Size(201, 20);
             label24.TabIndex = 1;
             label24.Text = "Довольных клиентов:";
             // 
             // label23
             // 
             label23.BackColor = Color.Silver;
-            label23.Location = new Point(14, 23);
+            label23.Location = new Point(12, 17);
             label23.Name = "label23";
-            label23.Size = new Size(230, 28);
+            label23.Size = new Size(201, 21);
             label23.TabIndex = 0;
             label23.Text = "Недовольных клиентов:";
             // 
@@ -891,30 +950,36 @@
             // 
             groupBox6.Controls.Add(button3);
             groupBox6.Controls.Add(button2);
-            groupBox6.Location = new Point(55, 569);
+            groupBox6.Location = new Point(48, 427);
+            groupBox6.Margin = new Padding(3, 2, 3, 2);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new Size(617, 71);
+            groupBox6.Padding = new Padding(3, 2, 3, 2);
+            groupBox6.Size = new Size(540, 53);
             groupBox6.TabIndex = 10;
             groupBox6.TabStop = false;
             groupBox6.Text = "Цена";
             // 
             // button3
             // 
-            button3.Location = new Point(384, 19);
+            button3.Location = new Point(336, 14);
+            button3.Margin = new Padding(3, 2, 3, 2);
             button3.Name = "button3";
-            button3.Size = new Size(176, 35);
+            button3.Size = new Size(154, 26);
             button3.TabIndex = 2;
             button3.Text = "Отказать";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // button2
             // 
-            button2.Location = new Point(191, 19);
+            button2.Location = new Point(167, 14);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(176, 35);
+            button2.Size = new Size(154, 26);
             button2.TabIndex = 1;
             button2.Text = "Продать";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // groupBox5
             // 
@@ -927,83 +992,95 @@
             groupBox5.Controls.Add(label21);
             groupBox5.Controls.Add(label19);
             groupBox5.Controls.Add(label20);
-            groupBox5.Location = new Point(54, 295);
+            groupBox5.Location = new Point(47, 221);
+            groupBox5.Margin = new Padding(3, 2, 3, 2);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(613, 206);
+            groupBox5.Padding = new Padding(3, 2, 3, 2);
+            groupBox5.Size = new Size(536, 154);
             groupBox5.TabIndex = 9;
             groupBox5.TabStop = false;
             groupBox5.Text = "Выбранный покупатель";
             // 
             // textBox12
             // 
-            textBox12.Location = new Point(269, 160);
+            textBox12.Location = new Point(235, 120);
+            textBox12.Margin = new Padding(3, 2, 3, 2);
             textBox12.Name = "textBox12";
-            textBox12.Size = new Size(207, 27);
+            textBox12.ReadOnly = true;
+            textBox12.Size = new Size(182, 23);
             textBox12.TabIndex = 10;
             // 
             // textBox11
             // 
-            textBox11.Location = new Point(269, 117);
+            textBox11.Location = new Point(235, 88);
+            textBox11.Margin = new Padding(3, 2, 3, 2);
             textBox11.Name = "textBox11";
-            textBox11.Size = new Size(207, 27);
+            textBox11.ReadOnly = true;
+            textBox11.Size = new Size(182, 23);
             textBox11.TabIndex = 9;
             // 
             // textBox10
             // 
-            textBox10.Location = new Point(269, 69);
+            textBox10.Location = new Point(235, 52);
+            textBox10.Margin = new Padding(3, 2, 3, 2);
             textBox10.Name = "textBox10";
-            textBox10.Size = new Size(207, 27);
+            textBox10.ReadOnly = true;
+            textBox10.Size = new Size(182, 23);
             textBox10.TabIndex = 8;
             // 
             // textBox9
             // 
-            textBox9.Location = new Point(269, 27);
+            textBox9.Location = new Point(235, 20);
+            textBox9.Margin = new Padding(3, 2, 3, 2);
             textBox9.Name = "textBox9";
-            textBox9.Size = new Size(207, 27);
+            textBox9.ReadOnly = true;
+            textBox9.Size = new Size(182, 23);
             textBox9.TabIndex = 7;
             // 
             // label22
             // 
             label22.BackColor = Color.Silver;
-            label22.Location = new Point(17, 163);
+            label22.Location = new Point(15, 122);
             label22.Name = "label22";
-            label22.Size = new Size(161, 31);
+            label22.Size = new Size(141, 23);
             label22.TabIndex = 6;
             label22.Text = "Макс цена";
             // 
             // label21
             // 
             label21.BackColor = Color.Silver;
-            label21.Location = new Point(17, 115);
+            label21.Location = new Point(15, 86);
             label21.Name = "label21";
-            label21.Size = new Size(161, 31);
+            label21.Size = new Size(141, 23);
             label21.TabIndex = 5;
             label21.Text = "Жанр";
             // 
             // label19
             // 
             label19.BackColor = Color.Silver;
-            label19.Location = new Point(17, 69);
+            label19.Location = new Point(15, 52);
             label19.Name = "label19";
-            label19.Size = new Size(161, 31);
+            label19.Size = new Size(141, 23);
             label19.TabIndex = 4;
             label19.Text = "Автор";
             // 
             // label20
             // 
             label20.BackColor = Color.Silver;
-            label20.Location = new Point(17, 28);
+            label20.Location = new Point(15, 21);
             label20.Name = "label20";
-            label20.Size = new Size(161, 31);
+            label20.Size = new Size(141, 23);
             label20.TabIndex = 3;
             label20.Text = "Название";
             // 
             // listClient
             // 
             listClient.FormattingEnabled = true;
-            listClient.Location = new Point(55, 115);
+            listClient.ItemHeight = 15;
+            listClient.Location = new Point(48, 86);
+            listClient.Margin = new Padding(3, 2, 3, 2);
             listClient.Name = "listClient";
-            listClient.Size = new Size(606, 164);
+            listClient.Size = new Size(531, 124);
             listClient.TabIndex = 8;
             listClient.SelectedIndexChanged += listClient_SelectedIndexChanged;
             // 
@@ -1011,27 +1088,27 @@
             // 
             label16.BackColor = Color.Silver;
             label16.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label16.Location = new Point(55, 65);
+            label16.Location = new Point(48, 49);
             label16.Name = "label16";
-            label16.Size = new Size(607, 36);
+            label16.Size = new Size(531, 27);
             label16.TabIndex = 7;
             label16.Text = "Очередь";
             // 
             // lblBalance
             // 
             lblBalance.BackColor = Color.FromArgb(224, 224, 224);
-            lblBalance.Location = new Point(659, 64);
+            lblBalance.Location = new Point(577, 48);
             lblBalance.Name = "lblBalance";
-            lblBalance.Size = new Size(120, 43);
+            lblBalance.Size = new Size(105, 32);
             lblBalance.TabIndex = 1;
             // 
             // label7
             // 
             label7.BackColor = Color.FromArgb(224, 224, 224);
             label7.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label7.Location = new Point(370, 64);
+            label7.Location = new Point(324, 48);
             label7.Name = "label7";
-            label7.Size = new Size(277, 43);
+            label7.Size = new Size(242, 32);
             label7.TabIndex = 0;
             label7.Text = "Баланс магазина";
             // 
@@ -1039,17 +1116,17 @@
             // 
             label8.BackColor = Color.FromArgb(224, 224, 224);
             label8.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label8.Location = new Point(58, 5);
+            label8.Location = new Point(51, 4);
             label8.Name = "label8";
-            label8.Size = new Size(721, 43);
+            label8.Size = new Size(631, 32);
             label8.TabIndex = 2;
             // 
             // lblday
             // 
             lblday.BackColor = Color.Silver;
-            lblday.Location = new Point(58, 64);
+            lblday.Location = new Point(51, 48);
             lblday.Name = "lblday";
-            lblday.Size = new Size(53, 21);
+            lblday.Size = new Size(46, 16);
             lblday.TabIndex = 3;
             lblday.Text = "День:";
             lblday.Visible = false;
@@ -1057,26 +1134,28 @@
             // lbltime
             // 
             lbltime.BackColor = Color.Silver;
-            lbltime.Location = new Point(137, 64);
+            lbltime.Location = new Point(120, 48);
             lbltime.Name = "lbltime";
-            lbltime.Size = new Size(63, 21);
+            lbltime.Size = new Size(55, 16);
             lbltime.TabIndex = 4;
             lbltime.Text = "Время:";
             // 
             // txtday
             // 
-            txtday.Location = new Point(58, 91);
+            txtday.Location = new Point(51, 68);
+            txtday.Margin = new Padding(3, 2, 3, 2);
             txtday.Name = "txtday";
-            txtday.Size = new Size(53, 27);
+            txtday.Size = new Size(47, 23);
             txtday.TabIndex = 5;
             txtday.Visible = false;
             // 
             // txttime
             // 
-            txttime.Location = new Point(137, 91);
+            txttime.Location = new Point(120, 68);
+            txttime.Margin = new Padding(3, 2, 3, 2);
             txttime.Name = "txttime";
             txttime.ReadOnly = true;
-            txttime.Size = new Size(63, 27);
+            txttime.Size = new Size(56, 23);
             txttime.TabIndex = 6;
             txttime.Text = "08:00";
             // 
@@ -1084,26 +1163,26 @@
             // 
             label26.BackColor = Color.FromArgb(224, 224, 224);
             label26.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label26.Location = new Point(370, 121);
+            label26.Location = new Point(324, 91);
             label26.Name = "label26";
-            label26.Size = new Size(277, 43);
+            label26.Size = new Size(242, 32);
             label26.TabIndex = 7;
             label26.Text = "Кол-во недовольных клиентов";
             // 
             // label27
             // 
             label27.BackColor = Color.FromArgb(224, 224, 224);
-            label27.Location = new Point(659, 121);
+            label27.Location = new Point(577, 91);
             label27.Name = "label27";
-            label27.Size = new Size(120, 43);
+            label27.Size = new Size(105, 32);
             label27.TabIndex = 8;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(845, 993);
+            ClientSize = new Size(739, 748);
             Controls.Add(label27);
             Controls.Add(label26);
             Controls.Add(txttime);
@@ -1114,6 +1193,7 @@
             Controls.Add(tabControl1);
             Controls.Add(label7);
             Controls.Add(lblBalance);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
