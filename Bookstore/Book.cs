@@ -194,7 +194,6 @@ namespace Bookstore
         public Book()
         {
             Id = _lastId + 1;
-            _lastId = Id;
             GenerateRandom();
         }
 
@@ -219,7 +218,6 @@ namespace Bookstore
                 throw new ArgumentException("Цена должна быть больше 0");
 
             Id = _lastId + 1;
-            _lastId = Id;
             Name = name;
             Author = author;
             Genre = genre;
