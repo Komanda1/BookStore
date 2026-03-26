@@ -208,7 +208,7 @@ namespace Lab3
                 tabControl1.Invalidate(tabControl1.GetTabRect(tabControl1.TabPages.IndexOf(tabPage2)));
             }
         }
-
+        
         private void LoadGenres()
         {
             lstGenres.Items.Clear();
@@ -326,7 +326,7 @@ namespace Lab3
             ClearBookInfo();
             UpdateBooksList();
         }
-
+        
         private void btnClearShelf_Click(object sender, EventArgs e)
         {
             if (currentShelf == null) return;
@@ -497,6 +497,7 @@ namespace Lab3
             }
             comboBox1.Text = null;
             textBox7.Text = store.UnsatisfiedCustomers.ToString();
+            label27.Text = store.UnsatisfiedCustomers.ToString();
             textBox8.Text = store.SatisfiedCustomers.ToString();
         }
 
@@ -513,6 +514,7 @@ namespace Lab3
             comboBox1.Text = null;
             UpdateCustomerList();
             textBox7.Text = store.UnsatisfiedCustomers.ToString();
+            label27.Text = store.UnsatisfiedCustomers.ToString();
             textBox8.Text = store.SatisfiedCustomers.ToString();
         }
     }
