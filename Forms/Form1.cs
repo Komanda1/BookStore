@@ -278,10 +278,11 @@ namespace Lab3
                 return;
             }
             Book newBook = new Book(txtBookName.Text, txtAuthor.Text, txtGenre.Text, pages, price);
+            store.DeliveryMyBooksQueue.Add(newBook);
 
-            store.AddBookToShelf(newBook.Genre, newBook, out string msg);
+            /*store.AddBookToShelf(newBook.Genre, newBook, out string msg);
             txtStatus.Text = msg;
-            LoadGenres();
+            LoadGenres();*/
             txtBookID.Clear(); txtBookName.Clear(); txtAuthor.Clear(); txtPrice.Clear(); txtPageCount.Clear(); txtGenre.Clear();
             UpdateBooksList();
         }

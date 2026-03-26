@@ -172,7 +172,7 @@ namespace Bookstore
             if (book.IsSold)
                 throw new InvalidOperationException("Нельзя добавить уже проданную книгу");
 
-            Book.AddBook();
+            //Book.AddBook();
             _books.Add(book);
         }
 

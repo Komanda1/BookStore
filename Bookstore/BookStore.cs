@@ -205,6 +205,7 @@ namespace Bookstore
     {
         private List<BookShelf> _shelves = new List<BookShelf>();
         private List<Book> _deliveryQueue = new List<Book>();
+        private List<Book> _myDeliveryQueue = new List<Book>();
         private List<Customer> _customerQueue = new List<Customer>();
         private List<(string Name, string Author)> _database = new List<(string, string)>();
         public int MaxShelves { get; }
@@ -214,6 +215,7 @@ namespace Bookstore
         public List<Book> DeliveryQueue => _deliveryQueue;
         public List<Customer> CustomerQueue => _customerQueue;
         public List<BookShelf> Shelves => _shelves;
+        public List<Book> DeliveryMyBooksQueue => _myDeliveryQueue;
 
         /// <summary>
         /// Конструктор магазина
@@ -304,6 +306,15 @@ namespace Bookstore
         {
             var book = Book.CreateWithPossibleError();
             _deliveryQueue.Add(book);
+        }
+
+        /// <summary>
+        /// Добавление заказанной книги в очередь поставок
+        /// </summary>
+        public void AddMyDelivery()
+        {
+            _deliveryQueue.Add(_myDeliveryQueue[0]);
+            _myDeliveryQueue.Remove(_myDeliveryQueue[0]);
         }
 
         /// <summary>

@@ -182,7 +182,11 @@ namespace Bookstore
             if (State != GameState.Playing)
                 return;
 
-            _store.AddRandomDelivery();
+            if (_store.DeliveryMyBooksQueue.Count == 0)
+                _store.AddRandomDelivery();
+            else
+                _store.AddMyDelivery();
+
             var book = _store.DeliveryQueue[_store.DeliveryQueue.Count - 1];
             if (BookDelivered != null)
             {

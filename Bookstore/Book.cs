@@ -226,6 +226,7 @@ namespace Bookstore
             IsSold = false;
             IsPlagiat = false;
             IsError = false;
+            _lastId = _lastId + 1;
         }
 
         public static void AddBook() { _lastId = _lastId + 1; }
