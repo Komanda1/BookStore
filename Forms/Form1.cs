@@ -179,19 +179,26 @@ namespace Lab3
 
             string title = isWin ? "Победа!" : "Игра окончена — Вы проиграли!";
 
+            string filePlase = Directory.GetCurrentDirectory();
+            filePlase = Path.Combine(filePlase, "Результат игры.txt");
 
-            DialogResult result = MessageBox.Show
+            MessageBox.Show
             (
-                fullMessage,
+                fullMessage + $"\n \n Данные о результате игры можно повторно просмотреть в файле \"Результат игры.txt\". Путь: {filePlase}",
                 title,
-                MessageBoxButtons.OK,
-                isWin ? MessageBoxIcon.Information : MessageBoxIcon.Error
+                MessageBoxButtons.OK
             );
 
-            if (result == DialogResult.OK)
+            try
             {
-                Application.Exit();
+                File.WriteAllText(filePlase, fullMessage);
             }
+            catch (Exception)
+            {
+                MessageBox.Show("В связи с ошибкой, данные не были записаны в файл");
+            }
+
+            //this.Close();
         }
 
 
