@@ -203,6 +203,7 @@ namespace Bookstore
     /// </summary>
     public class BookStore
     {
+        private int _nextBookId = 1; // Счётчик ID, начинается с 1
         private List<BookShelf> _shelves = new List<BookShelf>();
         private List<Book> _deliveryQueue = new List<Book>();
         private List<Book> _myDeliveryQueue = new List<Book>();
@@ -237,6 +238,12 @@ namespace Bookstore
             UnsatisfiedCustomers = 0;
             SatisfiedCustomers = 0;
             LoadDatabase();
+        }
+
+        // Метод для получения следующего ID
+        private int GetNextBookId()
+        {
+            return _nextBookId++;
         }
 
         /// <summary>
@@ -407,6 +414,11 @@ namespace Bookstore
                     return false;
                 }
 
+                if (book.Id == 0) 
+                {
+                    book.SetId(GetNextBookId()); 
+                }
+
                 _database.Add((book.Name, book.Author));
                 SaveNewBookToDatabase(book.Name, book.Author);
 
@@ -416,7 +428,6 @@ namespace Bookstore
             }
             else
             {
-                // Списание денег
                 if (Balance < book.BasePrice)
                 {
                     message = "Недостаточно средств!";
@@ -428,6 +439,11 @@ namespace Bookstore
                 if (!AddBookToShelf(book.Genre, book, out message))
                 {
                     return false;
+                }
+
+                if (book.Id == 0)
+                {
+                    book.SetId(GetNextBookId());
                 }
 
                 _deliveryQueue.Remove(book);

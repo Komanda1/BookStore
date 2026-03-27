@@ -265,7 +265,7 @@ namespace Lab3
                 txtShelfName.Text = $"Выбран шкаф: {genre}";
             }
         }
-
+        
         private void lstBook_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstBook.SelectedItem == null) return;
@@ -284,7 +284,7 @@ namespace Lab3
         private void btnGenerateRandom_Click_1(object sender, EventArgs e)
         {
             Book b = new Book();
-            txtBookID.Text = b.Id.ToString();
+            //txtBookID.Text = b.Id.ToString();
             txtBookName.Text = b.Name;
             txtAuthor.Text = b.Author;
             txtGenre.Text = b.Genre;
@@ -538,6 +538,7 @@ namespace Lab3
                 MessageBox.Show(msg, msg);
                 selectedCustomer = null;
                 bookForSellCust = null;
+                lblBalance.Text = $"{store.Balance}₽";
                 UpdateBooksList();
                 UpdateCustomerList();
             }
