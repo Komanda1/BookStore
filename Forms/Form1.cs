@@ -51,7 +51,7 @@ namespace Lab3
 
             gameController.StartGame();
 
-            lblBalance.Text = $"{store.Balance}₽";
+            lblBalance.Text = $"{store.Balance}₽"; 
             txtStatus.Text = "Магазин готов";
             LoadGenres();
             if (!string.IsNullOrEmpty(gameController.Difficulty)) label8.Text = $"Режим: {gameController.Difficulty}";
@@ -277,8 +277,22 @@ namespace Lab3
                 MessageBox.Show("Заполните название, автора и жанр");
                 return;
             }
-            Book newBook = new Book(txtBookName.Text, txtAuthor.Text, txtGenre.Text, pages, price);
-            store.DeliveryMyBooksQueue.Add(newBook);
+
+            bool success = store.OrderBook(
+                txtBookName.Text,
+                txtAuthor.Text,
+                txtGenre.Text,
+                pages,
+                price,
+                out string message);
+
+            if (success)
+            {
+                lblBalance.Text = $"{store.Balance}₽"; 
+                UpdateDeliveryQueue();
+                UpdateBooksList();
+                LoadGenres();
+            }
 
             /*store.AddBookToShelf(newBook.Genre, newBook, out string msg);
             txtStatus.Text = msg;

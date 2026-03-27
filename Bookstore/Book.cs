@@ -187,6 +187,7 @@ namespace Bookstore
         public bool IsSold { get; set; }
         public bool IsPlagiat { get; set; }
         public bool IsError { get; set; }
+        public bool IsOrdered { get; set; }
 
         /// <summary>
         /// Конструктор для случайной генерации
@@ -206,7 +207,7 @@ namespace Bookstore
         /// <param name="PageNumber">кол-во страниц </param>
         /// <param name="BasePrice"> цена книги </param>
         /// <exception cref="ArgumentException"></exception>
-        public Book(string name, string author, string genre, int pageNumber, decimal basePrice)
+        public Book(string name, string author, string genre, int pageNumber, decimal basePrice, bool isOrdered = false)
         {
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(author) || string.IsNullOrWhiteSpace(genre))
                 throw new ArgumentException("Название, автор и жанр не могут быть пустыми");
@@ -226,10 +227,14 @@ namespace Bookstore
             IsSold = false;
             IsPlagiat = false;
             IsError = false;
+            IsOrdered = isOrdered;
             _lastId = _lastId + 1;
         }
 
-        public static void AddBook() { _lastId = _lastId + 1; }
+        public static int GetNextBookId() 
+        {
+            return Interlocked.Increment(ref _lastId);
+        }
 
         /// <summary>
         /// Случайная генерация книги из файлов
@@ -264,7 +269,7 @@ namespace Bookstore
                 }
                 else
                 {
-                    // Опечатка: меняем символ в названии
+                    // Опечатка: меняем символ в названии 
                     book.Name = CreateErrorInName(book.Name);
                     book.IsError = true;
                 }

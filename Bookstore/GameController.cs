@@ -82,7 +82,7 @@ namespace Bookstore
             switch (_difficulty)
             {
                 case DifficultyLevel.Easy:
-                    Difficulty = "Лёгкая";
+                    Difficulty = "Лёгкий";
                     deliveryInterval = 30;
                     customerInterval = 45;
                     maxQueueSize = 5;
@@ -91,7 +91,7 @@ namespace Bookstore
                     break;
 
                 case DifficultyLevel.Normal:
-                    Difficulty = "Средняя";
+                    Difficulty = "Средний";
                     deliveryInterval = 20;
                     customerInterval = 30;
                     maxQueueSize = 4;
@@ -100,7 +100,7 @@ namespace Bookstore
                     break;
 
                 case DifficultyLevel.Hard:
-                    Difficulty = "Сложная";
+                    Difficulty = "Сложный";
                     deliveryInterval = 15;
                     customerInterval = 20;
                     maxQueueSize = 3;

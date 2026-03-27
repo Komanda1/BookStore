@@ -232,7 +232,7 @@ namespace Bookstore
 
         /// <summary>
         /// Смена жанра шкафа (только если пуст)
-        /// </summary>
+        /// </summary> 
         /// <param name="newGenre">Название нового жанра</param>
         /// <exception cref="InvalidOperationException"></exception>
         /// <exception cref="ArgumentException"></exception>

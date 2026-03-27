@@ -274,7 +274,7 @@ namespace Bookstore
         /// <param name="pages">Кол-во страниц</param>
         /// <param name="price">Цена</param>
         /// <param name="message">Сообщение о результате</param>
-        /// <returns>Заказана ли книга</returns>
+        /// <returns>Заказана ли книга</returns> 
         public bool OrderBook(string name,
             string author,
             string genre,
@@ -283,6 +283,28 @@ namespace Bookstore
             out string message)
         {
             message = "";
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                message = "Название книги не может быть пустым";
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(author))
+            {
+                message = "Автор книги не может быть пустым";
+                return false;
+            }
+            if (pages <= 0)
+            {
+                message = "Количество страниц должно быть положительным";
+                return false;
+            }
+            if (price <= 0)
+            {
+                message = "Цена должна быть положительной";
+                return false;
+            }
+
             if (Balance - price < 0)
             {
                 message = "У вас недостаточно средств на балансе";
@@ -291,11 +313,11 @@ namespace Bookstore
 
             Balance -= price;
 
-            var book = new Book(name, author, genre, pages, price);
+            var book = new Book(name, author, genre, pages, price, true);
             _deliveryQueue.Add(book);
 
-            _database.Add((name, author));
-            SaveNewBookToDatabase(name, author);
+            //_database.Add((name, author));
+            //SaveNewBookToDatabase(name, author);
             return true;
         }
 
@@ -378,35 +400,68 @@ namespace Bookstore
                 return false;
             }
 
-            // Списание денег
-            if (Balance < book.BasePrice)
+            if (book.IsOrdered)
             {
-                message = "Недостаточно средств!";
-                return false;
-            }
+                if (book.Id == 0)
+                {
+                    book.Id = Book.GetNextBookId();
+                }
+                else if (FindBookById(book.Id) != null)
+                {
+                    book.Id = Book.GetNextBookId();
+                }
+                if (!AddBookToShelf(book.Genre, book, out message))
+                {
+                    return false;
+                }
 
-            Balance -= book.BasePrice;
+                _database.Add((book.Name, book.Author));
+                SaveNewBookToDatabase(book.Name, book.Author);
 
-            if (!AddBookToShelf(book.Genre, book, out message))
-            {
-                return false;
-            }
-
-            _deliveryQueue.Remove(book);
-
-            if (isPlagiat || isError)
-            {
-                fine = 150;
-                Balance -= fine;
-                message = $"Книга содержит ошибки! Штраф: {fine}₽";
+                _deliveryQueue.Remove(book);
+                message = $"Заказанная книга успешно принята";
+                return true;
             }
             else
             {
-                message = "Книга успешно принята!";
+                // Списание денег
+                if (Balance < book.BasePrice)
+                {
+                    message = "Недостаточно средств!";
+                    return false;
+                }
+
+                Balance -= book.BasePrice;
+
+                if (book.Id == 0)
+                {
+                    book.Id = Book.GetNextBookId();
+                }
+                else if (FindBookById(book.Id) != null)
+                {
+                    book.Id = Book.GetNextBookId();
+                }
+
+
+                if (!AddBookToShelf(book.Genre, book, out message))
+                {
+                    return false;
+                }
+
+                _deliveryQueue.Remove(book);
+
+                if (isPlagiat || isError)
+                {
+                    fine = 150;
+                    Balance -= fine;
+                    message = $"Книга содержит ошибки! Штраф: {fine}₽";
+                }
+                else
+                {
+                    message = "Книга успешно принята!";
+                }
+                DeliveryQueue.Remove(book);
             }
-
-            DeliveryQueue.Remove(book);
-
             return true;
 
         }
@@ -436,19 +491,24 @@ namespace Bookstore
             }
 
             _deliveryQueue.Remove(book);
-
-            // Премия за нахождение ошибки
-            if (isPlagiat || isError)
+            if (book.IsOrdered)
             {
-                reward = 100;
-                Balance += reward;
-                message = $"Ошибка найдена! Премия: {reward}₽";
+                message = $"Заказанная книга отклонена";
             }
             else
             {
-                message = "Книга отклонена";
+                // Премия за нахождение ошибки
+                if (isPlagiat || isError)
+                {
+                    reward = 100;
+                    Balance += reward;
+                    message = $"Ошибка найдена! Премия: {reward}₽";
+                }
+                else
+                {
+                    message = "Книга отклонена";
+                }
             }
-
             DeliveryQueue.Remove(book);
 
             return true;
