@@ -324,6 +324,10 @@ namespace Lab3
                 UpdateBooksList();
                 LoadGenres();
             }
+            else
+            {
+                MessageBox.Show(message); // показываем сообщение об ошибке
+            }
 
             /*store.AddBookToShelf(newBook.Genre, newBook, out string msg);
             txtStatus.Text = msg;

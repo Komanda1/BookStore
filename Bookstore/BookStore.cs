@@ -402,14 +402,6 @@ namespace Bookstore
 
             if (book.IsOrdered)
             {
-                if (book.Id == 0)
-                {
-                    book.Id = Book.GetNextBookId();
-                }
-                else if (FindBookById(book.Id) != null)
-                {
-                    book.Id = Book.GetNextBookId();
-                }
                 if (!AddBookToShelf(book.Genre, book, out message))
                 {
                     return false;
@@ -432,16 +424,6 @@ namespace Bookstore
                 }
 
                 Balance -= book.BasePrice;
-
-                if (book.Id == 0)
-                {
-                    book.Id = Book.GetNextBookId();
-                }
-                else if (FindBookById(book.Id) != null)
-                {
-                    book.Id = Book.GetNextBookId();
-                }
-
 
                 if (!AddBookToShelf(book.Genre, book, out message))
                 {
