@@ -330,5 +330,107 @@ namespace TestUnit
             Assert.That(stats, Does.Contain("Довольных клиентов"));
             Assert.That(stats, Does.Contain("Недовольных клиентов"));
         }
+
+        [Test]
+        public void AcceptDelivery_WithPlagiat_AppliesFine()
+        {
+            _store.AddRandomDelivery();
+            var book = _store.DeliveryQueue[0];
+            decimal initialBalance = _store.Balance;
+
+            bool result = _store.AcceptDelivery(book, isPlagiat: true, isError: false, out decimal fine, out string message);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(fine, Is.EqualTo(150));
+                Assert.That(_store.Balance, Is.EqualTo(initialBalance - book.BasePrice - 150));
+                Assert.That(message, Does.Contain("Штраф"));
+            });
+        }
+
+        [Test]
+        public void AcceptDelivery_WithError_AppliesFine()
+        {
+            _store.AddRandomDelivery();
+            var book = _store.DeliveryQueue[0];
+            decimal initialBalance = _store.Balance;
+
+            bool result = _store.AcceptDelivery(book, isPlagiat: false, isError: true, out decimal fine, out string message);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(fine, Is.EqualTo(150));
+                Assert.That(message, Does.Contain("Штраф"));
+            });
+        }
+
+        [Test]
+        public void AcceptDelivery_BookNotInQueue_ReturnsFalse()
+        {
+            var book = TestHelpers.CreateTestBook(genre: "Фантастика");
+            book.SetId(1);
+
+            bool result = _store.AcceptDelivery(book, false, false, out decimal fine, out string message);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.False);
+                Assert.That(message, Is.EqualTo("Книга не найдена в очереди поставок."));
+            });
+        }
+
+        [Test]
+        public void AcceptDelivery_InsufficientBalance_ReturnsFalse()
+        {
+            var store = new BookStore(3, 50m);
+            store.AddRandomDelivery();
+            var book = store.DeliveryQueue[0];
+
+            bool result = store.AcceptDelivery(book, false, false, out decimal fine, out string message);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.False);
+                Assert.That(message, Is.EqualTo("Недостаточно средств!"));
+            });
+        }
+
+        [Test]
+        public void RejectDelivery_WithPlagiat_AddsReward()
+        {
+            _store.AddRandomDelivery();
+            var book = _store.DeliveryQueue[0];
+            decimal initialBalance = _store.Balance;
+
+            bool result = _store.RejectDelivery(book, isPlagiat: true, isError: false, out decimal reward, out string message);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(reward, Is.EqualTo(100));
+                Assert.That(_store.Balance, Is.EqualTo(initialBalance + 100));
+                Assert.That(message, Does.Contain("Премия"));
+            });
+        }
+
+        [Test]
+        public void RejectDelivery_WithError_AddsReward()
+        {
+            _store.AddRandomDelivery();
+            var book = _store.DeliveryQueue[0];
+            decimal initialBalance = _store.Balance;
+
+            bool result = _store.RejectDelivery(book, isPlagiat: false, isError: true, out decimal reward, out string message);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(reward, Is.EqualTo(100));
+                Assert.That(_store.Balance, Is.EqualTo(initialBalance + 100));
+            });
+        }
+
     }
 }
