@@ -48,6 +48,7 @@ namespace Lab3
             gameController.BookDelivered += GameController_BookDelivered;
             gameController.CustomerArrived += GameController_CustomerArrived;
             gameController.TimeUpdated += (s, e) => GameController_TimeUpdated(s, e);
+            gameController.GameOver += GameController_GameOver;
 
             gameController.StartGame();
 
@@ -163,6 +164,36 @@ namespace Lab3
 
             txttime.Text = e.GameTime.ToString(@"hh\:mm");
         }
+
+        private void GameController_GameOver(object sender, (bool Won, string Reason) e)
+        {
+            ShowGameEndMessage(e.Won, e.Reason);
+        }
+
+        private void ShowGameEndMessage(bool isWin, string reason)
+        {
+            string statistics = store.GetStatistics(); // получаем статистику из магазина
+
+            string fullMessage = $"{reason}\n\n{statistics}";
+
+
+            string title = isWin ? "Победа!" : "Игра окончена — Вы проиграли!";
+
+
+            DialogResult result = MessageBox.Show
+            (
+                fullMessage,
+                title,
+                MessageBoxButtons.OK,
+                isWin ? MessageBoxIcon.Information : MessageBoxIcon.Error
+            );
+
+            if (result == DialogResult.OK)
+            {
+                Application.Exit();
+            }
+        }
+
 
         /// <summary>
         /// Таймер отрисовки

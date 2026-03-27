@@ -680,11 +680,14 @@ namespace Bookstore
         /// </summary>
         public string GetStatistics()
         {
-            return $"Баланс: {Balance}₽\n" +
+            return $"Статистика игры:\n" + 
+                   $"Баланс: {Balance}₽\n" +
                    $"Довольных клиентов: {SatisfiedCustomers}\n" +
                    $"Недовольных клиентов: {UnsatisfiedCustomers}\n" +
                    $"Шкафов: {_shelves.Count}/{MaxShelves}\n" +
-                   $"Книг в магазине: {_shelves.Sum(s => s.Count)}";
+                   $"Книг в магазине: {_shelves.Sum(s => s.Count)}\n" +
+                   $"Книг в очереди поставок: {_deliveryQueue.Count}\n" +
+                   $"Клиентов в очереди: {_customerQueue.Count}";
         }
 
         /// <summary>

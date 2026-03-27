@@ -281,9 +281,12 @@ namespace Bookstore
         {
             State = won ? GameState.Won : GameState.Lost;
 
+            string statistics = _store.GetStatistics();
+
             if (GameOver != null)
             {
-                GameOver.Invoke(this, (won, reason));
+                GameOver.Invoke(this, (won, reason)); 
+                //GameOver.Invoke(this, (won, $"{reason}\n\n{statistics}"));
             }
         }
 

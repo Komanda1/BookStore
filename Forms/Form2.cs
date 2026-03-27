@@ -44,13 +44,13 @@ namespace Forms
             switch (DifficultyLevel)
             {
                 case DifficultyLevel.Easy:
-                    difficulty = "Легкая";
+                    difficulty = "Легкий";
                     break;
                 case DifficultyLevel.Normal:
-                    difficulty = "Средняя";
+                    difficulty = "Средний";
                     break;
                 case DifficultyLevel.Hard:
-                    difficulty = "Сложная";
+                    difficulty = "Сложный";
                     break;
             }
 
