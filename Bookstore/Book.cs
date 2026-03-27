@@ -194,7 +194,7 @@ namespace Bookstore
         /// </summary>
         public Book()
         {
-            Id = _lastId + 1;
+            Id = GetNextBookId();
             GenerateRandom();
         }
 
@@ -218,7 +218,7 @@ namespace Bookstore
             if (basePrice <= 0)
                 throw new ArgumentException("Цена должна быть больше 0");
 
-            Id = _lastId + 1;
+            Id = GetNextBookId();
             Name = name;
             Author = author;
             Genre = genre;
@@ -228,7 +228,7 @@ namespace Bookstore
             IsPlagiat = false;
             IsError = false;
             IsOrdered = isOrdered;
-            _lastId = _lastId + 1;
+            //_lastId = _lastId + 1;
         }
 
         public static int GetNextBookId() 

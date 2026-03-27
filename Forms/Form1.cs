@@ -160,7 +160,7 @@ namespace Lab3
             //        txttime.Text = e.GameTime.ToString(@"hh\:mm");
             //    }));
             //    return;
-            //}
+            //} 
 
             txttime.Text = e.GameTime.ToString(@"hh\:mm");
         }
@@ -530,7 +530,7 @@ namespace Lab3
             }
             if (bookForSellCust != null)
             {
-                bookForSellCust.IsSold = store.SellToCustomer(selectedCustomer, bookForSellCust, bookForSellCust.BasePrice, out string msg);
+                bookForSellCust.IsSold = store.SellToCustomer(selectedCustomer, bookForSellCust, selectedCustomer.MaxPrice, out string msg);
                 MessageBox.Show(msg, msg);
                 selectedCustomer = null;
                 bookForSellCust = null;
