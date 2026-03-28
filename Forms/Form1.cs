@@ -530,6 +530,15 @@ namespace Lab3
             selectbook = selectbook.Split(' ')[0];
             int id = int.Parse(selectbook);
             bookForSellCust = store.FindBookById(id);
+            if (bookForSellCust != null && selectedCustomer != null)
+            {
+                decimal finalPrice = store.CalculatePriceForCustomer(selectedCustomer, bookForSellCust);
+                textBox12.Text = $"{finalPrice}₽";
+            }
+            else if (bookForSellCust != null)
+            {
+                textBox12.Text = $"{bookForSellCust.BasePrice}₽ (базовая)";
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -541,13 +550,34 @@ namespace Lab3
             }
             if (bookForSellCust != null)
             {
-                bookForSellCust.IsSold = store.SellToCustomer(selectedCustomer, bookForSellCust, selectedCustomer.MaxPrice, out string msg);
-                MessageBox.Show(msg, msg);
-                selectedCustomer = null;
-                bookForSellCust = null;
-                lblBalance.Text = $"{store.Balance}₽";
-                UpdateBooksList();
-                UpdateCustomerList();
+                decimal price = store.CalculatePriceForCustomer(selectedCustomer, bookForSellCust);
+                bookForSellCust.IsSold = store.SellToCustomer(selectedCustomer, bookForSellCust,price,  selectedCustomer.MaxPrice, out string msg);
+                /*if (msg == "BARGAIN_NEEDED")
+                {
+                    decimal newPrice = price * 0.9m;
+                    DialogResult dialogResult = MessageBox.Show(
+                        $"Дороговато будет, в соседнем магазине дешевле!\n" +
+                        $"Предложить скидку? Новая цена: {newPrice}₽",
+                        "Торговаться",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        textBox12.Text = $"{newPrice}₽";
+                        // Повторная попытка продажи со скидкой
+                        bookForSellCust.IsSold = store.SellToCustomerSecond(selectedCustomer, bookForSellCust, newPrice, selectedCustomer.MaxPrice, out msg);
+                    }
+                }
+                else
+                {*/
+                    MessageBox.Show(msg, msg);
+                    selectedCustomer = null;
+                    bookForSellCust = null;
+                    lblBalance.Text = $"{store.Balance}₽";
+                    UpdateBooksList();
+                    UpdateCustomerList();
+                /*}*/
             }
             else
             {

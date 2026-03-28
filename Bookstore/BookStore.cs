@@ -203,6 +203,7 @@ namespace Bookstore
     /// </summary>
     public class BookStore
     {
+        private static Random rnd = new Random();
         private int _nextBookId = 1; // Счётчик ID, начинается с 1
         private List<BookShelf> _shelves = new List<BookShelf>();
         private List<Book> _deliveryQueue = new List<Book>();
@@ -513,24 +514,71 @@ namespace Bookstore
         }
 
         /// <summary>
+        /// Второй шанс продать книгу покупателю, если он отказался от первой цены
+        /// </summary>
+        /// <param name="customer">Покупатель</param>
+        /// <param name="book">Книга</param>
+        /// <param name="sellPrice">Цена продажи</param>
+        /// <param name="MaxPrice">Максимальная цена</param>
+        /// <param name="message">Сообщение</param>
+        /// <returns></returns>
+        /*public bool SellToCustomerSecond(Customer customer,
+            Book book,
+            decimal sellPrice,
+            decimal MaxPrice,
+            out string message)
+        {
+            message = "";
+            if (MaxPrice < sellPrice)
+            {
+                message = "Все еще дорого!";
+                int bargainOppotunity = rnd.Next(100);
+
+                UnsatisfiedCustomers++;
+                _customerQueue.Remove(customer);
+                return false;
+            }
+            var shelf = _shelves.FirstOrDefault(s => s.Books.Contains(book));
+            if (shelf == null)
+            {
+                message = "Книга не найдена в магазине!";
+                return false;
+            }
+            Balance += sellPrice;
+            shelf.RemoveBook(book);
+            _customerQueue.Remove(customer);
+            SatisfiedCustomers++;
+            message = $"Книга продана за {sellPrice}₽!";
+            return true;
+        }*/
+
+        /// <summary>
         /// Продажа книги покупателю
         /// </summary>
         /// <param name="customer">Покупатель</param>
         /// <param name="book">Книга</param>
         /// <param name="sellPrice">Цена с наценкой</param>
+        /// <param name="MaxPrice">Максимальная цена</param>
         /// <param name="message">Сообщение о результате</param>
         /// <returns></returns>
         public bool SellToCustomer(Customer customer,
             Book book,
             decimal sellPrice,
+            decimal MaxPrice,
             out string message)
         {
             message = "";
 
             // Проверка цены (не более 15% наценки)
-            if (sellPrice > book.BasePrice * 1.15m)
+            if (sellPrice > MaxPrice)
             {
                 message = "Цена превышает допустимую наценку 15%!";
+                /*int bargainOppotunity = rnd.Next(100);
+                if (bargainOppotunity > 60)
+                {
+                    message = "BARGAIN_NEEDED";
+                    return false;
+                }*/
                 UnsatisfiedCustomers++;
                 _customerQueue.Remove(customer);
                 return false;
@@ -776,6 +824,19 @@ namespace Bookstore
 
             Balance += book.BasePrice;
             book.IsSold = true;
+        }
+
+        /// <summary>
+        /// Рассчет цены для покупателя с учётом наценки (не более 15%)
+        /// </summary>
+        /// <param name="book">Книга для рассчета цены</param>
+        /// <returns></returns>
+        public decimal CalculatePriceForCustomer(Customer customer, Book book)
+        {
+            decimal price = book.BasePrice;
+
+            price = price * 1.15m;
+            return price;
         }
 
         /*public void AddBookToStore(Book book)
