@@ -168,6 +168,8 @@ namespace Lab3
         private void GameController_GameOver(object sender, (bool Won, string Reason) e)
         {
             ShowGameEndMessage(e.Won, e.Reason);
+            Application.Exit();
+            
         }
 
         private void ShowGameEndMessage(bool isWin, string reason)
@@ -197,8 +199,6 @@ namespace Lab3
             {
                 MessageBox.Show("В связи с ошибкой, данные не были записаны в файл");
             }
-
-            //this.Close();
         }
 
 
@@ -245,6 +245,8 @@ namespace Lab3
             {
                 tabControl1.Invalidate(tabControl1.GetTabRect(tabControl1.TabPages.IndexOf(tabPage2)));
             }
+
+
         }
         
         private void LoadGenres()
@@ -574,6 +576,10 @@ namespace Lab3
                     MessageBox.Show(msg, msg);
                     selectedCustomer = null;
                     bookForSellCust = null;
+                    textBox9.Clear();
+                    textBox10.Clear();
+                    textBox11.Clear();
+                    textBox12.Clear();
                     lblBalance.Text = $"{store.Balance}₽";
                     UpdateBooksList();
                     UpdateCustomerList();
